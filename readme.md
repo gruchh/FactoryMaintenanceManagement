@@ -16,7 +16,7 @@ This project was created for learning Java, specifically the Spring framework. T
 - **Spring Framework**
 - **Spring Boot**
 - **Hibernate**
-- **MySQL**
+- **PostgreSQL**
 
 ## Prerequisites
 The following tools are required to start the application:
