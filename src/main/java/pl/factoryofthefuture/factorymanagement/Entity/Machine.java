@@ -16,10 +16,15 @@ public class Machine {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Column(name = "NAME")
     private String name;
+    @Column(name = "MANUFACTURER")
     private String manufacturer;
+    @Column(name = "PRODUCTION_DATE")
     private LocalDate productionDate;
+    @Column(name = "LAST_MAINTENANCE_DATE")
     private LocalDate lastMaintenanceDate;
+    @Column(name = "ENERGY_CONSUMPTION")
     private double energyConsumption;
 
     @ManyToOne
