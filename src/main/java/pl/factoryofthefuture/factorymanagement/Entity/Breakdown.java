@@ -1,9 +1,10 @@
-package pl.factoryofthefuture.factorymanagement.Model;
+package pl.factoryofthefuture.factorymanagement.Entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.factoryofthefuture.factorymanagement.Enums.SeverityType;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -20,6 +21,11 @@ public class Breakdown {
     private String eventDescription;
     private LocalDate startDate;
     private LocalDate endDate;
+    @Enumerated(EnumType.STRING)
+    private SeverityType severity;
+    private String cause;
+    private String usedParts;
+    private String comments;
 
     @ManyToOne
     @JoinColumn(name = "machine_id")

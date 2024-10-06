@@ -6,8 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.factoryofthefuture.factorymanagement.Model.Department;
-import pl.factoryofthefuture.factorymanagement.Model.Employee;
+import pl.factoryofthefuture.factorymanagement.Entity.Employee;
 import pl.factoryofthefuture.factorymanagement.Service.EmployeeService;
 
 import java.util.List;

@@ -2,7 +2,7 @@ package pl.factoryofthefuture.factorymanagement.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.factoryofthefuture.factorymanagement.Model.Breakdown;
+import pl.factoryofthefuture.factorymanagement.Entity.Breakdown;
 import pl.factoryofthefuture.factorymanagement.Repository.BreakdownRepository;
 
 import java.util.List;
