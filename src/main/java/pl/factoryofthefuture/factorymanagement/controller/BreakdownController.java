@@ -1,4 +1,4 @@
-package pl.factoryofthefuture.factorymanagement.Controller;
+package pl.factoryofthefuture.factorymanagement.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.factoryofthefuture.factorymanagement.Entity.Breakdown;
-import pl.factoryofthefuture.factorymanagement.Service.BreakdownService;
+import pl.factoryofthefuture.factorymanagement.entity.Breakdown;
+import pl.factoryofthefuture.factorymanagement.service.BreakdownService;
 
 import java.util.List;
 

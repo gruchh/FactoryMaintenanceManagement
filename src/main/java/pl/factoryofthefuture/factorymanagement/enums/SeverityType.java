@@ -1,4 +1,4 @@
-package pl.factoryofthefuture.factorymanagement.Enums;
+package pl.factoryofthefuture.factorymanagement.enums;
 
 public enum SeverityType {
     LOW,

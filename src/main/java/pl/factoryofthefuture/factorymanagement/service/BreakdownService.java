@@ -1,9 +1,9 @@
-package pl.factoryofthefuture.factorymanagement.Service;
+package pl.factoryofthefuture.factorymanagement.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.factoryofthefuture.factorymanagement.Entity.Breakdown;
-import pl.factoryofthefuture.factorymanagement.Repository.BreakdownRepository;
+import pl.factoryofthefuture.factorymanagement.entity.Breakdown;
+import pl.factoryofthefuture.factorymanagement.repository.BreakdownRepository;
 
 import java.util.List;
 import java.util.NoSuchElementException;

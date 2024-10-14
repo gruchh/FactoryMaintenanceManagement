@@ -1,10 +1,10 @@
-package pl.factoryofthefuture.factorymanagement.Entity;
+package pl.factoryofthefuture.factorymanagement.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.factoryofthefuture.factorymanagement.Enums.SeverityType;
+import pl.factoryofthefuture.factorymanagement.enums.SeverityType;
 
 import java.time.LocalDate;
 import java.util.Set;

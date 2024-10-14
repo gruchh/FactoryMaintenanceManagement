@@ -1,4 +1,4 @@
-package pl.factoryofthefuture.factorymanagement.Entity;
+package pl.factoryofthefuture.factorymanagement.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

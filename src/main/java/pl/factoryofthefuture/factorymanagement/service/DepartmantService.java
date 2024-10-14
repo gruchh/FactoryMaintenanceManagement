@@ -1,9 +1,9 @@
-package pl.factoryofthefuture.factorymanagement.Service;
+package pl.factoryofthefuture.factorymanagement.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.factoryofthefuture.factorymanagement.Entity.Department;
-import pl.factoryofthefuture.factorymanagement.Repository.DepartmentRepository;
+import pl.factoryofthefuture.factorymanagement.entity.Department;
+import pl.factoryofthefuture.factorymanagement.repository.DepartmentRepository;
 
 import java.util.List;
 import java.util.NoSuchElementException;

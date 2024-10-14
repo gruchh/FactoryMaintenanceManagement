@@ -1,4 +1,4 @@
-package pl.factoryofthefuture.factorymanagement.Controller;
+package pl.factoryofthefuture.factorymanagement.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,27 +6,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.factoryofthefuture.factorymanagement.Entity.Employee;
-import pl.factoryofthefuture.factorymanagement.Service.EmployeeService;
+import pl.factoryofthefuture.factorymanagement.entity.Machine;
+import pl.factoryofthefuture.factorymanagement.service.MachineService;
 
 import java.util.List;
 
 @RestController()
-@RequestMapping("/employees")
+@RequestMapping("/machines")
 @RequiredArgsConstructor
-public class EmployeeController {
+public class MachineController {
 
     @Autowired
-    EmployeeService employeeService;
+    MachineService machineService;
 
     @GetMapping()
-    public List<Employee> getEmployees() {
-        return employeeService.getEmployees();
+    public List<Machine> getMachines() {
+        return machineService.getMachine();
     }
 
     @GetMapping("/{id}")
-    public Employee getEmployee(@PathVariable Long id) {
-        return employeeService.getEmployee(id);
+    public Machine getMachine(@PathVariable Long id) {
+        return machineService.getMachine(id);
     }
 
 
