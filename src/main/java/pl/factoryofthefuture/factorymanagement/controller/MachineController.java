@@ -7,27 +7,29 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.factoryofthefuture.factorymanagement.entity.Machine;
+import pl.factoryofthefuture.factorymanagement.entity.dto.MachineDto;
 import pl.factoryofthefuture.factorymanagement.service.MachineService;
 
 import java.util.List;
+
+import static pl.factoryofthefuture.factorymanagement.mapper.MachineDtoMapper.mapToMachineDto;
+import static pl.factoryofthefuture.factorymanagement.mapper.MachineDtoMapper.mapToMachineDtos;
 
 @RestController()
 @RequestMapping("/machines")
 @RequiredArgsConstructor
 public class MachineController {
 
-    @Autowired
-    MachineService machineService;
+    private final MachineService machineService;
 
     @GetMapping()
-    public List<Machine> getMachines() {
-        return machineService.getMachine();
+    public List<MachineDto> getMachines() {
+        return mapToMachineDtos(machineService.getMachine());
     }
 
     @GetMapping("/{id}")
-    public Machine getMachine(@PathVariable Long id) {
-        return machineService.getMachine(id);
+    public MachineDto getMachine(@PathVariable Long id) {
+        return mapToMachineDto(machineService.getMachine(id));
     }
-
 
 }
