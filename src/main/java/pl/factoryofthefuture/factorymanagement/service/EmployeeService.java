@@ -1,5 +1,6 @@
 package pl.factoryofthefuture.factorymanagement.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.factoryofthefuture.factorymanagement.entity.Employee;
@@ -8,11 +9,11 @@ import pl.factoryofthefuture.factorymanagement.repository.EmployeeRepository;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@RequiredArgsConstructor
 @Service
 public class EmployeeService {
 
-    @Autowired
-    EmployeeRepository  employeeRepository;
+    private final EmployeeRepository  employeeRepository;
 
     public List<Employee> getEmployees() {
         return employeeRepository.findAll();
