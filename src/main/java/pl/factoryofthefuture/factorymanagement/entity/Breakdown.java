@@ -16,9 +16,9 @@ import java.util.Set;
 public class Breakdown {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "EVENT_DESCRIPTIOJ")
+    @Column(name = "EVENT_DESCRIPTION")
     private String eventDescription;
     @Column(name = "START_DATE")
     private LocalDate startDate;
