@@ -2,10 +2,7 @@ package pl.factoryofthefuture.factorymanagement.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.factoryofthefuture.factorymanagement.entity.Breakdown;
 import pl.factoryofthefuture.factorymanagement.entity.dto.BreakdownDto;
 import pl.factoryofthefuture.factorymanagement.service.BreakdownService;
@@ -22,9 +19,15 @@ public class BreakdownController {
 
     private final BreakdownService breakdownService;
 
-    @GetMapping("/breakdowns")
+    @GetMapping("/")
     public List<BreakdownDto> getBreakdowns() {
         return mapToBreakdownDtos(breakdownService.getBreakdowns());
+    }
+
+    @GetMapping("/page")
+    public List<BreakdownDto> getPaginatedBreakdown(@RequestParam(required = false) int page) {
+        int pageNumber = page >= 1 ? page - 1 : 0;
+        return mapToBreakdownDtos(breakdownService.findAllBreakdowns(pageNumber));
     }
 
     @GetMapping("/{id}")
