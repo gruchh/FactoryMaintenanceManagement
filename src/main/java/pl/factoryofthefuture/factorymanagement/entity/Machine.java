@@ -15,7 +15,7 @@ public class Machine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @Column(name = "NAME")
     private String name;
     @Column(name = "MANUFACTURER")

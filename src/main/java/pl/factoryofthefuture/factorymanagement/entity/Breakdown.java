@@ -17,7 +17,7 @@ public class Breakdown {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @Column(name = "EVENT_DESCRIPTION")
     private String eventDescription;
     @Column(name = "START_DATE")
@@ -38,5 +38,6 @@ public class Breakdown {
     @JoinColumn(name = "machine_id")
     private Machine machine;
     @OneToMany
+    @JoinColumn(name = "breakdown_id")
     private Set<Employee> employeeSet;
 }

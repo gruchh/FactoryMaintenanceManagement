@@ -25,14 +25,20 @@ public class BreakdownController {
     }
 
     @GetMapping("/page")
-    public List<BreakdownDto> getPaginatedBreakdown(@RequestParam(required = false) int page) {
+    public List<Breakdown> getPaginatedBreakdown(@RequestParam(required = false) int page) {
         int pageNumber = page >= 1 ? page - 1 : 0;
-        return mapToBreakdownDtos(breakdownService.findAllBreakdowns(pageNumber));
+        return breakdownService.findAllBreakdowns(pageNumber);
     }
 
     @GetMapping("/{id}")
     public BreakdownDto getBreakdownDto(@PathVariable Long id) {
         return mapToBreakdownDto(breakdownService.getBreakdown(id));
+    }
+
+    @GetMapping("/page/employees")
+    public List<Breakdown> getBreakdownWithEmployees (@RequestParam(required = false) int page) {
+        int pageNumber = page >= 1 ? page - 1 : 0;
+        return breakdownService.getBreakdownsWithEmployees(pageNumber);
     }
 
 

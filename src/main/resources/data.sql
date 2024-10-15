@@ -24,18 +24,6 @@ INSERT INTO BREAKDOWNS (EVENT_DESCRIPTION, START_DATE, END_DATE, SEVERITY, CAUSE
                                                                                                                         ('Software glitch', '2024-08-22', '2024-08-23', 'MEDIUM', 'Firmware bug', 'Firmware update', 'Updated firmware and tested functionality', 4),
                                                                                                                         ('Valve malfunction', '2024-09-15', '2024-09-16', 'HIGH', 'Blocked valve', 'Valve, Cleaning solution', 'Cleaned and replaced valve', 2),
                                                                                                                         ('Sensor failure', '2024-10-10', '2024-10-11', 'LOW', 'Faulty sensor', 'Sensor', 'Replaced sensor and recalibrated system', 5);
-INSERT INTO BREAKDOWNS_EMPLOYEE_SET (BREAKDOWNS_ID, EMPLOYEE_SET_ID) VALUES
-                                                                         (1, 1),
-                                                                         (1, 3),
-                                                                         (2, 2),
-                                                                         (2, 4);
-
-INSERT INTO DEPARTMENTS_MACHINE_SET (DEPARTMENTS_ID, MACHINE_SET_ID) VALUES
-                                                                         (1, 1),
-                                                                         (1, 4),
-                                                                         (2, 2),
-                                                                         (2, 5),
-                                                                         (3, 3);
 
 INSERT INTO BUDGET (BUDGET_MONTH, BUDGET_YEAR, BUDGET_AMOUNT_PLN) VALUES
                                                                       (1, 2024, 1560000.00),

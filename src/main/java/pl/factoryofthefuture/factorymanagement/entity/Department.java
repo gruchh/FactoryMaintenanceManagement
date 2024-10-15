@@ -16,8 +16,7 @@ public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
+    private long id;
     @Column(name = "FULL_NAME")
     private String fullName;
     @Column(name = "SHORT_CUT")
@@ -25,5 +24,6 @@ public class Department {
     @Column(name = "CREATION_DATE")
     private LocalDate creationDate;
     @OneToMany
+    @JoinColumn(name = "machine_id")
     private Set<Machine> machineSet;
 }
