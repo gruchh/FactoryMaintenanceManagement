@@ -8,6 +8,7 @@ import pl.factoryofthefuture.factorymanagement.enums.JobPositionType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity (name= "EMPLOYEES")
 @NoArgsConstructor
@@ -40,5 +41,7 @@ public class Employee {
     private int performanceRating;
     @Column(name = "ASSESMENT_DATE")
     private LocalDate assesmentDate;
+    @ManyToMany(mappedBy = "employeeSet", fetch = FetchType.EAGER)
+    private Set<Breakdown> breakdowns;
 
 }

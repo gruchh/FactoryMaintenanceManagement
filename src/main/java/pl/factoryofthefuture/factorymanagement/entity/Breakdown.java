@@ -33,11 +33,14 @@ public class Breakdown {
     private String usedParts;
     @Column(name = "COMMENTS")
     private String comments;
-
     @ManyToOne
     @JoinColumn(name = "machine_id")
     private Machine machine;
-    @OneToMany
-    @JoinColumn(name = "breakdown_id")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "breakdown_employee",
+            joinColumns = @JoinColumn(name = "breakdown_id"),
+            inverseJoinColumns = @JoinColumn(name = "employee_id")
+    )
     private Set<Employee> employeeSet;
 }

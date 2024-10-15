@@ -38,6 +38,7 @@ public class BreakdownService {
         List<Breakdown> allBreakdowns = breakdownRepository.findAllBreakdowns(PageRequest.of(pageNumber, PAGE_SIZE));
         List<Long> ids = allBreakdowns.stream().map(Breakdown::getId).toList();
         List<Employee> employees = employeeRepository.findAllByIdIn(ids);
+        List<Employee> e = employeeRepository.findAll();
         allBreakdowns.forEach(breakdown -> breakdown.setEmployeeSet(extractExployees(employees, breakdown.getId())));
 
         return allBreakdowns;
