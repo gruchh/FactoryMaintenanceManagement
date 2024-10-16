@@ -19,7 +19,7 @@ public class BreakdownController {
 
     private final BreakdownService breakdownService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public List<BreakdownDto> getBreakdowns() {
         return mapToBreakdownDtos(breakdownService.getBreakdowns());
     }
