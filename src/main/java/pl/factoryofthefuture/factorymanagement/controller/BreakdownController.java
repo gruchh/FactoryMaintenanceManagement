@@ -35,11 +35,4 @@ public class BreakdownController {
         return mapToBreakdownDto(breakdownService.getBreakdown(id));
     }
 
-    @GetMapping("/page/employees")
-    public List<Breakdown> getBreakdownWithEmployees (@RequestParam(required = false) int page) {
-        int pageNumber = page >= 1 ? page - 1 : 0;
-        return breakdownService.getBreakdownsWithEmployees(pageNumber);
-    }
-
-
 }
