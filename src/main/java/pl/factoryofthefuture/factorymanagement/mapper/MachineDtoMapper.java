@@ -25,6 +25,7 @@ public class MachineDtoMapper {
                 .productionDate(machine.getProductionDate())
                 .lastMaintenanceDate(machine.getLastMaintenanceDate())
                 .energyConsumption(machine.getEnergyConsumption())
+                .departmentId(machine.getDepartment().getId())
                 .build();
     }
 

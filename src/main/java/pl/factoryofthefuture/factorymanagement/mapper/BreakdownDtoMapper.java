@@ -1,6 +1,7 @@
 package pl.factoryofthefuture.factorymanagement.mapper;
 
 import pl.factoryofthefuture.factorymanagement.entity.Breakdown;
+import pl.factoryofthefuture.factorymanagement.entity.Employee;
 import pl.factoryofthefuture.factorymanagement.entity.dto.BreakdownDto;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class BreakdownDtoMapper {
                 .cause(breakdown.getCause())
                 .usedParts(breakdown.getUsedParts())
                 .comments(breakdown.getComments())
+                .employeeIds(breakdown.getEmployeeSet().stream().map(Employee::getId).collect(Collectors.toSet()))
                 .build();
     }
 

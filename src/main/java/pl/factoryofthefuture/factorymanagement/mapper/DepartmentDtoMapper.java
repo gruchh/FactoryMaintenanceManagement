@@ -1,6 +1,7 @@
 package pl.factoryofthefuture.factorymanagement.mapper;
 
 import pl.factoryofthefuture.factorymanagement.entity.Department;
+import pl.factoryofthefuture.factorymanagement.entity.Machine;
 import pl.factoryofthefuture.factorymanagement.entity.dto.DepartmentDto;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class DepartmentDtoMapper {
                 .fullName(department.getFullName())
                 .shortCut(department.getShortCut())
                 .creationDate(department.getCreationDate())
+                .machineIds(department.getMachineSet().stream().map(Machine::getId).collect(Collectors.toSet()))
                 .build();
     }
 

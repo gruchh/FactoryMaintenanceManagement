@@ -23,7 +23,6 @@ public class Department {
     private String shortCut;
     @Column(name = "CREATION_DATE")
     private LocalDate creationDate;
-    @OneToMany
-    @JoinColumn(name = "machine_id")
+    @OneToMany(mappedBy = "department")
     private Set<Machine> machineSet;
 }

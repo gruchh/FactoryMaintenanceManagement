@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Getter
 @Builder
@@ -13,4 +14,5 @@ public class DepartmentDto {
     private String fullName;
     private String shortCut;
     private LocalDate creationDate;
+    private Set<Long> machineIds;
 }

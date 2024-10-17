@@ -6,6 +6,7 @@ import pl.factoryofthefuture.factorymanagement.enums.JobPositionType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Getter
 @Builder
@@ -23,4 +24,5 @@ public class EmployeeDto {
     private BigDecimal salary;
     private int performanceRating;
     private LocalDate assessmentDate;
+    private Set<Long> breakdownIds;
 }

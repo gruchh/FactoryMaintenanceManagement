@@ -36,7 +36,7 @@ public class Breakdown {
     @ManyToOne
     @JoinColumn(name = "machine_id")
     private Machine machine;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany()
     @JoinTable(
             name = "breakdown_employee",
             joinColumns = @JoinColumn(name = "breakdown_id"),

@@ -20,7 +20,7 @@ public class BreakdownService {
         return breakdownRepository.findAll();
     }
 
-    public List<Breakdown> findAllBreakdowns(int pageNumber) {
+    public List<Breakdown> getPaginatedBreakdowns(int pageNumber) {
         return breakdownRepository.findAllBreakdowns(PageRequest.of(pageNumber, PAGE_SIZE));
     }
 

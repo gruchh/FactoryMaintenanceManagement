@@ -41,7 +41,7 @@ public class Employee {
     private int performanceRating;
     @Column(name = "ASSESMENT_DATE")
     private LocalDate assesmentDate;
-    @ManyToMany(mappedBy = "employeeSet", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "employeeSet")
     private Set<Breakdown> breakdowns;
 
 }

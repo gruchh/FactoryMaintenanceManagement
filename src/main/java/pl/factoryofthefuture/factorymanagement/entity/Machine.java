@@ -26,10 +26,8 @@ public class Machine {
     private LocalDate lastMaintenanceDate;
     @Column(name = "ENERGY_CONSUMPTION")
     private double energyConsumption;
-
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
-
 }
 
