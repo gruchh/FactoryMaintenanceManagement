@@ -7,26 +7,29 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.factoryofthefuture.factorymanagement.entity.Employee;
+import pl.factoryofthefuture.factorymanagement.entity.dto.EmployeeDto;
 import pl.factoryofthefuture.factorymanagement.service.EmployeeService;
 
 import java.util.List;
+
+import static pl.factoryofthefuture.factorymanagement.mapper.EmployeeDtoMapper.mapToEmployeeDto;
+import static pl.factoryofthefuture.factorymanagement.mapper.EmployeeDtoMapper.mapToEmployeeDtos;
 
 @RestController()
 @RequestMapping("/employees")
 @RequiredArgsConstructor
 public class EmployeeController {
 
-    @Autowired
-    EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
     @GetMapping()
-    public List<Employee> getEmployees() {
-        return employeeService.getEmployees();
+    public List<EmployeeDto> getEmployees() {
+        return mapToEmployeeDtos(employeeService.getEmployees());
     }
 
     @GetMapping("/{id}")
-    public Employee getEmployee(@PathVariable Long id) {
-        return employeeService.getEmployee(id);
+    public EmployeeDto getEmployee(@PathVariable Long id) {
+        return mapToEmployeeDto(employeeService.getEmployee(id));
     }
 
 

@@ -13,17 +13,19 @@ import java.util.Set;
 @Getter
 @Setter
 public class Department {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @Column(name = "FULL_NAME")
     private String fullName;
+
     @Column(name = "SHORT_CUT")
     private String shortCut;
+
     @Column(name = "CREATION_DATE")
     private LocalDate creationDate;
-    @OneToMany
+
+    @OneToMany(mappedBy = "department")
     private Set<Machine> machineSet;
 }

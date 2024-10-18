@@ -8,8 +8,8 @@ import pl.factoryofthefuture.factorymanagement.repository.BudgetRepository;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@Service
 @RequiredArgsConstructor
+@Service
 public class BudgetService {
 
     private final BudgetRepository budgetRepository;

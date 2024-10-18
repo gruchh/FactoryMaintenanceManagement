@@ -19,6 +19,6 @@ public class BreakdownDto {
     private String cause;
     private String usedParts;
     private String comments;
-    private int machineId;
-    private Set<Integer> employeeIds;
+    private long machineId;
+    private Set<Long> employeeIds;
 }

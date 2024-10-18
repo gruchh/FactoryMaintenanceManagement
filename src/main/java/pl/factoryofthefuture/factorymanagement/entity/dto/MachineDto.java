@@ -15,5 +15,5 @@ public class MachineDto {
     private LocalDate productionDate;
     private LocalDate lastMaintenanceDate;
     private double energyConsumption;
-    private int departmentId;
+    private long departmentId;
 }

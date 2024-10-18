@@ -1,5 +1,6 @@
 package pl.factoryofthefuture.factorymanagement.mapper;
 
+import pl.factoryofthefuture.factorymanagement.entity.Breakdown;
 import pl.factoryofthefuture.factorymanagement.entity.Employee;
 import pl.factoryofthefuture.factorymanagement.entity.dto.EmployeeDto;
 
@@ -30,6 +31,7 @@ public class EmployeeDtoMapper {
                 .salary(employee.getSalary())
                 .performanceRating(employee.getPerformanceRating())
                 .assessmentDate(employee.getAssesmentDate())
+                .breakdownIds(employee.getBreakdowns().stream().map(Breakdown::getId).collect(Collectors.toSet()))
                 .build();
     }
 
