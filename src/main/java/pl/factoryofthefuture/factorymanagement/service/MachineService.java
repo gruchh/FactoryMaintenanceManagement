@@ -23,6 +23,4 @@ public class MachineService {
         return machineRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("No such element " + id));
     }
-
-
 }
