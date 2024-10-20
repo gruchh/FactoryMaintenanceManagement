@@ -5,13 +5,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import pl.factoryofthefuture.factorymanagement.entity.Breakdown;
-import pl.factoryofthefuture.factorymanagement.entity.Department;
 import pl.factoryofthefuture.factorymanagement.entity.Employee;
-import pl.factoryofthefuture.factorymanagement.entity.Machine;
-import pl.factoryofthefuture.factorymanagement.entity.dto.DepartmentDto;
 import pl.factoryofthefuture.factorymanagement.entity.dto.EmployeeDto;
 import pl.factoryofthefuture.factorymanagement.service.BreakdownService;
-import pl.factoryofthefuture.factorymanagement.service.MachineService;
 
 import java.util.List;
 import java.util.Set;

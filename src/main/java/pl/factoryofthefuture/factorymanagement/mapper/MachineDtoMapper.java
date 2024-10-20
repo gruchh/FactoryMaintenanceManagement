@@ -4,17 +4,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
-import pl.factoryofthefuture.factorymanagement.entity.Breakdown;
 import pl.factoryofthefuture.factorymanagement.entity.Department;
-import pl.factoryofthefuture.factorymanagement.entity.Employee;
 import pl.factoryofthefuture.factorymanagement.entity.Machine;
-import pl.factoryofthefuture.factorymanagement.entity.dto.EmployeeDto;
 import pl.factoryofthefuture.factorymanagement.entity.dto.MachineDto;
-import pl.factoryofthefuture.factorymanagement.service.BreakdownService;
 import pl.factoryofthefuture.factorymanagement.service.DepartmantService;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
