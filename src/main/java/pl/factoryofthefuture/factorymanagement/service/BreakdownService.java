@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import pl.factoryofthefuture.factorymanagement.entity.Breakdown;
 import pl.factoryofthefuture.factorymanagement.repository.BreakdownRepository;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
@@ -32,5 +34,9 @@ public class BreakdownService {
 
     public Breakdown saveBreakdown(Breakdown breakdown) {
         return breakdownRepository.save(breakdown);
+    }
+
+    public Set<Breakdown> findBreakdownsById(Set<Long> breakdownIds) {
+        return new HashSet<>(breakdownRepository.findAllById(breakdownIds));
     }
 }

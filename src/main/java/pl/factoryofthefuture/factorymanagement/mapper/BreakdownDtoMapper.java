@@ -1,6 +1,6 @@
 package pl.factoryofthefuture.factorymanagement.mapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
@@ -16,16 +16,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
+@AllArgsConstructor
 public class BreakdownDtoMapper implements ApplicationContextAware {
 
     private static MachineService machineService;
     private static EmployeeService employeeService;
-
-    @Autowired
-    public BreakdownDtoMapper(MachineService machineService, EmployeeService employeeService) {
-        this.machineService = machineService;
-        this.employeeService = employeeService;
-    }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {

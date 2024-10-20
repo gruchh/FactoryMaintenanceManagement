@@ -23,5 +23,7 @@ public class BudgetService {
                 .orElseThrow(() -> new NoSuchElementException("No such element " + id));
     }
 
-
+    public Budget saveBudget(Budget budget) {
+        return budgetRepository.save(budget);
+    }
 }

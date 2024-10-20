@@ -1,14 +1,32 @@
 package pl.factoryofthefuture.factorymanagement.mapper;
 
+import lombok.AllArgsConstructor;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 import pl.factoryofthefuture.factorymanagement.entity.Breakdown;
+import pl.factoryofthefuture.factorymanagement.entity.Department;
 import pl.factoryofthefuture.factorymanagement.entity.Employee;
+import pl.factoryofthefuture.factorymanagement.entity.Machine;
+import pl.factoryofthefuture.factorymanagement.entity.dto.DepartmentDto;
 import pl.factoryofthefuture.factorymanagement.entity.dto.EmployeeDto;
+import pl.factoryofthefuture.factorymanagement.service.BreakdownService;
+import pl.factoryofthefuture.factorymanagement.service.MachineService;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+@Component
+@AllArgsConstructor
+public class EmployeeDtoMapper implements ApplicationContextAware {
 
-public class EmployeeDtoMapper {
+    private static BreakdownService breakdownService;
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        breakdownService = applicationContext.getBean(BreakdownService.class);
+    }
 
     public static List<EmployeeDto> mapToEmployeeDtos(List<Employee> employees) {
 
@@ -35,4 +53,21 @@ public class EmployeeDtoMapper {
                 .build();
     }
 
+    public static Employee mapDtoToEmployee(EmployeeDto employeeDto) {
+        Set<Breakdown> breakdownSet = breakdownService.findBreakdownsById(employeeDto.getBreakdownIds());
+        return Employee.builder()
+                .name(employeeDto.getName())
+                .surname(employeeDto.getSurname())
+                .jobPosition(employeeDto.getJobPosition())
+                .dateOfBirth(employeeDto.getDateOfBirth())
+                .hireDate(employeeDto.getHireDate())
+                .shift(employeeDto.getShift())
+                .contactNumber(employeeDto.getContactNumber())
+                .email(employeeDto.getEmail())
+                .salary(employeeDto.getSalary())
+                .performanceRating(employeeDto.getPerformanceRating())
+                .assesmentDate(employeeDto.getAssessmentDate())
+                .breakdowns(breakdownSet)
+                .build();
+    }
 }

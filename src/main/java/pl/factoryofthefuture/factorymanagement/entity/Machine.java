@@ -1,16 +1,16 @@
 package pl.factoryofthefuture.factorymanagement.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity (name="MACHINES")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Machine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

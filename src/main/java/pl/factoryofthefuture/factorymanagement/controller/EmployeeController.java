@@ -1,19 +1,16 @@
 package pl.factoryofthefuture.factorymanagement.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import pl.factoryofthefuture.factorymanagement.entity.Employee;
 import pl.factoryofthefuture.factorymanagement.entity.dto.EmployeeDto;
 import pl.factoryofthefuture.factorymanagement.service.EmployeeService;
 
 import java.util.List;
 
-import static pl.factoryofthefuture.factorymanagement.mapper.EmployeeDtoMapper.mapToEmployeeDto;
-import static pl.factoryofthefuture.factorymanagement.mapper.EmployeeDtoMapper.mapToEmployeeDtos;
+import static pl.factoryofthefuture.factorymanagement.mapper.EmployeeDtoMapper.*;
 
 @RestController()
 @RequestMapping("/employees")
@@ -32,5 +29,9 @@ public class EmployeeController {
         return mapToEmployeeDto(employeeService.getEmployee(id));
     }
 
-
+    @PostMapping()
+    public ResponseEntity<EmployeeDto> saveEmployee(@RequestBody EmployeeDto employeeDto) {
+        Employee savedEmployee = employeeService.saveEmployee(mapDtoToEmployee(employeeDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapToEmployeeDto(savedEmployee));
+    }
 }

@@ -1,7 +1,6 @@
 package pl.factoryofthefuture.factorymanagement.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.factoryofthefuture.factorymanagement.entity.Department;
 import pl.factoryofthefuture.factorymanagement.repository.DepartmentRepository;
@@ -24,5 +23,7 @@ public class DepartmantService {
                 .orElseThrow(() -> new NoSuchElementException("No such element " + id));
     }
 
-
+    public Department saveDepartment(Department department) {
+        return departmentRepository.save(department);
+    }
 }

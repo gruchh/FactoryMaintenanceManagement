@@ -9,7 +9,6 @@ import java.util.Set;
 @Getter
 @Builder
 public class DepartmentDto {
-
     private long id;
     private String fullName;
     private String shortCut;

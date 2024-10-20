@@ -1,19 +1,16 @@
 package pl.factoryofthefuture.factorymanagement.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import pl.factoryofthefuture.factorymanagement.entity.Department;
 import pl.factoryofthefuture.factorymanagement.entity.dto.DepartmentDto;
 import pl.factoryofthefuture.factorymanagement.service.DepartmantService;
 
 import java.util.List;
 
-import static pl.factoryofthefuture.factorymanagement.mapper.DepartmentDtoMapper.mapToDepartmentDto;
-import static pl.factoryofthefuture.factorymanagement.mapper.DepartmentDtoMapper.mapToDepartmentDtos;
+import static pl.factoryofthefuture.factorymanagement.mapper.DepartmentDtoMapper.*;
 
 @RestController()
 @RequestMapping("/departments")
@@ -32,5 +29,9 @@ public class DepartmentController {
         return mapToDepartmentDto(departmantService.getDepartment(id));
     }
 
-
+    @PostMapping()
+    public ResponseEntity<DepartmentDto> saveDepartment(@RequestBody DepartmentDto departmentDto) {
+        Department savedDepartment = departmantService.saveDepartment(mapDtoToDepartment(departmentDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapToDepartmentDto(savedDepartment));
+    }
 }
