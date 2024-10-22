@@ -25,7 +25,7 @@ public class BudgetController {
     }
 
     @GetMapping("/{id}")
-    public BudgetDto getBudget(@PathVariable Long id) {
+    public BudgetDto getBudget(@PathVariable long id) {
         return mapToBudgetDto(budgetService.getBudget(id));
     }
 

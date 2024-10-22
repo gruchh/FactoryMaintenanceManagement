@@ -25,7 +25,7 @@ public class MachineController {
     }
 
     @GetMapping("/{id}")
-    public MachineDto getMachine(@PathVariable Long id) {
+    public MachineDto getMachine(@PathVariable long id) {
         return mapToMachineDto(machineService.getMachine(id));
     }
 

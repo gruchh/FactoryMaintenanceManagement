@@ -40,7 +40,7 @@ public class Breakdown {
     @Column(name = "COMMENTS")
     private String comments;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "machine_id")
     private Machine machine;
 
