@@ -44,7 +44,8 @@ public class BreakdownService {
 
     @Transactional
     public Breakdown updateBreakdown(Breakdown breakdown) {
-        Breakdown updatedBreakdown = breakdownRepository.findById(breakdown.getId()).orElseThrow(() -> new NoSuchElementException("Breakdown not found"));
+        Breakdown updatedBreakdown = breakdownRepository.findById(breakdown.getId())
+                .orElseThrow(() -> new NoSuchElementException("Breakdown not found with id: " + breakdown.getId()));
         updatedBreakdown.setEventDescription(breakdown.getEventDescription());
         updatedBreakdown.setStartDate(breakdown.getStartDate());
         updatedBreakdown.setEndDate(breakdown.getEndDate());
@@ -54,6 +55,7 @@ public class BreakdownService {
         updatedBreakdown.setComments(breakdown.getComments());
         updatedBreakdown.setMachine(breakdown.getMachine());
         updatedBreakdown.setEmployeeSet(breakdown.getEmployeeSet());
+
         return breakdownRepository.save(updatedBreakdown);
     }
 
