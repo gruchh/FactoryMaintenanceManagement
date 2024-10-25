@@ -34,4 +34,15 @@ public class BudgetController {
         Budget savedBudget = budgetService.saveBudget(mapDtoToBudget(budgetDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(mapToBudgetDto(savedBudget));
     }
+
+    @PutMapping()
+    public ResponseEntity<BudgetDto> updateBudget(@RequestBody BudgetDto budgetDto) {
+        Budget editedBudget = budgetService.updateBudget(mapDtoToBudget(budgetDto));
+        return ResponseEntity.status(HttpStatus.OK).body(mapToBudgetDto(editedBudget));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteBudget(@PathVariable long id) {
+        budgetService.deleteById(id);
+    }
 }

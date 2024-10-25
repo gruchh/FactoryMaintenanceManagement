@@ -2,6 +2,7 @@ package pl.factoryofthefuture.factorymanagement.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.factoryofthefuture.factorymanagement.entity.Department;
 import pl.factoryofthefuture.factorymanagement.entity.Employee;
 import pl.factoryofthefuture.factorymanagement.repository.EmployeeRepository;
 
@@ -27,4 +28,15 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
+    public Employee updateEmployee(Employee employee) {
+        Employee updatedEmployee = employeeRepository.findById(employee.getId())
+                .orElseThrow(() -> new NoSuchElementException("Employee not found with id: " + employee.getId()));
+        updatedEmployee.setId(updatedEmployee.getId());
+
+        return employeeRepository.save(updatedEmployee);
+    }
+
+    public void deleteById(long id) {
+        employeeRepository.deleteById(id);
+    }
 }
