@@ -38,12 +38,26 @@
             <properties>
                 <spring.profiles.active>dev</spring.profiles.active>
             </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
         </profile>
         <profile>
             <id>prod</id>
             <properties>
                 <spring.profiles.active>prod</spring.profiles.active>
             </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                    <version>42.7.4</version>
+                </dependency>
+            </dependencies>
         </profile>
     </profiles>
     <dependencies>
@@ -54,12 +68,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -82,14 +90,13 @@
             <version>5.14.2</version>
             <scope>test</scope>
         </dependency>
-
-        <!-- Mockito JUnit Jupiter (Test scope) -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
             <version>5.14.2</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
     <build>
         <plugins>
