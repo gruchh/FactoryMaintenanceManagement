@@ -34,7 +34,7 @@ public class BreakdownController {
     }
 
     @GetMapping("/{id}")
-    public BreakdownDto getBreakdownDto(@PathVariable Long id) {
+    public BreakdownDto getBreakdownDto(@PathVariable long id) {
         return mapToBreakdownDto(breakdownService.getBreakdown(id));
     }
 
@@ -43,4 +43,16 @@ public class BreakdownController {
         Breakdown savedBreakdown = breakdownService.saveBreakdown(mapDtoToBreakdown(breakdownDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(mapToBreakdownDto(savedBreakdown));
     }
+
+    @PutMapping()
+    public ResponseEntity<BreakdownDto> updateBreakdown(@RequestBody BreakdownDto breakdownDto) {
+        Breakdown editedBreakdown = breakdownService.updateBreakdown(mapDtoToBreakdown(breakdownDto));
+        return ResponseEntity.status(HttpStatus.OK).body(mapToBreakdownDto(editedBreakdown));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteBreakdown(@PathVariable long id) {
+        breakdownService.deleteById(id);
+    }
+
 }

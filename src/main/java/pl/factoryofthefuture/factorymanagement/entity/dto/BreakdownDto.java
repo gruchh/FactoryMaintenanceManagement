@@ -10,7 +10,6 @@ import java.util.Set;
 @Getter
 @Builder
 public class BreakdownDto {
-
     private long id;
     private String eventDescription;
     private LocalDate startDate;

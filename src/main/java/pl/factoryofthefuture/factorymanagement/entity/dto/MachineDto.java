@@ -8,7 +8,6 @@ import java.time.LocalDate;
 @Getter
 @Builder
 public class MachineDto {
-
     private long id;
     private String name;
     private String manufacturer;

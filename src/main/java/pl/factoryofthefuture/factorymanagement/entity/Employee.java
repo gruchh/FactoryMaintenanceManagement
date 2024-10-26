@@ -1,9 +1,7 @@
 package pl.factoryofthefuture.factorymanagement.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import pl.factoryofthefuture.factorymanagement.enums.JobPositionType;
 
 import java.math.BigDecimal;
@@ -12,8 +10,10 @@ import java.util.Set;
 
 @Entity (name= "EMPLOYEES")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

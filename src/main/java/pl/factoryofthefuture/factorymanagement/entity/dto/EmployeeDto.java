@@ -11,7 +11,6 @@ import java.util.Set;
 @Getter
 @Builder
 public class EmployeeDto {
-
     private long id;
     private String name;
     private String surname;

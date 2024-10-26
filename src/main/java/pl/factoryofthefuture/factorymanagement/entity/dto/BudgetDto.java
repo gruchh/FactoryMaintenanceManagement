@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 @Getter
 @Builder
 public class BudgetDto {
-
     private long id;
     private int month;
     private int year;
