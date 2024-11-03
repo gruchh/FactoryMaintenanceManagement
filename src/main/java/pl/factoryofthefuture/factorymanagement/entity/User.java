@@ -2,9 +2,10 @@ package pl.factoryofthefuture.factorymanagement.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.util.Set;
 
-@Entity(name="USERS")
+@Entity(name = "USERS")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -15,8 +16,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false, unique = true)
     private String username;
+    @Column(nullable = false, unique = true)
     private String password;
+    @Column(nullable = false, unique = true)
     private String email;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

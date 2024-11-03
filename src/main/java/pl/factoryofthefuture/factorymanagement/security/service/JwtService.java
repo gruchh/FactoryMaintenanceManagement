@@ -1,4 +1,4 @@
-package pl.factoryofthefuture.factorymanagement.config.security;
+package pl.factoryofthefuture.factorymanagement.security.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -51,7 +51,6 @@ public class JwtService {
     }
 
     public String extractUsername(String token) {
-        // extract the username from jwt token
         return extractClaim(token, Claims::getSubject);
     }
 

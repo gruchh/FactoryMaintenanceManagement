@@ -1,4 +1,4 @@
-package pl.factoryofthefuture.factorymanagement.config.security;
+package pl.factoryofthefuture.factorymanagement.security.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import pl.factoryofthefuture.factorymanagement.security.service.JwtService;
+import pl.factoryofthefuture.factorymanagement.security.service.MyUserDetailsService;
 
 import java.io.IOException;
 
@@ -24,7 +26,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-//  Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJraWxsIiwiaWF0IjoxNzIzMTgzNzExLCJleHAiOjE3MjMxODM4MTl9.5nf7dRzKRiuGurN2B9dHh_M5xiu73ZzWPr6rbhOTTHs
+
         String authHeader = request.getHeader("Authorization");
         String token = null;
         String username = null;
@@ -43,7 +45,6 @@ public class JwtFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
-
         filterChain.doFilter(request, response);
     }
 }

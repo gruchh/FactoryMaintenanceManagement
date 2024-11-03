@@ -4,16 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.factoryofthefuture.factorymanagement.entity.Department;
 import pl.factoryofthefuture.factorymanagement.entity.Employee;
-import pl.factoryofthefuture.factorymanagement.entity.dto.DepartmentDto;
 import pl.factoryofthefuture.factorymanagement.entity.dto.EmployeeDto;
 import pl.factoryofthefuture.factorymanagement.service.EmployeeService;
 
 import java.util.List;
 
-import static pl.factoryofthefuture.factorymanagement.mapper.DepartmentDtoMapper.mapDtoToDepartment;
-import static pl.factoryofthefuture.factorymanagement.mapper.DepartmentDtoMapper.mapToDepartmentDto;
 import static pl.factoryofthefuture.factorymanagement.mapper.EmployeeDtoMapper.*;
 
 @RestController()

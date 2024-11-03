@@ -2,7 +2,6 @@ package pl.factoryofthefuture.factorymanagement.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.factoryofthefuture.factorymanagement.entity.Budget;
 import pl.factoryofthefuture.factorymanagement.entity.Department;
 import pl.factoryofthefuture.factorymanagement.repository.DepartmentRepository;
 

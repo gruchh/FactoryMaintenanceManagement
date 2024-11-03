@@ -1,25 +1,18 @@
-package pl.factoryofthefuture.factorymanagement.config.security;
+package pl.factoryofthefuture.factorymanagement.security.model;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 import pl.factoryofthefuture.factorymanagement.entity.User;
 
 import java.util.Collection;
 import java.util.Collections;
 
 @RequiredArgsConstructor
-@Component
 public class UserPrincipal implements UserDetails {
 
-    //zmienić na konstruktor z lombokiem
-    private User user;
-
-    public UserPrincipal(User user) {
-        this.user = user;
-    }
+    private final User user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -7,7 +7,7 @@ import pl.factoryofthefuture.factorymanagement.enums.SeverityType;
 import java.time.LocalDate;
 import java.util.Set;
 
-@Entity (name="BREAKDOWNS")
+@Entity(name = "BREAKDOWNS")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

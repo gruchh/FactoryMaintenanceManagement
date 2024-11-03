@@ -1,4 +1,4 @@
-package pl.factoryofthefuture.factorymanagement.config.security;
+package pl.factoryofthefuture.factorymanagement.security.model;
 
 import lombok.Builder;
 import lombok.Getter;
