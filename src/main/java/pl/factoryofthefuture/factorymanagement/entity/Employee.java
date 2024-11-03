@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Set;
 
-@Entity (name= "EMPLOYEES")
+@Entity(name = "EMPLOYEES")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

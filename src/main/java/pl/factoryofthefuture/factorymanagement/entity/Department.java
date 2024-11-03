@@ -6,7 +6,7 @@ import lombok.*;
 import java.time.LocalDate;
 import java.util.Set;
 
-@Entity (name="DEPARTMENTS")
+@Entity(name = "DEPARTMENTS")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

@@ -2,7 +2,6 @@ package pl.factoryofthefuture.factorymanagement.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.factoryofthefuture.factorymanagement.entity.Department;
 import pl.factoryofthefuture.factorymanagement.entity.Machine;
 import pl.factoryofthefuture.factorymanagement.repository.MachineRepository;
 
@@ -34,7 +33,7 @@ public class MachineService {
         return machineRepository.save(machine);
     }
 
-    public Machine updateMachine (Machine machine) {
+    public Machine updateMachine(Machine machine) {
         Machine updatedMachine = machineRepository.findById(machine.getId())
                 .orElseThrow(() -> new NoSuchElementException("Machine not found with id: " + machine.getId()));
         updatedMachine.setId(updatedMachine.getId());
