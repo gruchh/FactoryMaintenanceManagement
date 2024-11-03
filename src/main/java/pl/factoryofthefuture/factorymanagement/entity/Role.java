@@ -13,7 +13,6 @@ import lombok.*;
 @Setter
 @Builder
 public class Role {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

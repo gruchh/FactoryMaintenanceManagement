@@ -43,7 +43,6 @@ public class JwtService {
                 .and()
                 .signWith(getKey())
                 .compact();
-
     }
 
     private SecretKey getKey() {

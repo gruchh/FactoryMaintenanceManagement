@@ -56,3 +56,7 @@ INSERT INTO BREAKDOWN_EMPLOYEE (breakdown_id, employee_id) VALUES
 															(6, 1),
 															(7, 2),
 															(7, 4);
+
+INSERT INTO ROLES (ID, NAME) VALUES (1,'USER'), (2, 'ADMIN');
+INSERT INTO USERS (ID, EMAIL, PASSWORD, USERNAME) VALUES (1, 'admin@admin.pl', '$2a$10$BTOuwspZHJWHhz4PabaOFe3ejBFraRUkWWGJn3MJPizhOG7ZRNsMG', 'admin');
+INSERT INTO USERS_ROLES VALUES (1,1);
