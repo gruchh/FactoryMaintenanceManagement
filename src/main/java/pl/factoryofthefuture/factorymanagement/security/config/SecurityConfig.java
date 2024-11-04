@@ -32,10 +32,9 @@ public class SecurityConfig {
 
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((authorize) -> {
-                    authorize.requestMatchers("/h2-console/**").permitAll();
-                    authorize.requestMatchers("/register").permitAll();
-                    authorize.requestMatchers("/login").permitAll();
-                    authorize.requestMatchers("/machines/{id}").authenticated();
+                    authorize.requestMatchers("/h2-console/**", "/register", "/login").permitAll();
+                    authorize.requestMatchers("/machines/**", "/breakdowns/**", "/departments/**").hasRole("USER");
+                    authorize.requestMatchers("/employees/**", "/budget/**").hasRole("ADMIN");
                     authorize.anyRequest().authenticated();
                 }).httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
