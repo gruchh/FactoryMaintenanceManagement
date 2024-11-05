@@ -40,23 +40,23 @@ INSERT INTO BUDGET (BUDGET_MONTH, BUDGET_YEAR, BUDGET_AMOUNT_PLN) VALUES
                                                                       (12, 2024, 2100340.50);
 																	  
 INSERT INTO BREAKDOWN_EMPLOYEE (breakdown_id, employee_id) VALUES
-															(1, 1),
-															(1, 3),
-															(2, 1),
-															(2, 2),
-															(2, 4),
-															(3, 2),
-															(3, 3),
-															(4, 1),
-															(4, 2),
-															(4, 3),
-															(4, 4),
-															(5, 3),
-															(5, 4),
-															(6, 1),
-															(7, 2),
-															(7, 4);
+															(1, 1);
+-- 															(1, 3),
+-- 															(2, 1),
+-- 															(2, 2),
+-- 															(2, 4),
+-- 															(3, 2),
+-- 															(3, 3),
+-- 															(4, 1),
+-- 															(4, 2),
+-- 															(4, 3),
+-- 															(4, 4),
+-- 															(5, 3),
+-- 															(5, 4),
+-- 															(6, 1),
+-- 															(7, 2),
+-- 															(7, 4);
 
-INSERT INTO ROLES (ID, NAME) VALUES (1,'USER'), (2, 'ADMIN');
-INSERT INTO USERS (ID, EMAIL, PASSWORD, USERNAME) VALUES (1, 'admin@admin.pl', '$2a$10$BTOuwspZHJWHhz4PabaOFe3ejBFraRUkWWGJn3MJPizhOG7ZRNsMG', 'admin');
-INSERT INTO USERS_ROLES VALUES (1,1);
+-- INSERT INTO ROLES (ID, NAME) VALUES (1,'USER'), (2, 'ADMIN');
+-- INSERT INTO USERS (ID, EMAIL, PASSWORD, USERNAME) VALUES (1, 'admin@admin.pl', '$2a$10$BTOuwspZHJWHhz4PabaOFe3ejBFraRUkWWGJn3MJPizhOG7ZRNsMG', 'admin');
+-- INSERT INTO USERS_ROLES VALUES (1,1);

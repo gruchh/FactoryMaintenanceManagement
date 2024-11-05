@@ -8,8 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import pl.factoryofthefuture.factorymanagement.security.filter.JwtFilter;
 import pl.factoryofthefuture.factorymanagement.service.BreakdownService;
+import pl.factoryofthefuture.factorymanagement.service.BudgetService;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -17,29 +17,28 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
-@RequiredArgsConstructor
-public class BreakdownControllerTest {
+public class BudgetControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
     @Autowired
-    private BreakdownService breakdownService;
+    private BudgetService budgetService;
 
     @Test
     @WithAnonymousUser
-    public void givenUnauthenticatedUser_whenGetEmployees_thenReturnUnauthorized() throws Exception {
-        mockMvc.perform(get("/breakdowns")).andExpect(status().isUnauthorized());
+    public void givenUnauthenticatedUser_whenGetBreakdowns_thenReturnUnauthorized() throws Exception {
+        mockMvc.perform(get("/budget")).andExpect(status().isUnauthorized());
     }
 
     @Test
     @WithMockUser(roles = "USER")
-    public void givenUser_whenGetEmployees_thenReturnOk() throws Exception {
-        mockMvc.perform(get("/breakdowns")).andExpect(status().isOk());
+    public void givenUserRole_whenGetEmployees_thenReturnForbidden() throws Exception {
+        mockMvc.perform(get("/budget")).andExpect(status().isForbidden());
     }
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    public void givenAdmin_whenGetBreakdowns_thenReturnForbidden() throws Exception {
-        mockMvc.perform(get("/breakdowns")).andExpect(status().isForbidden());
+    public void givenAdminRole_whenGetBreakdowns_thenReturnOk() throws Exception {
+        mockMvc.perform(get("/budget")).andExpect(status().isOk());
     }
 }

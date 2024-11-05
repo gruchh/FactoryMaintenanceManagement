@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -21,6 +22,7 @@ import pl.factoryofthefuture.factorymanagement.security.filter.JwtFilter;
 
 @RequiredArgsConstructor
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @EnableWebSecurity
 public class SecurityConfig {
 
@@ -32,9 +34,9 @@ public class SecurityConfig {
 
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((authorize) -> {
-                    authorize.requestMatchers("/h2-console/**", "/register", "/login").permitAll();
-                    authorize.requestMatchers("/machines/**", "/breakdowns/**", "/departments/**").hasRole("USER");
-                    authorize.requestMatchers("/employees/**", "/budget/**").hasRole("ADMIN");
+                    authorize.requestMatchers("/h2-console/**", "/register", "/login", "/me").permitAll();
+                    authorize.requestMatchers("/machines", "/breakdowns", "/departments").hasRole("USER");
+                    authorize.requestMatchers("/employees", "/budget").hasRole("ADMIN");
                     authorize.anyRequest().authenticated();
                 }).httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

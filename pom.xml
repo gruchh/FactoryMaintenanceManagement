@@ -5,7 +5,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.3.4</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>pl.factoryofthefuture</groupId>
     <artifactId>FactoryManagement</artifactId>
@@ -21,14 +21,12 @@
     </licenses>
     <developers>
         <developer>
-            <id>developerId</id>
-            <name>Developer Name</name>
-            <email>developer@example.com</email>
+            <name>gruchh</name>
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:https://github.com/your-repo/FactoryManagement.git</connection>
-        <developerConnection>scm:git:ssh://github.com:your-repo/FactoryManagement.git</developerConnection>
+        <connection>scm:git:https://github.com/gruchh/FactoryManagement.git</connection>
+        <developerConnection>scm:git:ssh://github.com:gruchh/FactoryManagement.git</developerConnection>
         <url>https://github.com/your-repo/FactoryManagement</url>
     </scm>
     <properties>
@@ -58,16 +56,17 @@
                 <spring.profiles.active>prod</spring.profiles.active>
             </properties>
             <dependencies>
-                <dependency>
-                    <groupId>org.postgresql</groupId>
-                    <artifactId>postgresql</artifactId>
-                    <version>42.7.4</version>
-                </dependency>
+
             </dependencies>
         </profile>
     </profiles>
 
     <dependencies>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.4</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -112,7 +111,7 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <version>6.3.4</version>
-<!--            <scope>test</scope>-->
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

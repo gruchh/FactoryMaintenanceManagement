@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import pl.factoryofthefuture.factorymanagement.entity.User;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class UserPrincipal implements UserDetails {
@@ -16,7 +16,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("USER"));
+        return user.getRoles().stream().map(role -> new SimpleGrantedAuthority(String.format("ROLE_%s", role.getName()))).collect(Collectors.toList());
     }
 
     @Override

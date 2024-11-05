@@ -6,23 +6,21 @@ This project was created for learning Java, specifically the Spring framework. T
 
 ## Features
 
-- **Machine Management**
-- **Breakdown Management**
-- **Employee Management**
+- **Machine Management:** Add, edit, remove, and view detailed information about factory machines.
+- **Breakdown Management:** Log new breakdowns, assign maintenance staff, and track repair progress.
+- **Employee Management:** Manage employee details, including departments and roles.
+- **Budget Management :** Track maintenance costs and allocate budgets for different departments or machine types.
+- **User Management:** New user registration, login, user role and permission management.
 
 ## Technologies
 
-- **Java**
-- **Spring Framework**
-- **Spring Boot**
-- **Hibernate**
-- **PostgreSQL**
-
-## Prerequisites
-The following tools are required to start the application:
-- [IntelliJ IDEA](https://www.jetbrains.com/idea/)
-- [Java 17 LTS](https://openjdk.org/projects/jdk/17/)
-- [Postman](https://www.postman.com/)
+- **Java 17 LTS:** Core programming language.
+- **Spring Framework:** Provides the foundation for the application.
+- **Spring Boot:** Simplifies application configuration and deployment.
+- **Hibernate:** ORM for mapping objects to the database.
+- **PostgreSQL:** Relational database for storing application data.
+- **H2 Database:** Test database
+- **Spring Security:** Ensures application security through user authentication and authorization.
 
 ## Usage
 

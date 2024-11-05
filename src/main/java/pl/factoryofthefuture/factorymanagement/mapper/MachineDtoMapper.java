@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import pl.factoryofthefuture.factorymanagement.entity.Department;
 import pl.factoryofthefuture.factorymanagement.entity.Machine;
 import pl.factoryofthefuture.factorymanagement.entity.dto.MachineDto;
-import pl.factoryofthefuture.factorymanagement.service.DepartmantService;
+import pl.factoryofthefuture.factorymanagement.service.DepartmentService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,11 +16,11 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class MachineDtoMapper implements ApplicationContextAware {
 
-    private static DepartmantService departmantService;
+    private static DepartmentService departmantService;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
-        departmantService = applicationContext.getBean(DepartmantService.class);
+        departmantService = applicationContext.getBean(DepartmentService.class);
     }
 
 
