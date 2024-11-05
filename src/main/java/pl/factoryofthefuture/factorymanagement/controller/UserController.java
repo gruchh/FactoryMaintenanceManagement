@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +16,6 @@ import pl.factoryofthefuture.factorymanagement.entity.dto.UserRegisterDto;
 import pl.factoryofthefuture.factorymanagement.entity.dto.UserRegistrationDto;
 import pl.factoryofthefuture.factorymanagement.security.model.JwtAuthResponse;
 import pl.factoryofthefuture.factorymanagement.service.UserService;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Set;
 import java.util.stream.Collectors;

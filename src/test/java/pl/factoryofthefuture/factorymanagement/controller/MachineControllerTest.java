@@ -7,36 +7,35 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import pl.factoryofthefuture.factorymanagement.service.BudgetService;
+import pl.factoryofthefuture.factorymanagement.service.MachineService;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
-public class BudgetControllerTest {
+public class MachineControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
     @Autowired
-    private BudgetService budgetService;
+    private MachineService MachineService;
 
     @Test
     @WithAnonymousUser
-    public void givenUnauthenticatedUser_whenGetBudget_thenReturnUnauthorized() throws Exception {
-        mockMvc.perform(get("/budget")).andExpect(status().isUnauthorized());
+    public void givenUnauthenticatedUser_whenGetMachine_thenReturnUnauthorized() throws Exception {
+        mockMvc.perform(get("/Machines")).andExpect(status().isUnauthorized());
     }
 
     @Test
     @WithMockUser(roles = "USER")
-    public void givenUserRole_whenGetBudget_thenReturnForbidden() throws Exception {
-        mockMvc.perform(get("/budget")).andExpect(status().isForbidden());
+    public void givenUser_whenGetMachine_thenReturnOk() throws Exception {
+        mockMvc.perform(get("/Machines")).andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    public void givenAdminRole_whenGetBudget_thenReturnOk() throws Exception {
-        mockMvc.perform(get("/budget")).andExpect(status().isOk());
+    public void givenAdmin_whenGetMachine_thenReturnForbidden() throws Exception {
+        mockMvc.perform(get("/Machines")).andExpect(status().isForbidden());
     }
 }

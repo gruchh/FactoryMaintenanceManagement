@@ -2,7 +2,8 @@
 
 ## Project Description
 
-This project was created for learning Java, specifically the Spring framework. The application aims to manage machines, breakdowns, and maintenance staff in a factory.
+This project was created for learning Java, specifically the Spring framework. The application aims to manage machines,
+breakdowns, and maintenance staff in a factory.
 
 ## Features
 
@@ -24,7 +25,8 @@ This project was created for learning Java, specifically the Spring framework. T
 
 ## Usage
 
-Once the application is running, it will be available at `http://localhost:8080`. You can use the web interface to manage machines, breakdowns, and employees.
+Once the application is running, it will be available at `http://localhost:8080`. You can use the web interface to
+manage machines, breakdowns, and employees.
 
 ## Author
 

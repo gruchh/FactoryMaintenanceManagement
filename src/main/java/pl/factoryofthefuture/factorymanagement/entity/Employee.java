@@ -15,6 +15,8 @@ import java.util.Set;
 @Setter
 @Builder
 public class Employee {
+    @Enumerated(EnumType.STRING)
+    JobPositionType jobPosition;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -24,9 +26,6 @@ public class Employee {
 
     @Column(name = "SURNAME")
     private String surname;
-
-    @Enumerated(EnumType.STRING)
-    JobPositionType jobPosition;
 
     @Column(name = "DATE_OF_BIRTH")
     private LocalDate dateOfBirth;

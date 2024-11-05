@@ -17,11 +17,6 @@ public class UserDtoMapper implements ApplicationContextAware {
 
     private static UserService userService;
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        userService = applicationContext.getBean(UserService.class);
-    }
-
     public static User mapUserRegisterDtoToUser(UserRegisterDto userRegisterDto) {
         return User.builder()
                 .username(userRegisterDto.getUsername())
@@ -46,5 +41,10 @@ public class UserDtoMapper implements ApplicationContextAware {
 
     public static JwtAuthResponse mapUserLoginDtoToJwtAuthResponse(String token) {
         return JwtAuthResponse.builder().accessToken(token).tokenType("Bearer").build();
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        userService = applicationContext.getBean(UserService.class);
     }
 }

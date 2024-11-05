@@ -18,12 +18,6 @@ public class MachineDtoMapper implements ApplicationContextAware {
 
     private static DepartmentService departmantService;
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        departmantService = applicationContext.getBean(DepartmentService.class);
-    }
-
-
     public static List<MachineDto> mapToMachineDtos(List<Machine> machines) {
         return machines.stream()
                 .map(MachineDtoMapper::mapToMachineDto)
@@ -52,6 +46,11 @@ public class MachineDtoMapper implements ApplicationContextAware {
                 .energyConsumption(machineDto.getEnergyConsumption())
                 .department(department)
                 .build();
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        departmantService = applicationContext.getBean(DepartmentService.class);
     }
 
 }
