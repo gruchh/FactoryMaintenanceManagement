@@ -22,7 +22,6 @@ public class BreakdownController {
     private final BreakdownService breakdownService;
 
     @GetMapping
-    @PreAuthorize("hasRole('USER')")
     public List<BreakdownDto> getBreakdowns() {
         return mapToBreakdownDtos(breakdownService.getBreakdowns());
     }

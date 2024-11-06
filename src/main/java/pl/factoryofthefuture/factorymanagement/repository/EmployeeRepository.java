@@ -7,11 +7,14 @@ import org.springframework.stereotype.Repository;
 import pl.factoryofthefuture.factorymanagement.entity.Employee;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
-    List<Employee> findAllByIdIn(List<Long> ids);
 
     @EntityGraph(attributePaths = {"breakdownsSet"})
     List<Employee> findAll();
+
+    @EntityGraph(attributePaths = {"breakdownsSet"})
+    Optional<Employee> findById(Long id);
 }

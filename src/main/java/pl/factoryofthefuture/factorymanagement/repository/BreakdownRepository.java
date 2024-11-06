@@ -9,13 +9,17 @@ import org.springframework.stereotype.Repository;
 import pl.factoryofthefuture.factorymanagement.entity.Breakdown;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BreakdownRepository extends JpaRepository<Breakdown, Long> {
 
-    @Query("SELECT b from BREAKDOWNS b")
+    @Query("SELECT b from BREAKDOWNS b LEFT JOIN FETCH b.employeeSet")
     List<Breakdown> findAllBreakdowns(Pageable page);
 
     @EntityGraph(attributePaths = {"machine", "employeeSet"})
     List<Breakdown> findAll();
+
+    @EntityGraph(attributePaths = {"machine", "employeeSet"})
+    Optional<Breakdown> findById(Long id);
 }
