@@ -31,8 +31,7 @@ public class Machine {
     @Column(name = "ENERGY_CONSUMPTION")
     private double energyConsumption;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private Department department;
 }
-

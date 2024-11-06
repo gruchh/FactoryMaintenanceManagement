@@ -26,6 +26,6 @@ public class Department {
     @Column(name = "CREATION_DATE")
     private LocalDate creationDate;
 
-    @OneToMany(mappedBy = "department")
+    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
     private Set<Machine> machineSet;
 }

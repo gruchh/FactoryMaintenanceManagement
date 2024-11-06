@@ -40,7 +40,7 @@ public class EmployeeDtoMapper implements ApplicationContextAware {
                 .salary(employee.getSalary())
                 .performanceRating(employee.getPerformanceRating())
                 .assessmentDate(employee.getAssesmentDate())
-                .breakdownIds(employee.getBreakdowns().stream().map(Breakdown::getId).collect(Collectors.toSet()))
+                .breakdownIds(employee.getBreakdownsSet().stream().map(Breakdown::getId).collect(Collectors.toSet()))
                 .build();
     }
 
@@ -58,7 +58,7 @@ public class EmployeeDtoMapper implements ApplicationContextAware {
                 .salary(employeeDto.getSalary())
                 .performanceRating(employeeDto.getPerformanceRating())
                 .assesmentDate(employeeDto.getAssessmentDate())
-                .breakdowns(breakdownSet)
+                .breakdownsSet(breakdownSet)
                 .build();
     }
 

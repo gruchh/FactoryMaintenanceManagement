@@ -52,5 +52,5 @@ public class Employee {
     private LocalDate assesmentDate;
 
     @ManyToMany(mappedBy = "employeeSet")
-    private Set<Breakdown> breakdowns;
+    private Set<Breakdown> breakdownsSet;
 }
