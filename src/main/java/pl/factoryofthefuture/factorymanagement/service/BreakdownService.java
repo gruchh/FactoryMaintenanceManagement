@@ -55,7 +55,6 @@ public class BreakdownService {
         updatedBreakdown.setComments(breakdown.getComments());
         updatedBreakdown.setMachine(breakdown.getMachine());
         updatedBreakdown.setEmployeeSet(breakdown.getEmployeeSet());
-
         return breakdownRepository.save(updatedBreakdown);
     }
 

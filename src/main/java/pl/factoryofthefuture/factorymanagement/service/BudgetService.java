@@ -34,8 +34,6 @@ public class BudgetService {
         updatedBudget.setMonth(budget.getMonth());
         updatedBudget.setYear(budget.getYear());
         updatedBudget.setBudgetAmount(budget.getBudgetAmount());
-
-
         return budgetRepository.save(updatedBudget);
     }
 

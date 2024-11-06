@@ -22,12 +22,6 @@ public class BreakdownDtoMapper implements ApplicationContextAware {
     private static MachineService machineService;
     private static EmployeeService employeeService;
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        BreakdownDtoMapper.machineService = applicationContext.getBean(MachineService.class);
-        BreakdownDtoMapper.employeeService = applicationContext.getBean(EmployeeService.class);
-    }
-
     public static List<BreakdownDto> mapToBreakdownDtos(List<Breakdown> breakdowns) {
         return breakdowns.stream()
                 .map(BreakdownDtoMapper::mapToBreakdownDto)
@@ -67,5 +61,11 @@ public class BreakdownDtoMapper implements ApplicationContextAware {
                 .machine(machine)
                 .employeeSet(employeeSet)
                 .build();
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        BreakdownDtoMapper.machineService = applicationContext.getBean(MachineService.class);
+        BreakdownDtoMapper.employeeService = applicationContext.getBean(EmployeeService.class);
     }
 }

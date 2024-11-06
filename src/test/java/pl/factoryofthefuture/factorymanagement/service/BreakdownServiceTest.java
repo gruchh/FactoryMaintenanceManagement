@@ -29,7 +29,7 @@ class BreakdownServiceTest {
     }
 
     @Test
-    public void whenUpdateBreakdown() {
+    public void givenBreakdownBeforeUpdate_whenUpdateBreakdown_thanSaveUpdatedBreakdown() {
         Breakdown breakdownBeforeUpdate = Breakdown.builder()
                 .id(1L)
                 .cause("Sensor")
@@ -52,7 +52,7 @@ class BreakdownServiceTest {
     }
 
     @Test
-    void whenUpdateBreakdownNotFound() {
+    void givenNewBreakdown_whenDatabaseNotFound_thaRollbackTransaction() {
         Breakdown newBreakdown = Breakdown.builder()
                 .id(99L)
                 .build();

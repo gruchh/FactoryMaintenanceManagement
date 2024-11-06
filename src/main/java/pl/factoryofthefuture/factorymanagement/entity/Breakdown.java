@@ -40,11 +40,11 @@ public class Breakdown {
     @Column(name = "COMMENTS")
     private String comments;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "machine_id")
     private Machine machine;
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "breakdown_employee",
             joinColumns = @JoinColumn(name = "breakdown_id"),

@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.factoryofthefuture.factorymanagement.entity.Department;
 import pl.factoryofthefuture.factorymanagement.entity.dto.DepartmentDto;
-import pl.factoryofthefuture.factorymanagement.service.DepartmantService;
+import pl.factoryofthefuture.factorymanagement.service.DepartmentService;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import static pl.factoryofthefuture.factorymanagement.mapper.DepartmentDtoMapper
 @RequiredArgsConstructor
 public class DepartmentController {
 
-    private final DepartmantService departmantService;
+    private final DepartmentService departmantService;
 
     @GetMapping()
     public List<DepartmentDto> getDepartments() {

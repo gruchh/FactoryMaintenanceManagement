@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.factoryofthefuture.factorymanagement.entity.Breakdown;
 import pl.factoryofthefuture.factorymanagement.entity.dto.BreakdownDto;
@@ -20,7 +21,7 @@ public class BreakdownController {
 
     private final BreakdownService breakdownService;
 
-    @GetMapping()
+    @GetMapping
     public List<BreakdownDto> getBreakdowns() {
         return mapToBreakdownDtos(breakdownService.getBreakdowns());
     }

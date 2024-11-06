@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @Service
-public class DepartmantService {
+public class DepartmentService {
 
     private final DepartmentRepository departmentRepository;
 

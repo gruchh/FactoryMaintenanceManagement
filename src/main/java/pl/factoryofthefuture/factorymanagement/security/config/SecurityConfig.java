@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -21,6 +22,7 @@ import pl.factoryofthefuture.factorymanagement.security.filter.JwtFilter;
 
 @RequiredArgsConstructor
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @EnableWebSecurity
 public class SecurityConfig {
 
@@ -28,14 +30,18 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
 
     @Bean
+    public static PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((authorize) -> {
-                    authorize.requestMatchers("/h2-console/**").permitAll();
-                    authorize.requestMatchers("/register").permitAll();
-                    authorize.requestMatchers("/login").permitAll();
-                    authorize.requestMatchers("/machines/{id}").authenticated();
+                    authorize.requestMatchers("/h2-console/**", "/register", "/login", "/me").permitAll();
+                    authorize.requestMatchers("/machines", "/breakdowns", "/departments").hasRole("USER");
+                    authorize.requestMatchers("/employees", "/budget").hasRole("ADMIN");
                     authorize.anyRequest().authenticated();
                 }).httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -55,10 +61,5 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
-    }
-
-    @Bean
-    public static PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }

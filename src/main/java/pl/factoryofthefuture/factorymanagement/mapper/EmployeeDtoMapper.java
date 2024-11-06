@@ -19,11 +19,6 @@ public class EmployeeDtoMapper implements ApplicationContextAware {
 
     private static BreakdownService breakdownService;
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        breakdownService = applicationContext.getBean(BreakdownService.class);
-    }
-
     public static List<EmployeeDto> mapToEmployeeDtos(List<Employee> employees) {
 
         return employees.stream()
@@ -45,7 +40,7 @@ public class EmployeeDtoMapper implements ApplicationContextAware {
                 .salary(employee.getSalary())
                 .performanceRating(employee.getPerformanceRating())
                 .assessmentDate(employee.getAssesmentDate())
-                .breakdownIds(employee.getBreakdowns().stream().map(Breakdown::getId).collect(Collectors.toSet()))
+                .breakdownIds(employee.getBreakdownsSet().stream().map(Breakdown::getId).collect(Collectors.toSet()))
                 .build();
     }
 
@@ -63,7 +58,12 @@ public class EmployeeDtoMapper implements ApplicationContextAware {
                 .salary(employeeDto.getSalary())
                 .performanceRating(employeeDto.getPerformanceRating())
                 .assesmentDate(employeeDto.getAssessmentDate())
-                .breakdowns(breakdownSet)
+                .breakdownsSet(breakdownSet)
                 .build();
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        breakdownService = applicationContext.getBean(BreakdownService.class);
     }
 }

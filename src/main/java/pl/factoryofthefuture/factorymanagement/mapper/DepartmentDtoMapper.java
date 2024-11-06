@@ -19,11 +19,6 @@ public class DepartmentDtoMapper implements ApplicationContextAware {
 
     private static MachineService machineService;
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        DepartmentDtoMapper.machineService = applicationContext.getBean(MachineService.class);
-    }
-
     public static List<DepartmentDto> mapToDepartmentDtos(List<Department> departments) {
         return departments.stream()
                 .map(DepartmentDtoMapper::mapToDepartmentDto)
@@ -48,5 +43,10 @@ public class DepartmentDtoMapper implements ApplicationContextAware {
                 .creationDate(departmentDto.getCreationDate())
                 .machineSet(machineSet)
                 .build();
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        DepartmentDtoMapper.machineService = applicationContext.getBean(MachineService.class);
     }
 }
