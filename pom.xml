@@ -42,13 +42,27 @@
             <properties>
                 <spring.profiles.active>dev</spring.profiles.active>
             </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                    <version>RELEASE</version>
+                    <scope>compile</scope>
+                </dependency>
+            </dependencies>
         </profile>
         <profile>
             <id>prod</id>
             <properties>
                 <spring.profiles.active>prod</spring.profiles.active>
             </properties>
-
+            <dependencies>
+                <dependency>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                    <version>42.7.4</version>
+                </dependency>
+            </dependencies>
         </profile>
     </profiles>
     <dependencies>
@@ -95,8 +109,8 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>2.3.232</version>
-            <scope>test</scope>
+            <version>RELEASE</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -106,7 +120,7 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
-            <version>6.3.4</version>
+            <version>6.3.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -164,5 +178,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
