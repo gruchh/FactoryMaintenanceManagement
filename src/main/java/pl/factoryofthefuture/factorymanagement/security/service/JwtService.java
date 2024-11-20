@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,9 @@ import java.util.function.Function;
 public class JwtService {
 
     private String secretkey = "";
+
+    @Value("${jwt.token.duration}")
+    private final Long tokenDurationTime = 60000L;
 
     public JwtService() {
 
@@ -39,7 +43,7 @@ public class JwtService {
                 .add(claims)
                 .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 10))
+                .expiration(new Date(System.currentTimeMillis() + tokenDurationTime))
                 .and()
                 .signWith(getKey())
                 .compact();
@@ -70,6 +74,15 @@ public class JwtService {
     public boolean validateToken(String token, UserDetails userDetails) {
         final String userName = extractUsername(token);
         return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+    public String refreshToken(String token) {
+        final Claims claims = extractAllClaims(token);
+        return Jwts.builder().setClaims(claims)
+                .setSubject(claims.getSubject())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + tokenDurationTime))
+                .signWith(getKey()).compact();
     }
 
     private boolean isTokenExpired(String token) {
