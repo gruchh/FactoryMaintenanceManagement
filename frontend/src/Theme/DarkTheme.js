@@ -13,12 +13,12 @@ export const darkTheme = createTheme({
       main: "#242B2E",
     },
     background: {
-        main: "#0000000",
+        main: "#004020",
         default: "#0D0D0D",
         paper: "#0D0D0D"
     },
     textcolor: {
-        main: "111111"
+        main: "#111111"
     }
   },
 });

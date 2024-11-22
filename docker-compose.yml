@@ -14,8 +14,8 @@ services:
 
   app:
     build:
-      context: .
-      dockerfile: backend/Dockerfile
+      context: ./backend
+      dockerfile: Dockerfile
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
       SPRING_DATASOURCE_USERNAME: sa
@@ -38,6 +38,15 @@ services:
       - "5050:80"
     depends_on:
       - postgres
+    networks:
+      - pgnetwork
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
     networks:
       - pgnetwork
 
