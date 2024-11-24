@@ -26,7 +26,7 @@ const Home = () => {
         <div>
           {breakdownExamples.map((breakdown) => (
             <BreakdownCard
-              name={breakdown.name}
+              title={breakdown.title}
               description={breakdown.description}
             />
           ))}

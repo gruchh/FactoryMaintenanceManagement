@@ -1,7 +1,7 @@
 import { Card, Chip } from "@mui/material";
 import React from "react";
 
-const BreakdownCard = ({name, description}) => {
+const BreakdownCard = ({title, description}) => {
   return (
     <Card className="m-5 w-[18rem]">
       <div className="cursor-pointer relative">
@@ -19,7 +19,7 @@ const BreakdownCard = ({name, description}) => {
       </div>
       <div className="p-4 textPart lg:flex w-full justify-between">
         <div className="space-y-1">
-            <p className="font-semibold text-gray-400 text-lg">{name}</p>
+            <p className="font-semibold text-gray-400 text-lg">{title}</p>
             <p className="text-gray-200 text-sm ">{description}</p>
         </div>
       </div>
