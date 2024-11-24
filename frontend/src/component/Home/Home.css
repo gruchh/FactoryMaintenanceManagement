@@ -1,0 +1,19 @@
+.banner {
+    background-image: url('https://images.pexels.com/photos/257643/pexels-photo-257643.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 70vh;
+}
+
+.cover {
+    width: 100%;
+    height: 70vh;
+    background-color: black;
+    opacity: 0.4;
+}
+/* 
+.fadout {
+    
+} */
