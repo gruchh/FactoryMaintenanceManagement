@@ -3,6 +3,7 @@ import "./App.css";
 import { darkTheme } from "./Theme/DarkTheme";
 import { Navbar } from "./component/Navbar/Navbar";
 import Home from "./component/Home/Home";
+import BreakdownDetails from "./component/Breakdown/BreakdownDetails";
 
 function App() {
   return (

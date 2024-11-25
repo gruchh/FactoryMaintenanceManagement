@@ -1,4 +1,4 @@
-export const topMeal = [
+export const carouselData = [
     {
         image: "https://cdn.pixabay.com/photo/2021/11/22/22/53/inventory-6817561_1280.png",
         title: "Analizy i Raporty"

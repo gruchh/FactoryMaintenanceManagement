@@ -3,10 +3,11 @@ import "./Home.css";
 import MultiItemCarousel from "./MultiItemCarousel";
 import { breakdownExamples } from "../Breakdown/BreakdownExamples";
 import BreakdownCard from "../Breakdown/BreakdownCard";
+import BreakdownCardList from "../Breakdown/BreakdownCardList";
 
 const Home = () => {
   return (
-    <div>
+    <div className="pb-10">
       <section className="banner z-50 relative flex flex-col justify-center items-center">
         <div className="w-[50vw] z-10 text-center ">
           <p className="text-2xl lg:text-6xl font-bold z-10 py-5">
@@ -22,15 +23,8 @@ const Home = () => {
       <section className="p-10 lg:py-10 lg:px-20 w-[100vw] lg:w-[80vw] mx-auto items-center ">
         <MultiItemCarousel />
       </section>
-      <section className="px-5 lg:px-20">
-        <div>
-          {breakdownExamples.map((breakdown) => (
-            <BreakdownCard
-              title={breakdown.title}
-              description={breakdown.description}
-            />
-          ))}
-        </div>
+      <section className="px-5 lg:px-20 pt-10">
+        <BreakdownCardList />
       </section>
     </div>
   );
