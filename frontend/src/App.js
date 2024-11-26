@@ -3,7 +3,7 @@ import "./App.css";
 import { darkTheme } from "./Theme/DarkTheme";
 import { Navbar } from "./component/Navbar/Navbar";
 import Home from "./component/Home/Home";
-import BreakdownDetails from "./component/Breakdown/BreakdownDetails";
+import BreakdownList from "./component/Breakdown/BreakdownList";
 
 function App() {
   return (
@@ -11,7 +11,8 @@ function App() {
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <Navbar />
-        <Home/>
+        {/* <Home/> */} 
+        <BreakdownList/>
       </ThemeProvider>
     </div>
   );
