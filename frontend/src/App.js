@@ -11,8 +11,8 @@ function App() {
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <Navbar />
-        <Home/> 
-        {/* <BreakdownDetails/> */}
+        {/* <Home/>  */}
+        <BreakdownDetails/>
       </ThemeProvider>
     </div>
   );
