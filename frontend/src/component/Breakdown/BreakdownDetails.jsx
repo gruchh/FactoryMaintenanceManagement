@@ -9,6 +9,7 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
+import BreakdownShortSummary from "./BreakdownShortSummary";
 
 const breakdownTypes = [
   { key: 1, value: "all", label: "Wszystkie" },
@@ -19,18 +20,22 @@ const departments = [
   { key: 1, value: "all", label: "Wszystkie" },
   { key: 2, value: "D1", label: "Dział 1" },
   { key: 3, value: "D2", label: "Dział 2" },
-  { key: 4, value: "D3", label: "Dział 3" },
+  { key: 4, value: "D3", label: "Dział 3" }
 ];
+
+const breakdownListItem = [1, 1, 1];
 
 const BreakdownList = () => {
   const [breakdownType, setBreakdownType] = useState("all");
   const onBreakdownType = (e) => {
     console.log(e.target.value);
+    setBreakdownType(e.target.value);
   };
 
   const [departmentType, setDepartmentType] = useState("all");
-  const onDepartmentTypeChange = (e) => {
-    console.log(e.target.value);
+  const onDepartmentChange = (e) => {
+    console.log(e);
+    setDepartmentType(e.target.value);
   };
 
   return (
@@ -59,7 +64,11 @@ const BreakdownList = () => {
                 Typ awarii
               </Typography>
               <FormControl className="py-10 space-y-5" component={"fieldset"}>
-                <RadioGroup>
+                <RadioGroup
+                  onChange={onBreakdownType}
+                  name="breakdown_type"
+                  value={breakdownType}
+                >
                   {breakdownTypes.map((breakdown) => (
                     <FormControlLabel
                       key={breakdown.key}
@@ -71,13 +80,17 @@ const BreakdownList = () => {
                 </RadioGroup>
               </FormControl>
             </div>
-            <Divider/>
+            <Divider />
             <div>
               <Typography variant="h5" sx={{ paddingBottom: "1rem" }}>
                 Dział
               </Typography>
               <FormControl className="py-10 space-y-5" component={"fieldset"}>
-                <RadioGroup>
+                <RadioGroup
+                  onChange={onDepartmentChange}
+                  name="breakdown_type"
+                  value={departmentType}
+                >
                   {departments.map((department) => (
                     <FormControlLabel
                       key={department.key}
@@ -91,7 +104,11 @@ const BreakdownList = () => {
             </div>
           </div>
         </div>
-        <div className="space-y-5 lg:w-[80%] lg:pl-10">aa</div>
+        <div className="space-y-5 lg:w-[80%] lg:pl-10">
+          {breakdownListItem.map(() => (
+            <BreakdownShortSummary />
+          ))}
+        </div>
       </section>
     </div>
   );
