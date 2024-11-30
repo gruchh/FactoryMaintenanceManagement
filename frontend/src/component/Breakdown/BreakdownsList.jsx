@@ -24,12 +24,12 @@ const departments = [
 const BreakdownsList = () => {
   const breakdownListItem = [1, 1, 1];
   const [breakdownType, setBreakdownType] = useState("all");
-  const onBreakdownType = (e) => {
+  const handleBreakdownChange = (e) => {
     console.log(e.target.value);
     setBreakdownType(e.target.value);
   };
   const [departmentType, setDepartmentType] = useState("all");
-  const onDepartmentChange = (e) => {
+  const handleDepartmentChange = (e) => {
     console.log(e);
     setDepartmentType(e.target.value);
   };
@@ -44,7 +44,7 @@ const BreakdownsList = () => {
             </Typography>
             <FormControl className="py-10 space-y-5" component={"fieldset"}>
               <RadioGroup
-                onChange={onBreakdownType}
+                onChange={handleBreakdownChange}
                 name="breakdown_type"
                 value={breakdownType}
               >
@@ -66,7 +66,7 @@ const BreakdownsList = () => {
             </Typography>
             <FormControl className="py-10 space-y-5" component={"fieldset"}>
               <RadioGroup
-                onChange={onDepartmentChange}
+                onChange={handleDepartmentChange}
                 name="breakdown_type"
                 value={departmentType}
               >

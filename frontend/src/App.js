@@ -4,6 +4,7 @@ import { darkTheme } from "./Theme/DarkTheme";
 import { Navbar } from "./component/Navbar/Navbar";
 import Home from "./component/Home/Home";
 import BreakdownDetails from "./component/Breakdown/BreakdownDetails";
+import OrdersList from "./component/Orders/OrdersList";
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
         <CssBaseline />
         <Navbar />
         {/* <Home/>  */}
-        <BreakdownDetails/>
+        {/* <BreakdownDetails/> */}
+        <OrdersList/>
       </ThemeProvider>
     </div>
   );
