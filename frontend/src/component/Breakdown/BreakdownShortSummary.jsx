@@ -1,13 +1,37 @@
-import React from "react";
+import { PrecisionManufacturing } from "@mui/icons-material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import TimerIcon from "@mui/icons-material/Timer";
+import { Button, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import TimerIcon from "@mui/icons-material/Timer";
-import { PrecisionManufacturing } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import React from "react";
 
 const BreakdownShortSummary = () => {
+  const checkList = [
+    {
+      category: "Ogólne sprawdzenie",
+      duties: ["Stan ogólny", "Elektryka", "Mechanika", "Wycieki"],
+    },
+    {
+      category: "Bezpieczeństwo i BHP",
+      duties: ["Zatrzymanie awaryjne", "", "", "Użycie gaśnicy"],
+    },
+    {
+      category: "Części",
+      duties: ["Wymiana", "Konieczność kontroli", "", ""],
+    },
+    {
+      category: "Dodatkowe",
+      duties: [
+        "Kalibracja",
+        "Działania w przyszłości",
+        "Prewencja",
+        "Testy końcowe",
+      ],
+    },
+  ];
+
   return (
     <div>
       <Accordion>
@@ -49,10 +73,27 @@ const BreakdownShortSummary = () => {
               eget.
             </p>
           </div>
+          <form>
+            <div className="flex gap-5 flex-wrap">
+              {checkList.map((checkItem) => (
+                <div key={checkItem.category}>
+                  <p className="font-bold text-xl">{checkItem.category}</p>
+                    <FormGroup>
+                      {checkItem.duties.map((duty, index) => (
+                        <FormControlLabel
+                          key={index}
+                          control={<Checkbox />}
+                          label={duty}
+                        />
+                      ))}
+                    </FormGroup>
+                </div>
+              ))}
+            </div>
+          </form>
           <div>
             <Button>Więcej szczegółów</Button>
           </div>
-
         </AccordionDetails>
       </Accordion>
     </div>

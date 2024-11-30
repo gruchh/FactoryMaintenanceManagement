@@ -1,9 +1,7 @@
 import React from "react";
 import "./Home.css";
 import MultiItemCarousel from "./MultiItemCarousel";
-import { breakdownExamples } from "../Breakdown/BreakdownExamples";
-import BreakdownCard from "../Breakdown/BreakdownCard";
-import BreakdownCardList from "../Breakdown/BreakdownCardList";
+import BreakdownCardList from "./BreakdownCardList";
 
 const Home = () => {
   return (
