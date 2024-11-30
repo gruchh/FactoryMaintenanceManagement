@@ -51,6 +51,10 @@ const OrdersList = () => {
     setPage(0);
   };
 
+  const handleOrder = (id) => {
+    alert(`Część z ID ${id} została zamówiona!`);
+  };
+
   const paginatedParts = filteredParts.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
@@ -93,7 +97,7 @@ const OrdersList = () => {
                       <Button
                         variant="contained"
                         color="primary"
-                        onClick={(id) => alert(`Część z ID ${id} została zamówiona!`)}
+                        onClick={() => handleOrder(part.id)}
                       >
                         Zamów
                       </Button>

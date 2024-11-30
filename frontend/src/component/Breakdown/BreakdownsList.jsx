@@ -8,11 +8,12 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import BreakdownShortSummary from "./BreakdownShortSummary";
+import { breakdownExamples } from "../Home/BreakdownExamples";
 
 const breakdownTypes = [
   { key: 1, value: "all", label: "Wszystkie" },
-  { key: 2, value: "automatical", label: "Automatyczne" },
-  { key: 3, value: "mechanical", label: "Mechaniczne" },
+  { key: 2, value: "automatical", label: "Automatyczna" },
+  { key: 3, value: "mechanical", label: "Mechaniczna" },
 ];
 const departments = [
   { key: 1, value: "all", label: "Wszystkie" },
@@ -22,7 +23,6 @@ const departments = [
 ];
 
 const BreakdownsList = () => {
-  const breakdownListItem = [1, 1, 1];
   const [breakdownType, setBreakdownType] = useState("all");
   const handleBreakdownChange = (e) => {
     console.log(e.target.value);
@@ -30,9 +30,19 @@ const BreakdownsList = () => {
   };
   const [departmentType, setDepartmentType] = useState("all");
   const handleDepartmentChange = (e) => {
-    console.log(e);
+    console.log(e.target.value);
     setDepartmentType(e.target.value);
   };
+
+  const filteredBreakdowns = breakdownExamples.filter((breakdown) => {
+    const typeMatch =
+      breakdownType === "all" ||
+      breakdown.type === breakdownType;
+    const departmentMatch =
+      departmentType === "all" ||
+      breakdown.department === departmentType;
+    return typeMatch && departmentMatch;
+  });
 
   return (
     <section className="pt-3 lg:pt-5 lg:flex relative">
@@ -84,9 +94,10 @@ const BreakdownsList = () => {
         </div>
       </div>
       <div className="space-y-5 lg:w-[80%] lg:pl-10">
-        {breakdownListItem.map(() => (
-          <BreakdownShortSummary />
-        ))}
+        {" "}
+        {filteredBreakdowns.map((breakdown, index) => (
+          <BreakdownShortSummary key={index} breakdown={breakdown} />
+        ))}{" "}
       </div>
     </section>
   );

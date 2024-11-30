@@ -13,8 +13,8 @@ function App() {
         <CssBaseline />
         <Navbar />
         {/* <Home/>  */}
-        {/* <BreakdownDetails/> */}
-        <OrdersList/>
+        <BreakdownDetails/>
+        {/* <OrdersList/> */}
       </ThemeProvider>
     </div>
   );
