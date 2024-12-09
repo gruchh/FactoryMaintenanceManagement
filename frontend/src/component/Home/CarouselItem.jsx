@@ -1,12 +1,21 @@
-import React from 'react'
+import PropTypes from "prop-types";
 
-const CarouselItem = ({image, title}) => {
+const CarouselItem = ({ image, title }) => {
   return (
-    <div className='flex flex-col justify-center items-center'>
-        <img className="w-[10rem] h-[10rem] lg:w-[14rem] lg:h-[14rem] rounded-full object-cover object-center" src={image} alt="" />
-        <span className='py-5 font-semibold text-xl text-gray-600'>{title}</span>
+    <div className="flex flex-col justify-center items-center">
+      <img
+        className="w-[10rem] h-[10rem] lg:w-[14rem] lg:h-[14rem] rounded-full object-cover object-center"
+        src={image}
+        alt=""
+      />
+      <span className="py-5 font-semibold text-xl text-gray-600">{title}</span>
     </div>
-  )
-}
+  );
+};
 
-export default CarouselItem
+CarouselItem.propTypes = {
+  image: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+};
+
+export default CarouselItem;

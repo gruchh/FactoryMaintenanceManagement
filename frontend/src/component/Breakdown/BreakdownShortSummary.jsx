@@ -1,13 +1,16 @@
-import { KeyboardDoubleArrowRightOutlined, PrecisionManufacturing } from "@mui/icons-material";
+import {
+  KeyboardDoubleArrowRightOutlined,
+  PrecisionManufacturing,
+} from "@mui/icons-material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import TimerIcon from "@mui/icons-material/Timer";
 import { Button, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
-import React from "react";
+import PropTypes from "prop-types";
 
-const BreakdownShortSummary = ({breakdown}) => {
+const BreakdownShortSummary = ({ breakdown }) => {
   const checkList = [
     {
       category: "Ogólne sprawdzenie",
@@ -82,15 +85,15 @@ const BreakdownShortSummary = ({breakdown}) => {
               {checkList.map((checkItem) => (
                 <div key={checkItem.category}>
                   <p className="font-bold text-xl">{checkItem.category}</p>
-                    <FormGroup>
-                      {checkItem.duties.map((duty, index) => (
-                        <FormControlLabel
-                          key={index}
-                          control={<Checkbox />}
-                          label={duty}
-                        />
-                      ))}
-                    </FormGroup>
+                  <FormGroup>
+                    {checkItem.duties.map((duty, index) => (
+                      <FormControlLabel
+                        key={index}
+                        control={<Checkbox />}
+                        label={duty}
+                      />
+                    ))}
+                  </FormGroup>
                 </div>
               ))}
             </div>
@@ -102,6 +105,13 @@ const BreakdownShortSummary = ({breakdown}) => {
       </Accordion>
     </div>
   );
+};
+
+BreakdownShortSummary.propTypes = {
+  breakdown: PropTypes.shape({
+    department: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default BreakdownShortSummary;

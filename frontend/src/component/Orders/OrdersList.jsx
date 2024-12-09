@@ -11,7 +11,7 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const testData = [
   { id: 1, nazwa: "Część 1", maszyna: "Maszyna A", cena: 100 },

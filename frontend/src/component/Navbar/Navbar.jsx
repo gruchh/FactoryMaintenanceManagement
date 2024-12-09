@@ -1,5 +1,4 @@
 import { Avatar, Badge, IconButton } from "@mui/material";
-import React from "react";
 import YoutubeSearchedForIcon from "@mui/icons-material/YoutubeSearchedFor";
 import { ShoppingCart } from "@mui/icons-material";
 

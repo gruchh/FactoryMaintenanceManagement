@@ -1,4 +1,3 @@
-import React from "react";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import { Divider } from "@mui/material";

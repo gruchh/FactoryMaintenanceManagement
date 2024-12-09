@@ -6,9 +6,9 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
 import BreakdownShortSummary from "./BreakdownShortSummary";
 import { breakdownExamples } from "../Home/BreakdownExamples";
+import { useState } from "react";
 
 const breakdownTypes = [
   { key: 1, value: "all", label: "Wszystkie" },
@@ -36,11 +36,9 @@ const BreakdownsList = () => {
 
   const filteredBreakdowns = breakdownExamples.filter((breakdown) => {
     const typeMatch =
-      breakdownType === "all" ||
-      breakdown.type === breakdownType;
+      breakdownType === "all" || breakdown.type === breakdownType;
     const departmentMatch =
-      departmentType === "all" ||
-      breakdown.department === departmentType;
+      departmentType === "all" || breakdown.department === departmentType;
     return typeMatch && departmentMatch;
   });
 

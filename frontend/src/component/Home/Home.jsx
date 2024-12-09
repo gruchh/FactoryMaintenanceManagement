@@ -1,4 +1,3 @@
-import React from "react";
 import "./Home.css";
 import MultiItemCarousel from "./MultiItemCarousel";
 import BreakdownCardList from "./BreakdownCardList";
