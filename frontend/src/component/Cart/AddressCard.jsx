@@ -1,6 +1,6 @@
-import React from "react";
 import FactoryIcon from "@mui/icons-material/Factory";
 import { Button, Card } from "@mui/material";
+import PropTypes from "prop-types";
 
 const AddressCard = ({ handleSelectAddress, selectedCard, showButton }) => {
   return (
@@ -13,7 +13,7 @@ const AddressCard = ({ handleSelectAddress, selectedCard, showButton }) => {
           <Button
             variant="outlined"
             fullWidth
-            onClick={() => handleSelectAddress()}
+            onClick={() => handleSelectAddress(selectedCard)}
           >
             Wybierz!
           </Button>
@@ -21,6 +21,12 @@ const AddressCard = ({ handleSelectAddress, selectedCard, showButton }) => {
       </div>
     </Card>
   );
+};
+
+AddressCard.propTypes = {
+  handleSelectAddress: PropTypes.func.isRequired,
+  selectedCard: PropTypes.number.isRequired,
+  showButton: PropTypes.bool.isRequired,
 };
 
 export default AddressCard;

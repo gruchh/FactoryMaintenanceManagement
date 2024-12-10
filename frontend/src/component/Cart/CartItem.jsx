@@ -1,6 +1,5 @@
 import { AddCircleOutline, RemoveCircleOutline } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-import React from "react";
 
 const CartItem = () => {
   return (
