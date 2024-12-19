@@ -3,18 +3,19 @@ import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlin
 import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
 import { Divider, Drawer, useMediaQuery } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
+import React from "react";
 
 const menu = [
-  { title: "Profile", icon: <WorkOutlineOutlinedIcon />, destiny: "me" },
+  { title: "Profile", icon: <WorkOutlineOutlinedIcon />, destiny: "" },
   {
     title: "Work orders",
     icon: <WorkOutlineOutlinedIcon />,
-    destiny: "work_orders",
+    destiny: "workorders",
   },
   {
     title: "Breakdowns",
     icon: <WarningAmberOutlinedIcon />,
-    destiny: "brekdowns",
+    destiny: "breakdowns",
   },
   { title: "Orders", icon: <BookmarkBorderOutlinedIcon />, destiny: "orders" },
   {
@@ -30,8 +31,6 @@ export const ProfileNavigation = ({ open, handleClose }) => {
   const navigate = useNavigate();
   const handleNavigate = (navigateDestiny) => {
     navigate(componentPrefix + navigateDestiny.destiny.toLowerCase());
-    console.log(navigateDestiny);
-    console.warn(actualLocation);
   };
   const actualLocation = useLocation();
   return (
@@ -43,22 +42,21 @@ export const ProfileNavigation = ({ open, handleClose }) => {
         anchor="left"
       >
         <div className="w-[50vw] lg:w-[20vw] h-[90vh] flex flex-col justify-center text-xl gap-1 pt-16">
-          {menu.map((menu, key) => (
-            <>
+          {menu.map((menuItem, key) => (
+            <React.Fragment key={key}>
               <div
                 className={`px-5 flex items-center space-x-5 py-4 cursor-pointer ${
-                  actualLocation.pathname === `${componentPrefix}${menu.destiny}`
+                  actualLocation.pathname ===
+                  `${componentPrefix}${menuItem.destiny}`
                     ? "bg-white text-black"
                     : ""
                 }`}
-                key={key}
-                onClick={() => handleNavigate(menu)}
+                onClick={() => handleNavigate(menuItem)}
               >
-                {menu.icon}
-                <span>{menu.title}</span>
+                {menuItem.icon} <span>{menuItem.title}</span>
               </div>
               {key !== menu.length - 1 && <Divider />}
-            </>
+            </React.Fragment>
           ))}
         </div>
       </Drawer>
