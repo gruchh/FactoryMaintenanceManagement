@@ -9,8 +9,14 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 const BreakdownShortSummary = ({ breakdown }) => {
+  const navigate = useNavigate();
+  const handleClickDetails = (breakdownId) => {
+    navigate(`/breakdowns/${breakdownId}`);
+  };
+
   const checkList = [
     {
       category: "Ogólne sprawdzenie",
@@ -67,7 +73,6 @@ const BreakdownShortSummary = ({ breakdown }) => {
                 <KeyboardDoubleArrowRightOutlined />
                 <p className="font-light">{breakdown.type}</p>
               </div>
-              <div></div>
             </div>
           </div>
         </AccordionSummary>
@@ -99,7 +104,9 @@ const BreakdownShortSummary = ({ breakdown }) => {
             </div>
           </form>
           <div>
-            <Button>Więcej szczegółów</Button>
+            <Button onClick={() => handleClickDetails(breakdown.id)}>
+              Więcej szczegółów
+            </Button>
           </div>
         </AccordionDetails>
       </Accordion>
@@ -109,6 +116,7 @@ const BreakdownShortSummary = ({ breakdown }) => {
 
 BreakdownShortSummary.propTypes = {
   breakdown: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     department: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
   }).isRequired,

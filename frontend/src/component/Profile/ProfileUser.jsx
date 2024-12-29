@@ -1,7 +1,7 @@
 import Face6Icon from "@mui/icons-material/Face6";
 import { Button } from "@mui/material";
 
-const UserProfile = () => {
+const ProfileUser = () => {
   const handleLogout = () => {};
   return (
     <div className="min-h-[80vh] flex flex-col justify-center items-center text-center">
@@ -15,4 +15,4 @@ const UserProfile = () => {
     </div>
   );
 };
-export default UserProfile;
+export default ProfileUser;

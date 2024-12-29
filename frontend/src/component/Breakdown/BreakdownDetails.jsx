@@ -2,12 +2,15 @@ import MyLocationIcon from "@mui/icons-material/MyLocation";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import { Divider } from "@mui/material";
 import BreakdownsList from "./BreakdownsList";
+import { useParams } from "react-router-dom";
 
-const BreakdownDetails = () => {
+export const BreakdownDetails = () => {
+  const { id } = useParams();
+
   return (
     <div className="px-5 lg:px-20">
       <section className="flex justify-end">
-        <h3 className="text-gray-500 py-2 mt-3">/Breakdown/i</h3>
+        <h3 className="text-gray-500 py-2 mt-3">/breakdowns/{id}</h3>
       </section>
       <div></div>
       <div className="pt-3 pb-5">
@@ -26,5 +29,3 @@ const BreakdownDetails = () => {
     </div>
   );
 };
-
-export default BreakdownDetails;

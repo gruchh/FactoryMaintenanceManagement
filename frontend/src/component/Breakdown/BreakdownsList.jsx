@@ -92,10 +92,9 @@ const BreakdownsList = () => {
         </div>
       </div>
       <div className="space-y-5 lg:w-[80%] lg:pl-10">
-        {" "}
         {filteredBreakdowns.map((breakdown, index) => (
           <BreakdownShortSummary key={index} breakdown={breakdown} />
-        ))}{" "}
+        ))}
       </div>
     </section>
   );

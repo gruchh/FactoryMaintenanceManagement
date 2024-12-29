@@ -1,20 +1,24 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "../component/Home/Home";
-import BreakdownDetails from "../component/Breakdown/BreakdownDetails";
 import OrdersList from "../component/Orders/OrdersList";
 import Profile from "../component/Profile/Profile";
 import Cart from "../component/Cart/Cart";
 import { Navbar } from "../component/Navbar/Navbar";
-import BreakdownsList from "../component/Breakdown/BreakdownsList";
-import UserProfile from "../component/Profile/UserProfile";
-import WorkOrders from "../component/Profile/WorkOrders";
+import ProfileUser from "../component/Profile/ProfileUser";
 import ProfileBreakdowns from "../component/Profile/ProfileBreakdowns";
 import ProfileOrders from "../component/Profile/ProfileOrders";
 import ProfileWorkers from "../component/Profile/ProfileWorkers";
+import ProfileWorkOrders from "../component/Profile/ProfileWorkOrders";
+import BreakdownsList from "../component/Breakdown/BreakdownsList";
+import { BreakdownDetails } from "../component/Breakdown/BreakdownDetails";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
-  { path: "/breakdowns", element: <BreakdownDetails /> },
+  {
+    path: "/breakdowns",
+    element: <BreakdownsList />
+  },
+  { path: "/breakdowns/:id", element: <BreakdownDetails /> },
   { path: "/orders", element: <OrdersList /> },
   { path: "/profile/me", element: <Profile /> },
   { path: "/cart", element: <Cart /> },
@@ -22,8 +26,8 @@ const router = createBrowserRouter([
     path: "/profile",
     element: <Profile />,
     children: [
-      { path: "", element: <UserProfile /> },
-      { path: "workorders", element: <WorkOrders /> },
+      { path: "", element: <ProfileUser /> },
+      { path: "workorders", element: <ProfileWorkOrders /> },
       { path: "breakdowns", element: <ProfileBreakdowns /> },
       { path: "orders", element: <ProfileOrders /> },
       { path: "workers", element: <ProfileWorkers /> },
