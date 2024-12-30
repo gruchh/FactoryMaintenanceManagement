@@ -1,7 +1,6 @@
 import MyLocationIcon from "@mui/icons-material/MyLocation";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import { Divider } from "@mui/material";
-import BreakdownsList from "./BreakdownsList";
 import { useParams } from "react-router-dom";
 
 export const BreakdownDetails = () => {
@@ -25,7 +24,6 @@ export const BreakdownDetails = () => {
         </p>
       </div>
       <Divider />
-      <BreakdownsList />
     </div>
   );
 };

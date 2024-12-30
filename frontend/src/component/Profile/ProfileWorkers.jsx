@@ -35,6 +35,7 @@ const ProfileWorkers = () => {
   const handleFilterChange = (event) => {
     setFilterText(event.target.value);
   };
+
   const filteredEmployees = EmployeeExamples.filter(
     (employee) =>
       employee.name.toLowerCase().includes(filterText.toLowerCase()) ||
@@ -57,36 +58,41 @@ const ProfileWorkers = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Imię</TableCell> <TableCell>Nazwisko</TableCell>
-              <TableCell>Stanowisko</TableCell> <TableCell>Akcje</TableCell>
+              <TableCell sx={{ padding: "8px" }}>Imię</TableCell>
+              <TableCell sx={{ padding: "8px" }}>Nazwisko</TableCell>
+              <TableCell sx={{ padding: "8px" }}>Stanowisko</TableCell>
+              <TableCell sx={{ padding: "8px" }}>Akcje</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredEmployees.slice(
-              page * rowsPerPage,
-              page * rowsPerPage + rowsPerPage
-            ).map((employee) => (
-              <TableRow key={employee.id}>
-                <TableCell>{employee.name}</TableCell>
-                <TableCell>{employee.surname}</TableCell>
-                <TableCell>{employee.profession}</TableCell>
-                <TableCell>
-                  <Button
-                    onClick={() => handleEdit(employee.id)}
-                    startIcon={<EditNotificationsRounded />}
-                  >
-                    Edytuj
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
+            {filteredEmployees
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((employee) => (
+                <TableRow key={employee.id}>
+                  <TableCell sx={{ padding: "8px" }}>{employee.name}</TableCell>
+                  <TableCell sx={{ padding: "8px" }}>
+                    {employee.surname}
+                  </TableCell>
+                  <TableCell sx={{ padding: "8px" }}>
+                    {employee.profession}
+                  </TableCell>
+                  <TableCell sx={{ padding: "8px" }}>
+                    <Button
+                      onClick={() => handleEdit(employee.id)}
+                      startIcon={<EditNotificationsRounded />}
+                    >
+                      Edytuj
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 20, 50]}
         component="div"
-        count={EmployeeExamples.length}
+        count={filteredEmployees.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
