@@ -1,8 +1,11 @@
-import { Avatar, Badge, Box, IconButton } from "@mui/material";
-import YoutubeSearchedForIcon from "@mui/icons-material/YoutubeSearchedFor";
 import { ShoppingCart } from "@mui/icons-material";
+import PersonIcon from "@mui/icons-material/Person";
+import YoutubeSearchedForIcon from "@mui/icons-material/YoutubeSearchedFor";
+import { Avatar, Badge, Box, IconButton } from "@mui/material";
 
-export const Navbar = () => { 
+export const Navbar = () => {
+  const isLogged = false;
+
   return (
     <Box className="px-5 sticky top-0 z-50 py-[.8rem] bg-[#543671] lg:px20 lg:py-3 flex justify-between">
       <div className="lg:mr-10 cursor-pointer flex items-center space-x-4">
@@ -17,7 +20,13 @@ export const Navbar = () => {
           </IconButton>
         </div>
         <div className="">
-          <Avatar sx={{ bgColor: "white", color: "pink.A400" }}>JM</Avatar>
+          {isLogged ? (
+            <Avatar sx={{ bgColor: "white", color: "pink.A400" }}>JM</Avatar>
+          ) : (
+              <IconButton>
+                <PersonIcon />
+              </IconButton>
+          )}
         </div>
         <div className="">
           <IconButton>
