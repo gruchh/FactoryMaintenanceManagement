@@ -1,7 +1,4 @@
-import {
-  Route,
-  Routes
-} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { Auth } from "../component/Auth/Auth";
 import { BreakdownDetails } from "../component/Breakdown/BreakdownDetails";
 import BreakdownsList from "../component/Breakdown/BreakdownsList";
@@ -37,6 +34,7 @@ export const CustomRouter = () => {
         </Route>
         <Route path="/account/login" element={<Auth />} />
       </Routes>
+      <Auth />
     </>
   );
 };
