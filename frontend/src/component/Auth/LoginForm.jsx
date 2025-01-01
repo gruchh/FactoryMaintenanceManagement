@@ -1,8 +1,17 @@
 import { Button, TextField, Typography } from "@mui/material";
 import { Field, Form, Formik } from "formik";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
 export const LoginForm = () => {
+  const initialValues = {
+    email: "",
+    password: "",
+  };
+  const navigate = useNavigate();
+  const handleSubmit = (values) => {
+    console.log(values);
+  };
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email("Invalid email format")
@@ -12,20 +21,13 @@ export const LoginForm = () => {
       .required("Password is required"),
   });
 
-  const handleSubmit = (values) => {
-    console.log(values);
-  };
-
   return (
     <div>
       <Typography variant="h5" className="text-center">
         Login
       </Typography>
       <Formik
-        initialValues={{
-          email: "",
-          password: "",
-        }}
+        initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
@@ -53,11 +55,18 @@ export const LoginForm = () => {
               helperText={touched.password && errors.password}
             />
             <Button fullWidth type="submit" variant="contained">
-              Submit
+              Login
             </Button>
           </Form>
         )}
       </Formik>
+
+      <Typography variant="body2" align="center" style={{ marginTop: "1rem" }}>
+        Don't have an account?
+        <Button className="mt-5" onClick={() => navigate("/account/register")}>
+          REGISTER
+        </Button>
+      </Typography>
     </div>
   );
 };
