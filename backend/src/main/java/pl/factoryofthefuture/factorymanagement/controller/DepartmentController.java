@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.factoryofthefuture.factorymanagement.entity.Department;
 import pl.factoryofthefuture.factorymanagement.entity.dto.DepartmentDto;
+import pl.factoryofthefuture.factorymanagement.mapper.DepartmentDtoMapper;
 import pl.factoryofthefuture.factorymanagement.service.DepartmentService;
 
 import java.util.List;
@@ -18,27 +19,28 @@ import static pl.factoryofthefuture.factorymanagement.mapper.DepartmentDtoMapper
 public class DepartmentController {
 
     private final DepartmentService departmantService;
+    private final DepartmentDtoMapper departmentDtoMapper;
 
     @GetMapping()
     public List<DepartmentDto> getDepartments() {
-        return mapToDepartmentDtos(departmantService.getDepartments());
+        return departmentDtoMapper.mapDepartmentDtosToEntities(departmantService.getDepartments());
     }
 
     @GetMapping("/{id}")
     public DepartmentDto getDepartment(@PathVariable long id) {
-        return mapToDepartmentDto(departmantService.getDepartment(id));
+        return departmentDtoMapper.mapDepartmentToDto(departmantService.getDepartment(id));
     }
 
     @PostMapping()
     public ResponseEntity<DepartmentDto> saveDepartment(@RequestBody DepartmentDto departmentDto) {
-        Department savedDepartment = departmantService.saveDepartment(mapDtoToDepartment(departmentDto));
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapToDepartmentDto(savedDepartment));
+        Department savedDepartment = departmantService.saveDepartment(departmentDtoMapper.mapDepartmentDtoToEntity(departmentDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(departmentDtoMapper.mapDepartmentToDto(savedDepartment));
     }
 
     @PutMapping()
     public ResponseEntity<DepartmentDto> updateDepartment(@RequestBody DepartmentDto departmentDto) {
-        Department editedDepartment = departmantService.updateDepartment(mapDtoToDepartment(departmentDto));
-        return ResponseEntity.status(HttpStatus.OK).body(mapToDepartmentDto(editedDepartment));
+        Department editedDepartment = departmantService.updateDepartment(departmentDtoMapper.mapDepartmentDtoToEntity(departmentDto));
+        return ResponseEntity.status(HttpStatus.OK).body(departmentDtoMapper.mapDepartmentToDto(editedDepartment));
     }
 
     @DeleteMapping("/{id}")

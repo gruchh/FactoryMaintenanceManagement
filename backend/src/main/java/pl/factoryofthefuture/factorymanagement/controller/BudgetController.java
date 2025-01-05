@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.factoryofthefuture.factorymanagement.entity.Budget;
 import pl.factoryofthefuture.factorymanagement.entity.dto.BudgetDto;
+import pl.factoryofthefuture.factorymanagement.mapper.BudgetDtoMapper;
 import pl.factoryofthefuture.factorymanagement.service.BudgetService;
 
 import java.util.List;
@@ -18,27 +19,28 @@ import static pl.factoryofthefuture.factorymanagement.mapper.BudgetDtoMapper.*;
 public class BudgetController {
 
     private final BudgetService budgetService;
+    private final BudgetDtoMapper budgetDtoMapper;
 
     @GetMapping()
     public List<BudgetDto> getBudgetList() {
-        return mapToBudgetDtos(budgetService.getBudgetList());
+        return budgetDtoMapper.mapBudgetsToDtos(budgetService.getBudgetList());
     }
 
     @GetMapping("/{id}")
     public BudgetDto getBudget(@PathVariable long id) {
-        return mapToBudgetDto(budgetService.getBudget(id));
+        return budgetDtoMapper.mapBudgetToDto(budgetService.getBudget(id));
     }
 
     @PostMapping()
     public ResponseEntity<BudgetDto> saveBudget(@RequestBody BudgetDto budgetDto) {
-        Budget savedBudget = budgetService.saveBudget(mapDtoToBudget(budgetDto));
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapToBudgetDto(savedBudget));
+        Budget savedBudget = budgetService.saveBudget(budgetDtoMapper.mapBudgetDtoToEntity(budgetDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(budgetDtoMapper.mapBudgetToDto(savedBudget));
     }
 
     @PutMapping()
     public ResponseEntity<BudgetDto> updateBudget(@RequestBody BudgetDto budgetDto) {
-        Budget editedBudget = budgetService.updateBudget(mapDtoToBudget(budgetDto));
-        return ResponseEntity.status(HttpStatus.OK).body(mapToBudgetDto(editedBudget));
+        Budget editedBudget = budgetService.updateBudget(budgetDtoMapper.mapBudgetDtoToEntity(budgetDto));
+        return ResponseEntity.status(HttpStatus.OK).body(budgetDtoMapper.mapBudgetToDto(editedBudget));
     }
 
     @DeleteMapping("/{id}")

@@ -14,6 +14,7 @@ import pl.factoryofthefuture.factorymanagement.entity.User;
 import pl.factoryofthefuture.factorymanagement.entity.dto.UserLoginDto;
 import pl.factoryofthefuture.factorymanagement.entity.dto.UserRegisterDto;
 import pl.factoryofthefuture.factorymanagement.entity.dto.UserRegistrationDto;
+import pl.factoryofthefuture.factorymanagement.mapper.UserDtoMapper;
 import pl.factoryofthefuture.factorymanagement.security.model.JwtAuthResponse;
 import pl.factoryofthefuture.factorymanagement.service.UserService;
 
@@ -27,17 +28,18 @@ import static pl.factoryofthefuture.factorymanagement.mapper.UserDtoMapper.*;
 public class UserController {
 
     private final UserService userService;
+    private final UserDtoMapper userDtoMapper;
 
     @PostMapping("/register")
     public ResponseEntity<UserRegistrationDto> register(@RequestBody UserRegisterDto userRegisterDto) {
-        User registeredUser = userService.register(mapUserRegisterDtoToUser(userRegisterDto));
-        return ResponseEntity.status(HttpStatus.OK).body(mapUserRegisterDtoToUserRegistrationDto(registeredUser));
+        User registeredUser = userService.register(userDtoMapper.mapUserRegistrationDtoToEntity(userRegisterDto));
+        return ResponseEntity.status(HttpStatus.OK).body(userDtoMapper.mapUserToUserRegistrationDto(registeredUser));
     }
 
     @PostMapping("/login")
     public ResponseEntity<JwtAuthResponse> login(@RequestBody UserLoginDto userLoginDto) {
-        String token = userService.verify(mapUserLoginDtoToUser(userLoginDto));
-        return ResponseEntity.status(HttpStatus.OK).body(mapUserLoginDtoToJwtAuthResponse(token));
+        String token = userService.verify(userDtoMapper.mapUserLoginDtoToEntity(userLoginDto));
+        return ResponseEntity.status(HttpStatus.OK).body(userDtoMapper.mapTokenToJwtAuthResponse(token));
     }
 
     @GetMapping("/me")
