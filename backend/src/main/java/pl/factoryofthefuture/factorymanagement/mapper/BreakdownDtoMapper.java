@@ -1,8 +1,8 @@
 package pl.factoryofthefuture.factorymanagement.mapper;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import pl.factoryofthefuture.factorymanagement.entity.Breakdown;
 import pl.factoryofthefuture.factorymanagement.entity.Employee;
@@ -16,19 +16,20 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
+@Data
 @AllArgsConstructor
-public class BreakdownDtoMapper implements ApplicationContextAware {
+public class BreakdownDtoMapper {
 
-    private static MachineService machineService;
-    private static EmployeeService employeeService;
+    private final MachineService machineService;
+    private final EmployeeService employeeService;
 
-    public static List<BreakdownDto> mapToBreakdownDtos(List<Breakdown> breakdowns) {
+    public List<BreakdownDto> mapBreakdownsToDtos(List<Breakdown> breakdowns) {
         return breakdowns.stream()
-                .map(BreakdownDtoMapper::mapToBreakdownDto)
+                .map(this::mapBreakdownToDtos)
                 .collect(Collectors.toList());
     }
 
-    public static BreakdownDto mapToBreakdownDto(Breakdown breakdown) {
+    public BreakdownDto mapBreakdownToDtos(Breakdown breakdown) {
         return BreakdownDto.builder()
                 .id(breakdown.getId())
                 .eventDescription(breakdown.getEventDescription())
@@ -43,7 +44,7 @@ public class BreakdownDtoMapper implements ApplicationContextAware {
                 .build();
     }
 
-    public static Breakdown mapDtoToBreakdown(BreakdownDto breakdownDto) {
+    public Breakdown mapBreakdownDtoToEntity(BreakdownDto breakdownDto) {
         Machine machine = machineService.getMachine(breakdownDto.getMachineId());
         Set<Employee> employeeSet = breakdownDto.getEmployeeIds().stream()
                 .map(employeeService::getEmployee)
@@ -61,11 +62,5 @@ public class BreakdownDtoMapper implements ApplicationContextAware {
                 .machine(machine)
                 .employeeSet(employeeSet)
                 .build();
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        BreakdownDtoMapper.machineService = applicationContext.getBean(MachineService.class);
-        BreakdownDtoMapper.employeeService = applicationContext.getBean(EmployeeService.class);
     }
 }
