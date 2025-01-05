@@ -31,21 +31,24 @@ public class UserController {
     private final UserDtoMapper userDtoMapper;
 
     @PostMapping("/register")
-    public ResponseEntity<UserRegistrationDto> register(@RequestBody UserRegisterDto userRegisterDto) {
-        User registeredUser = userService.register(userDtoMapper.mapUserRegistrationDtoToEntity(userRegisterDto));
-        return ResponseEntity.status(HttpStatus.OK).body(userDtoMapper.mapUserToUserRegistrationDto(registeredUser));
+    public ResponseEntity<JwtAuthResponse> register(@RequestBody UserRegisterDto userRegisterDto) {
+        try {
+            String jwtToken = userService.register(userDtoMapper.mapUserRegistrationDtoToEntity(userRegisterDto));
+            return ResponseEntity.status(HttpStatus.OK).body(userDtoMapper.mapTokenToJwtAuthResponse(jwtToken));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userDtoMapper.mapFailedAuthResponse("Registration failed"));
+        }
     }
 
     @PostMapping("/login")
     public ResponseEntity<JwtAuthResponse> login(@RequestBody UserLoginDto userLoginDto) {
-        String token = userService.verify(userDtoMapper.mapUserLoginDtoToEntity(userLoginDto));
-        return ResponseEntity.status(HttpStatus.OK).body(userDtoMapper.mapTokenToJwtAuthResponse(token));
+        String jwtToken = userService.verify(userDtoMapper.mapUserLoginDtoToEntity(userLoginDto));
+        return ResponseEntity.status(HttpStatus.OK).body(userDtoMapper.mapTokenToJwtAuthResponse(jwtToken));
     }
 
     @GetMapping("/me")
     public Set<String> getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
         Set<String> roles = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
         return roles;
     }

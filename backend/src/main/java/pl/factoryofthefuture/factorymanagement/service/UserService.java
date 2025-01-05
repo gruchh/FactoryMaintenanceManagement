@@ -6,6 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.factoryofthefuture.factorymanagement.entity.Role;
 import pl.factoryofthefuture.factorymanagement.entity.User;
 import pl.factoryofthefuture.factorymanagement.repository.RoleRepository;
@@ -25,11 +26,26 @@ public class UserService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
 
-    public User register(User user) {
+    @Transactional
+    public String register(User user) {
+        userRepository.findByEmail(user.getEmail()).ifPresent(existingUser -> {
+            throw new IllegalStateException("User with this email already exists");
+        });
+        userRepository.findByUsername(user.getUsername()).ifPresent(existingUser -> {
+            throw new IllegalStateException("User with this username already exists");
+        });
+        String originalPassword = user.getPassword();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Role role = roleRepository.findByName("USER").orElseThrow(() -> new NoSuchElementException());
+        Role role = roleRepository.findByName("USER").orElseThrow(() -> new NoSuchElementException("Role USER not found"));
         user.setRoles(Set.of(role));
-        return userRepository.save(user);
+        userRepository.save(user);
+        User userToLogin = User.builder()
+                .username(user.getUsername())
+                .password(originalPassword)
+                .build();
+//        userToLogin.setUsername(user.getUsername());
+//        userToLogin.setPassword(originalPassword);
+        return verify(userToLogin);
     }
 
     public String verify(User user) {

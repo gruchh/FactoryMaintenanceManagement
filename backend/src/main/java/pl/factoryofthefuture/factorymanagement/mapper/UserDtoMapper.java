@@ -40,6 +40,10 @@ public class UserDtoMapper {
     }
 
     public JwtAuthResponse mapTokenToJwtAuthResponse(String token) {
-        return JwtAuthResponse.builder().accessToken(token).tokenType("Bearer").build();
+        return JwtAuthResponse.builder().accessToken(token).build();
+    }
+
+    public JwtAuthResponse mapFailedAuthResponse(String message) {
+        return JwtAuthResponse.builder().accessToken(message).build();
     }
 }
