@@ -10,18 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import pl.factoryofthefuture.factorymanagement.entity.User;
 import pl.factoryofthefuture.factorymanagement.entity.dto.UserLoginDto;
 import pl.factoryofthefuture.factorymanagement.entity.dto.UserRegisterDto;
-import pl.factoryofthefuture.factorymanagement.entity.dto.UserRegistrationDto;
 import pl.factoryofthefuture.factorymanagement.mapper.UserDtoMapper;
 import pl.factoryofthefuture.factorymanagement.security.model.JwtAuthResponse;
 import pl.factoryofthefuture.factorymanagement.service.UserService;
 
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static pl.factoryofthefuture.factorymanagement.mapper.UserDtoMapper.*;
 
 @RestController
 @RequiredArgsConstructor

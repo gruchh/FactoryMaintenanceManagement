@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import pl.factoryofthefuture.factorymanagement.entity.User;
 import pl.factoryofthefuture.factorymanagement.entity.dto.UserLoginDto;
 import pl.factoryofthefuture.factorymanagement.entity.dto.UserRegisterDto;
-import pl.factoryofthefuture.factorymanagement.entity.dto.UserRegistrationDto;
 import pl.factoryofthefuture.factorymanagement.security.model.JwtAuthResponse;
 import pl.factoryofthefuture.factorymanagement.service.UserService;
 
@@ -29,13 +28,6 @@ public class UserDtoMapper {
         return User.builder()
                 .username(userLoginDto.getUsername())
                 .password(userLoginDto.getPassword())
-                .build();
-    }
-
-    public UserRegistrationDto mapUserToUserRegistrationDto(User registeredUser) {
-        return UserRegistrationDto.builder()
-                .username(registeredUser.getUsername())
-                .email(registeredUser.getEmail())
                 .build();
     }
 
