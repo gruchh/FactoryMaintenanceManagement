@@ -10,7 +10,7 @@ import {
   GET_USER_SUCCESS,
   GET_USER_FAILURE,
   LOGOUT_REQUEST,
-  LOGOUT_SUCCESS
+  LOGOUT_SUCCESS,
 } from "./ActionsType";
 import { api, API_URL } from "../../Config/Api";
 
@@ -82,6 +82,7 @@ export const logout = () => {
     dispatch({ type: LOGOUT_REQUEST });
     try {
       dispatch({ type: LOGOUT_SUCCESS });
+      localStorage.clear();
       console.log("logout success");
     } catch (error) {
       console.log("error ", error);
