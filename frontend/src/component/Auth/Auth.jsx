@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { RegisterForm } from "./RegisterForm";
 import { LoginForm } from "./LoginForm";
 
-export const Auth = () => {
+const Auth = () => {
   const style = {
     position: "absolute",
     top: "50%",
@@ -18,30 +18,35 @@ export const Auth = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const isOpen =
+    location.pathname === "/account/login" ||
+    location.pathname === "/account/register";
 
   const handleClose = () => {
     navigate(-1);
   };
 
+  const renderForm = () => {
+    switch (location.pathname) {
+      case "/account/login":
+        return <LoginForm />;
+      case "/account/register":
+        return <RegisterForm />;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div>
-      <Modal
-        open={
-          location.pathname === "/account/login" ||
-          location.pathname === "/account/register"
-        }
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          {location.pathname === "/account/register" ? (
-            <RegisterForm />
-          ) : (
-            <LoginForm />
-          )}
-        </Box>
-      </Modal>
-    </div>
+    <Modal
+      open={isOpen}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={style}>{renderForm()}</Box>
+    </Modal>
   );
 };
+
+export default Auth;
