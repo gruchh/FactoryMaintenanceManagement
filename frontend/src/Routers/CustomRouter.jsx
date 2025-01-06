@@ -33,8 +33,8 @@ export const CustomRouter = () => {
           <Route path="workers" element={<ProfileWorkers />} />
         </Route>
         <Route path="/account/login" element={<Auth />} />
+        <Route path="/account/register" element={<Auth />} />
       </Routes>
-      <Auth />
     </>
   );
 };
