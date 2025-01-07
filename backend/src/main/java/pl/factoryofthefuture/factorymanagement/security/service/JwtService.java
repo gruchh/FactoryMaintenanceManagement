@@ -7,14 +7,12 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import pl.factoryofthefuture.factorymanagement.entity.Role;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 @Service
@@ -36,8 +34,10 @@ public class JwtService {
         }
     }
 
-    public String generateToken(String username) {
+        public String generateToken(String username, String email, Set<Role> roles) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("email", email);
+        claims.put("roles", roles);
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(username)
@@ -55,12 +55,12 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
-    private <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
+    public <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
         final Claims claims = extractAllClaims(token);
         return claimResolver.apply(claims);
     }
 
-    private Claims extractAllClaims(String token) {
+    public Claims extractAllClaims(String token) {
         return Jwts.parser()
                 .verifyWith(getKey())
                 .build()

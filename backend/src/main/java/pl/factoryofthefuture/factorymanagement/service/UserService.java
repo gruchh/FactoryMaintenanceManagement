@@ -42,6 +42,8 @@ public class UserService {
         User userToLogin = User.builder()
                 .username(user.getUsername())
                 .password(originalPassword)
+                .email(user.getEmail())
+                .roles(Set.of(role))
                 .build();
 //        userToLogin.setUsername(user.getUsername());
 //        userToLogin.setPassword(originalPassword);
@@ -51,7 +53,7 @@ public class UserService {
     public String verify(User user) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
         if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(user.getUsername());
+            return jwtService.generateToken(user.getUsername(), user.getEmail(), user.getRoles());
         } else {
             return "fail";
         }
