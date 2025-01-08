@@ -14,7 +14,8 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Builder.Default
+    private long id = 0;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -22,7 +23,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String password;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String email;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

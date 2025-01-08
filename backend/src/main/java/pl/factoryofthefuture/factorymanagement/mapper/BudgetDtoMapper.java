@@ -22,6 +22,7 @@ public class BudgetDtoMapper {
 
     public BudgetDto mapBudgetToDto(Budget budget) {
         return BudgetDto.builder()
+                .id(budget.getId())
                 .month(budget.getMonth())
                 .year(budget.getYear())
                 .budgetAmount(budget.getBudgetAmount())
