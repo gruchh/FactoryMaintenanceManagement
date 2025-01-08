@@ -1,7 +1,9 @@
 import { Button, TextField, Typography } from "@mui/material";
 import { Field, Form, Formik } from "formik";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { registerUser } from "../State/Authentication/Actions";
 
 export const RegisterForm = () => {
   const initialValues = {
@@ -12,9 +14,10 @@ export const RegisterForm = () => {
   };
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = (values) => {
-    console.log(values);
+    dispatch(registerUser({userData:values, navigate}));
   };
 
   const validationSchema = Yup.object({

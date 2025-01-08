@@ -1,8 +1,7 @@
 package pl.factoryofthefuture.factorymanagement.mapper;
 
 import lombok.AllArgsConstructor;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+import lombok.Data;
 import org.springframework.stereotype.Component;
 import pl.factoryofthefuture.factorymanagement.entity.Breakdown;
 import pl.factoryofthefuture.factorymanagement.entity.Employee;
@@ -14,19 +13,20 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
+@Data
 @AllArgsConstructor
-public class EmployeeDtoMapper implements ApplicationContextAware {
+public class EmployeeDtoMapper {
 
-    private static BreakdownService breakdownService;
+    private final BreakdownService breakdownService;
 
-    public static List<EmployeeDto> mapToEmployeeDtos(List<Employee> employees) {
+    public List<EmployeeDto> mapEmployeesToDtos(List<Employee> employees) {
 
         return employees.stream()
-                .map(EmployeeDtoMapper::mapToEmployeeDto)
+                .map(this::mapEmployeeToDto)
                 .collect(Collectors.toList());
     }
 
-    public static EmployeeDto mapToEmployeeDto(Employee employee) {
+    public EmployeeDto mapEmployeeToDto(Employee employee) {
         return EmployeeDto.builder()
                 .id(employee.getId())
                 .name(employee.getName())
@@ -44,7 +44,7 @@ public class EmployeeDtoMapper implements ApplicationContextAware {
                 .build();
     }
 
-    public static Employee mapDtoToEmployee(EmployeeDto employeeDto) {
+    public Employee mapEmployeeDtoToEntity(EmployeeDto employeeDto) {
         Set<Breakdown> breakdownSet = breakdownService.findBreakdownsById(employeeDto.getBreakdownIds());
         return Employee.builder()
                 .name(employeeDto.getName())
@@ -60,10 +60,5 @@ public class EmployeeDtoMapper implements ApplicationContextAware {
                 .assesmentDate(employeeDto.getAssessmentDate())
                 .breakdownsSet(breakdownSet)
                 .build();
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        breakdownService = applicationContext.getBean(BreakdownService.class);
     }
 }

@@ -1,7 +1,9 @@
 import { Button, TextField, Typography } from "@mui/material";
 import { Field, Form, Formik } from "formik";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { loginUser } from "../State/Authentication/Actions";
 
 export const LoginForm = () => {
   const initialValues = {
@@ -9,9 +11,12 @@ export const LoginForm = () => {
     password: "",
   };
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleSubmit = (values) => {
-    console.log(values);
+    dispatch(loginUser({userData:values, navigate}));
   };
+
+
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email("Invalid email format")

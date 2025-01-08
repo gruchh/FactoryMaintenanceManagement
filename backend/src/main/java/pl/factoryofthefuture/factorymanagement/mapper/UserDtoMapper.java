@@ -1,50 +1,33 @@
 package pl.factoryofthefuture.factorymanagement.mapper;
 
 import lombok.AllArgsConstructor;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+import lombok.Data;
 import org.springframework.stereotype.Component;
 import pl.factoryofthefuture.factorymanagement.entity.User;
-import pl.factoryofthefuture.factorymanagement.entity.dto.UserLoginDto;
-import pl.factoryofthefuture.factorymanagement.entity.dto.UserRegisterDto;
-import pl.factoryofthefuture.factorymanagement.entity.dto.UserRegistrationDto;
+import pl.factoryofthefuture.factorymanagement.entity.dto.UserDto;
 import pl.factoryofthefuture.factorymanagement.security.model.JwtAuthResponse;
 import pl.factoryofthefuture.factorymanagement.service.UserService;
 
 @Component
+@Data
 @AllArgsConstructor
-public class UserDtoMapper implements ApplicationContextAware {
+public class UserDtoMapper {
 
-    private static UserService userService;
+    private final UserService userService;
 
-    public static User mapUserRegisterDtoToUser(UserRegisterDto userRegisterDto) {
+    public User mapUserDtoToEntity(UserDto userDto) {
         return User.builder()
-                .username(userRegisterDto.getUsername())
-                .password(userRegisterDto.getPassword())
-                .email(userRegisterDto.getEmail())
+                .username(userDto.getUsername())
+                .password(userDto.getPassword())
+                .email(userDto.getEmail())
                 .build();
     }
 
-    public static User mapUserLoginDtoToUser(UserLoginDto userLoginDto) {
-        return User.builder()
-                .username(userLoginDto.getUsername())
-                .password(userLoginDto.getPassword())
-                .build();
+    public JwtAuthResponse mapTokenToJwtAuthResponse(String token) {
+        return JwtAuthResponse.builder().accessToken(token).build();
     }
 
-    public static UserRegistrationDto mapUserRegisterDtoToUserRegistrationDto(User registeredUser) {
-        return UserRegistrationDto.builder()
-                .username(registeredUser.getUsername())
-                .email(registeredUser.getEmail())
-                .build();
-    }
-
-    public static JwtAuthResponse mapUserLoginDtoToJwtAuthResponse(String token) {
-        return JwtAuthResponse.builder().accessToken(token).tokenType("Bearer").build();
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        userService = applicationContext.getBean(UserService.class);
+    public JwtAuthResponse mapFailedAuthResponse(String message) {
+        return JwtAuthResponse.builder().accessToken(message).build();
     }
 }

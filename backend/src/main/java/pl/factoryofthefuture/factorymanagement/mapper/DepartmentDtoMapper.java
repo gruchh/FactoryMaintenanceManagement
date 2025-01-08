@@ -1,8 +1,8 @@
 package pl.factoryofthefuture.factorymanagement.mapper;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import pl.factoryofthefuture.factorymanagement.entity.Department;
 import pl.factoryofthefuture.factorymanagement.entity.Machine;
@@ -14,18 +14,19 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
+@Data
 @AllArgsConstructor
-public class DepartmentDtoMapper implements ApplicationContextAware {
+public class DepartmentDtoMapper {
 
-    private static MachineService machineService;
+    private final MachineService machineService;
 
-    public static List<DepartmentDto> mapToDepartmentDtos(List<Department> departments) {
+    public List<DepartmentDto> mapDepartmentDtosToEntities(List<Department> departments) {
         return departments.stream()
-                .map(DepartmentDtoMapper::mapToDepartmentDto)
+                .map(this::mapDepartmentToDto)
                 .collect(Collectors.toList());
     }
 
-    public static DepartmentDto mapToDepartmentDto(Department department) {
+    public DepartmentDto mapDepartmentToDto(Department department) {
         return DepartmentDto.builder()
                 .id(department.getId())
                 .fullName(department.getFullName())
@@ -35,7 +36,7 @@ public class DepartmentDtoMapper implements ApplicationContextAware {
                 .build();
     }
 
-    public static Department mapDtoToDepartment(DepartmentDto departmentDto) {
+    public Department mapDepartmentDtoToEntity(DepartmentDto departmentDto) {
         Set<Machine> machineSet = machineService.findMachinesById(departmentDto.getMachineIds());
         return Department.builder()
                 .fullName(departmentDto.getFullName())
@@ -43,10 +44,5 @@ public class DepartmentDtoMapper implements ApplicationContextAware {
                 .creationDate(departmentDto.getCreationDate())
                 .machineSet(machineSet)
                 .build();
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        DepartmentDtoMapper.machineService = applicationContext.getBean(MachineService.class);
     }
 }

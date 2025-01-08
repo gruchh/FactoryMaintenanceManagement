@@ -1,8 +1,7 @@
 package pl.factoryofthefuture.factorymanagement.mapper;
 
 import lombok.AllArgsConstructor;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+import lombok.Data;
 import org.springframework.stereotype.Component;
 import pl.factoryofthefuture.factorymanagement.entity.Department;
 import pl.factoryofthefuture.factorymanagement.entity.Machine;
@@ -13,18 +12,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@Data
 @AllArgsConstructor
-public class MachineDtoMapper implements ApplicationContextAware {
+public class MachineDtoMapper {
 
-    private static DepartmentService departmantService;
+    private final DepartmentService departmantService;
 
-    public static List<MachineDto> mapToMachineDtos(List<Machine> machines) {
+    public List<MachineDto> mapMachinesToDtos(List<Machine> machines) {
         return machines.stream()
-                .map(MachineDtoMapper::mapToMachineDto)
+                .map(this::mapMachineToDto)
                 .collect(Collectors.toList());
     }
 
-    public static MachineDto mapToMachineDto(Machine machine) {
+    public MachineDto mapMachineToDto(Machine machine) {
         return MachineDto.builder()
                 .id(machine.getId())
                 .name(machine.getName())
@@ -36,7 +36,7 @@ public class MachineDtoMapper implements ApplicationContextAware {
                 .build();
     }
 
-    public static Machine mapDtoToMachine(MachineDto machineDto) {
+    public Machine mapDtoToMachine(MachineDto machineDto) {
         Department department = departmantService.getDepartment(machineDto.getDepartmentId());
         return Machine.builder()
                 .name(machineDto.getName())
@@ -47,10 +47,4 @@ public class MachineDtoMapper implements ApplicationContextAware {
                 .department(department)
                 .build();
     }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        departmantService = applicationContext.getBean(DepartmentService.class);
-    }
-
 }

@@ -1,29 +1,35 @@
 package pl.factoryofthefuture.factorymanagement.mapper;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.springframework.stereotype.Component;
 import pl.factoryofthefuture.factorymanagement.entity.Budget;
 import pl.factoryofthefuture.factorymanagement.entity.dto.BudgetDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Component
+@Data
+@AllArgsConstructor
 public class BudgetDtoMapper {
 
-    public static List<BudgetDto> mapToBudgetDtos(List<Budget> machines) {
+    public List<BudgetDto> mapBudgetsToDtos(List<Budget> machines) {
         return machines.stream()
-                .map(BudgetDtoMapper::mapToBudgetDto)
+                .map(this::mapBudgetToDto)
                 .collect(Collectors.toList());
     }
 
-    public static BudgetDto mapToBudgetDto(Budget budget) {
+    public BudgetDto mapBudgetToDto(Budget budget) {
         return BudgetDto.builder()
+                .id(budget.getId())
                 .month(budget.getMonth())
                 .year(budget.getYear())
                 .budgetAmount(budget.getBudgetAmount())
                 .build();
     }
 
-    public static Budget mapDtoToBudget(BudgetDto budgetDto) {
+    public Budget mapBudgetDtoToEntity(BudgetDto budgetDto) {
         return Budget.builder()
                 .id(budgetDto.getId())
                 .month(budgetDto.getMonth())

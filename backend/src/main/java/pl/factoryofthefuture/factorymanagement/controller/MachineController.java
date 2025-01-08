@@ -6,11 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.factoryofthefuture.factorymanagement.entity.Machine;
 import pl.factoryofthefuture.factorymanagement.entity.dto.MachineDto;
+import pl.factoryofthefuture.factorymanagement.mapper.MachineDtoMapper;
 import pl.factoryofthefuture.factorymanagement.service.MachineService;
 
 import java.util.List;
-
-import static pl.factoryofthefuture.factorymanagement.mapper.MachineDtoMapper.*;
 
 @RestController()
 @RequestMapping("/machines")
@@ -18,27 +17,28 @@ import static pl.factoryofthefuture.factorymanagement.mapper.MachineDtoMapper.*;
 public class MachineController {
 
     private final MachineService machineService;
+    private final MachineDtoMapper machineDtoMapper;
 
     @GetMapping()
     public List<MachineDto> getMachines() {
-        return mapToMachineDtos(machineService.getMachine());
+        return machineDtoMapper.mapMachinesToDtos(machineService.getMachine());
     }
 
     @GetMapping("/{id}")
     public MachineDto getMachine(@PathVariable long id) {
-        return mapToMachineDto(machineService.getMachine(id));
+        return machineDtoMapper.mapMachineToDto(machineService.getMachine(id));
     }
 
     @PostMapping()
     public ResponseEntity<MachineDto> saveMachine(@RequestBody MachineDto machineDto) {
-        Machine saveMachine = machineService.saveMachine(mapDtoToMachine(machineDto));
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapToMachineDto(saveMachine));
+        Machine saveMachine = machineService.saveMachine(machineDtoMapper.mapDtoToMachine(machineDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(machineDtoMapper.mapMachineToDto(saveMachine));
     }
 
     @PutMapping()
     public ResponseEntity<MachineDto> updateMachine(@RequestBody MachineDto machineDto) {
-        Machine editedMachine = machineService.updateMachine(mapDtoToMachine(machineDto));
-        return ResponseEntity.status(HttpStatus.OK).body(mapToMachineDto(editedMachine));
+        Machine editedMachine = machineService.updateMachine(machineDtoMapper.mapDtoToMachine(machineDto));
+        return ResponseEntity.status(HttpStatus.OK).body(machineDtoMapper.mapMachineToDto(editedMachine));
     }
 
     @DeleteMapping("/{id}")
