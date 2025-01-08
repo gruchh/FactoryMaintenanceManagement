@@ -1,7 +1,6 @@
+import FactoryCardList from "./FactoryCardList";
 import "./Home.css";
 import MultiItemCarousel from "./MultiItemCarousel";
-import BreakdownCardList from "./BreakdownCardList";
-import FactoryCardList from "./FactoryCardList";
 
 const Home = () => {
   return (
@@ -22,7 +21,6 @@ const Home = () => {
         <MultiItemCarousel />
       </section>
       <section className="px-5 lg:px-20 pt-10">
-        {/* <BreakdownCardList /> */}
         <FactoryCardList />
       </section>
     </div>
