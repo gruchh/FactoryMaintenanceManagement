@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import pl.factoryofthefuture.factorymanagement.entity.dto.UserDto;
 import pl.factoryofthefuture.factorymanagement.mapper.UserDtoMapper;
@@ -16,6 +15,7 @@ import pl.factoryofthefuture.factorymanagement.security.service.JwtService;
 import pl.factoryofthefuture.factorymanagement.service.UserService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -43,28 +43,28 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userDtoMapper.mapTokenToJwtAuthResponse(jwtToken));
     }
 
-
     @GetMapping("/getUser")
     public ResponseEntity<UserDto> getUser(@RequestHeader("Authorization") String token) {
         try {
             String tokenValue = token.replace("Bearer ", "");
             String username = jwtService.extractUsername(tokenValue);
             Claims claims = jwtService.extractAllClaims(tokenValue);
-            List<String> rolesList = claims.get("roles", List.class);
-//            Set<String> roles = rolesList.stream().map(String::valueOf) .collect(Collectors.toSet());
+            List<Map<String, Object>> rolesList = claims.get("roles", List.class);
+            Set<String> roles = rolesList.stream()
+                    .map(role -> role.get("name").toString())
+                    .collect(Collectors.toSet());
             String email = claims.get("email", String.class);
             UserDto userDto = UserDto.builder()
                     .id(1)
                     .email(email)
                     .username(username)
+                    .roles(roles)
                     .build();
-
-            return ResponseEntity.ok(userDto);
+            return ResponseEntity.status(HttpStatus.OK).body(userDto);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
-
 
     @GetMapping("/me")
     public Set<String> getCurrentUser() {

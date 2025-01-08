@@ -45,8 +45,6 @@ public class UserService {
                 .email(user.getEmail())
                 .roles(Set.of(role))
                 .build();
-//        userToLogin.setUsername(user.getUsername());
-//        userToLogin.setPassword(originalPassword);
         return verify(userToLogin);
     }
 
