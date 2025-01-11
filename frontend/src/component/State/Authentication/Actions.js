@@ -11,7 +11,7 @@ import {
   GET_USER_FAILURE,
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
-} from "./ActionsType";
+} from "./ActionTypes";
 import { api, API_URL } from "../../Config/Api";
 
 export const registerUser = (credentials) => {

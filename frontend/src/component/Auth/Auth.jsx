@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { RegisterForm } from "./RegisterForm";
 import { LoginForm } from "./LoginForm";
 
-const Auth = () => {
+export const Auth = () => {
   const style = {
     position: "absolute",
     top: "50%",

@@ -12,3 +12,4 @@ export const GET_USER_FAILURE = 'GET_USER_FAILURE';
 
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGOUT = 'LOGOUT';
