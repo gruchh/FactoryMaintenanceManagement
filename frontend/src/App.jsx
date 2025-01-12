@@ -1,22 +1,28 @@
-import { CssBaseline, ThemeProvider } from "@mui/material";
 import "./App.css";
-import { darkTheme } from "./Theme/DarkTheme";
-import { CustomRouter } from "./Routers/CustomRouter";
+import { CssBaseline } from "@mui/material";
 import { BrowserRouter } from "react-router-dom";
-import { Provider } from "react-redux";
-import { store } from "./component/State/store";
+import { CustomRouter } from "./Routers/CustomRouter";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "./component/State/Authentication/authActions";
 
 function App() {
+
+  const dispatch = useDispatch();
+  const jwt = localStorage.getItem("jwt");
+  const auth = useSelector(store => store.auth);
+
+  useEffect(() => {
+    dispatch(getUser(auth.jwt || jwt));
+  }, [auth.jwt, dispatch, jwt]);
+
+
   return (
     <div className="App">
-      <ThemeProvider theme={darkTheme}>
-        <CssBaseline />
-        <BrowserRouter>
-          <Provider store={store}>
-            <CustomRouter />
-          </Provider>
-        </BrowserRouter>
-      </ThemeProvider>
+      <CssBaseline />
+      <BrowserRouter>
+        <CustomRouter />
+      </BrowserRouter>
     </div>
   );
 }

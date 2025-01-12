@@ -1,14 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+const initialState = {
+  user: null,
+  loading: false,
+  error: null,
+  jwt: null,
+  success: null,
+};
+
 export const authSlice = createSlice({
   name: 'auth',
-  initialState: {
-    user: null,
-    loading: false,
-    error: null,
-    jwt: null,
-    success: null,
-  },
+  initialState: initialState,
   reducers: {
     registerRequest: (state) => {
       state.loading = true;
