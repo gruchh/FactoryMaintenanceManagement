@@ -45,6 +45,7 @@ public class UserController {
 
     @GetMapping("/getUser")
     public ResponseEntity<UserDto> getUser(@RequestHeader("Authorization") String token) {
+        System.out.println(token);
         try {
             String tokenValue = token.replace("Bearer ", "");
             String username = jwtService.extractUsername(tokenValue);
@@ -64,7 +65,7 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-    }
+//    }
 
     @GetMapping("/me")
     public Set<String> getCurrentUser() {
