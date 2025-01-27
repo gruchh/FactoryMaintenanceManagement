@@ -3,10 +3,11 @@ import { Field, Form, Formik } from "formik";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { registerUser } from "../State/Authentication/authActions";
 
 export const RegisterForm = () => {
   const initialValues = {
-    fullName: "",
+    username: "",
     email: "",
     password: "",
     role: "ROLE_USER",
@@ -17,10 +18,11 @@ export const RegisterForm = () => {
 
   const handleSubmit = (values) => {
     console.log(values);
+    dispatch(registerUser({ userData: values }));
   };
 
   const validationSchema = Yup.object({
-    fullName: Yup.string()
+    username: Yup.string()
       .required("Full name is required")
       .min(5, "Full name must be at least 5 characters long"),
     email: Yup.string()
@@ -44,8 +46,8 @@ export const RegisterForm = () => {
           <Form>
             <Field
               as={TextField}
-              name="fullName"
-              label="FullName"
+              name="username"
+              label="UserName"
               fullWidth
               variant="outlined"
               margin="normal"

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   user: null,
@@ -10,14 +10,9 @@ const initialState = {
 
 export const authSlice = createSlice({
   name: 'auth',
-  initialState: initialState,
+  initialState,
   reducers: {
     registerRequest: (state) => {
-      state.loading = true;
-      state.error = null;
-      state.success = null;
-    },
-    loginRequest: (state) => {
       state.loading = true;
       state.error = null;
       state.success = null;
@@ -28,6 +23,16 @@ export const authSlice = createSlice({
       state.jwt = action.payload.jwt || null;
       state.error = null;
       state.success = true;
+    },    
+    registerFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+      state.success = null;
+    },    
+    loginRequest: (state) => {
+      state.loading = true;
+      state.error = null;
+      state.success = null;
     },
     loginSuccess: (state, action) => {
       state.loading = false;
@@ -36,21 +41,9 @@ export const authSlice = createSlice({
       state.error = null;
       state.success = true;
     },
-    registerFailure: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-      state.success = null;
-    },
     loginFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload;
-      state.success = null;
-    },
-    logout: (state) => {
-      state.user = null;
-      state.loading = false;
-      state.error = null;
-      state.jwt = null;
       state.success = null;
     },
     getUserRequest: (state) => {
@@ -63,9 +56,21 @@ export const authSlice = createSlice({
       state.user = action.payload.user || null;
       state.error = null;
       state.success = true;
-    }
+    },
+    getUserFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+      state.success = null;
+    },
+    logoutSuccess: (state) => {
+      state.user = null;
+      state.loading = false;
+      state.error = null;
+      state.jwt = null;
+      state.success = null;
+    },
   },
-})
+});
 
 export const { 
   registerRequest, 
@@ -74,9 +79,10 @@ export const {
   loginRequest, 
   loginSuccess, 
   loginFailure, 
-  logout, 
   getUserRequest,
-  getUserSuccess
+  getUserSuccess,
+  getUserFailure,
+  logoutSuccess, 
 } = authSlice.actions;
 
 export default authSlice.reducer;
