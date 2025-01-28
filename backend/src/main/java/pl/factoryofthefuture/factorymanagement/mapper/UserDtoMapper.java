@@ -17,6 +17,7 @@ public class UserDtoMapper {
 
     public User mapUserDtoToEntity(UserDto userDto) {
         return User.builder()
+                .id(null)
                 .username(userDto.getUsername())
                 .password(userDto.getPassword())
                 .email(userDto.getEmail())

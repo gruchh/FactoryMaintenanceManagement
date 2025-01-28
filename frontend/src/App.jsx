@@ -13,9 +13,9 @@ function App() {
   const auth = useSelector(store => store.auth);
 
   useEffect(() => {
+    console.log("getUser is called with:", auth.jwt || jwt || dispatch);
     dispatch(getUser(auth.jwt || jwt));
   }, [auth.jwt, dispatch, jwt]);
-
 
   return (
     <div className="App">

@@ -56,7 +56,6 @@ public class UserController {
                     .collect(Collectors.toSet());
             String email = claims.get("email", String.class);
             UserDto userDto = UserDto.builder()
-                    .id(1)
                     .email(email)
                     .username(username)
                     .roles(roles)
@@ -65,7 +64,7 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-//    }
+    }
 
     @GetMapping("/me")
     public Set<String> getCurrentUser() {
