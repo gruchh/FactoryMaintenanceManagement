@@ -17,8 +17,8 @@ export const RegisterForm = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values) => {
-    console.log(values);
     dispatch(registerUser({ userData: values }));
+    navigate("/");
   };
 
   const validationSchema = Yup.object({

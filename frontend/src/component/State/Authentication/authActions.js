@@ -1,37 +1,85 @@
 import { api, API_URL } from "../../Config/Api";
-import { getUserFailure, getUserRequest, getUserSuccess } from "./AuthSlice";
+import {
+  getUserFailure,
+  getUserRequest,
+  getUserSuccess,
+  loginFailure,
+  loginRequest,
+  loginSuccess,
+  logoutSuccess,
+  registerFailure,
+  registerRequest,
+  registerSuccess,
+} from "./AuthSlice";
 
 export const registerUser = (data) => async (dispatch) => {
-  console.log(data);
-  dispatch(getUserRequest());
+  dispatch(registerRequest());
   try {
     const { data: responseData } = await api.post(
       `${API_URL}/register`,
       data.userData
     );
+    console.log('response');
     console.log(responseData);
+    if (responseData.accessToken) {
+      localStorage.setItem("jwt", responseData.accessToken);
+      dispatch(registerSuccess({
+        jwt: responseData.accessToken
+      }));
+    }
   } catch (error) {
+    dispatch(registerFailure({ message: error.message }));
     console.log(error);
   }
+};
+
+export const loginUser = (data) => async (dispatch) => {
+  dispatch(loginRequest());
+  try {
+    const { data: responseData } = await api.post(
+      `${API_URL}/login`,
+      data.userData
+    );
+
+    if (responseData.accessToken) {
+      localStorage.setItem("jwt", responseData.accessToken);
+      dispatch(loginSuccess({
+        username: responseData.user.username,
+        email: responseData.user.email,
+        roles: responseData.user.roles || [], // Upewnij się, że to jest tablica
+        jwt: responseData.accessToken
+      }));
+    }
+  } catch (error) {
+    dispatch(loginFailure({ message: error.message }));
+    console.log(error);
+  }
+};
+
+export const logoutUser = () => (dispatch) => {
+  localStorage.removeItem("jwt");
+  dispatch(logoutSuccess());
 };
 
 export const getUser = (jwt) => {
   return async (dispatch) => {
     dispatch(getUserRequest());
-
     if (!jwt) {
       console.error("JWT is null. Returning user with null values.");
-      dispatch(getUserSuccess({ user: null }));
+      dispatch(getUserSuccess({ username: null, email: null, roles: [] }));
       return;
     }
-
     try {
       const res = await api.get(`${API_URL}/getUser`, {
         headers: {
           Authorization: `Bearer ${jwt}`,
         },
       });
-      dispatch(getUserSuccess({ user: res.data }));
+      dispatch(getUserSuccess({
+        username: res.data.username,
+        email: res.data.email,
+        roles: res.data.roles || [] 
+      }));
     } catch (error) {
       console.error("Error fetching user:", error);
       dispatch(getUserFailure({ message: error.message }));

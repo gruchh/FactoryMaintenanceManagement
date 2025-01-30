@@ -10,11 +10,10 @@ function App() {
 
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt");
-  const auth = useSelector(store => store.auth);
+  const { auth } = useSelector((store) => store);
 
   useEffect(() => {
-    console.log("getUser is called with:", auth.jwt || jwt || dispatch);
-    dispatch(getUser(auth.jwt || jwt));
+    dispatch(getUser(jwt));
   }, [auth.jwt, dispatch, jwt]);
 
   return (
