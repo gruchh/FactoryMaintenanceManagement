@@ -15,17 +15,14 @@ export const Auth = () => {
     boxShadow: 24,
     p: 4,
   };
-
   const navigate = useNavigate();
   const location = useLocation();
   const isOpen =
     location.pathname === "/account/login" ||
     location.pathname === "/account/register";
-
   const handleClose = () => {
     navigate(-1);
   };
-
   const renderForm = () => {
     switch (location.pathname) {
       case "/account/login":

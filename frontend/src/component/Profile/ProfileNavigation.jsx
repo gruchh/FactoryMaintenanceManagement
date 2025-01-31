@@ -4,6 +4,8 @@ import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
 import { Divider, Drawer, useMediaQuery } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../State/Authentication/authActions";
 
 const menu = [
   { title: "Profile", icon: <WorkOutlineOutlinedIcon />, destiny: "" },
@@ -23,17 +25,31 @@ const menu = [
     icon: <BookmarkBorderOutlinedIcon />,
     destiny: "workers",
   },
+  {
+    title: "Logout",
+    icon: <BookmarkBorderOutlinedIcon />,
+    destiny: "logout",
+  },
 ];
 
 export const ProfileNavigation = ({ open, handleClose }) => {
   const componentPrefix = "/profile/";
+  const actualLocation = useLocation();
   const isSmallScreen = useMediaQuery("(max-width:900px)");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleNavigate = (navigateDestiny) => {
-    navigate(componentPrefix + navigateDestiny.destiny.toLowerCase());
+    switch (navigateDestiny.destiny.toLowerCase()) {
+      case "logout":
+        dispatch(logoutUser());
+        navigate("/");
+        break;
+      default:
+        navigate(componentPrefix + navigateDestiny.destiny.toLowerCase());
+        break;
+    }
   };
-  const actualLocation = useLocation();
-  
+
   return (
     <div>
       <Drawer

@@ -38,7 +38,7 @@ export const Navbar = () => {
               onClick={() => handleAvatarClick()}
               sx={{ bgColor: "white", color: "pink.A400" }}
             >
-              {isLoggedIn.toUpperCase()}
+              {isLoggedIn.toUpperCase().charAt(0)}
             </Avatar>
           ) : (
             <IconButton onClick={() => handleLogin()} aria-label="login">
