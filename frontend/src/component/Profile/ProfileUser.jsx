@@ -2,12 +2,14 @@ import Face6Icon from "@mui/icons-material/Face6";
 import { Button } from "@mui/material";
 import { logoutUser } from "../State/Authentication/authActions";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const ProfileUser = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
-    logoutUser();
+    dispatch(logoutUser());
     navigate("/");
   };
 

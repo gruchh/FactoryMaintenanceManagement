@@ -33,6 +33,7 @@ export const ProfileNavigation = ({ open, handleClose }) => {
     navigate(componentPrefix + navigateDestiny.destiny.toLowerCase());
   };
   const actualLocation = useLocation();
+  
   return (
     <div>
       <Drawer

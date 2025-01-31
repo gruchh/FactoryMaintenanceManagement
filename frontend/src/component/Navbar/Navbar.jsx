@@ -6,23 +6,23 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
-  const { auth } = useSelector((store) => store);
+  const auth= useSelector((store) => store.auth);
   const navigate = useNavigate();
-
   const handleLogin = () => {
     navigate("/account/login");
   };
-
   const handleAvatarClick = () => {
     navigate("/profile");
   };
-
+  const handleLogoClick = () => {
+    navigate("/");
+  }
   const isLoggedIn = auth.user.username;
 
   return (
     <Box className="px-5 top-0 z-50 py-[.8rem] bg-[#543671] lg:px-20 lg:py-3 flex justify-between">
       <div className="lg:mr-10 cursor-pointer flex items-center space-x-4">
-        <li className="logo font-semibold text-gray-500 text-2xl list-none">
+        <li onClick={() => handleLogoClick()}className="logo font-semibold text-gray-500 text-2xl list-none">
           Maintenance management
         </li>
       </div>

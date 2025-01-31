@@ -19,13 +19,13 @@ export const registerUser = (data) => async (dispatch) => {
       `${API_URL}/register`,
       data.userData
     );
-    console.log('response');
-    console.log(responseData);
     if (responseData.accessToken) {
       localStorage.setItem("jwt", responseData.accessToken);
-      dispatch(registerSuccess({
-        jwt: responseData.accessToken
-      }));
+      dispatch(
+        registerSuccess({
+          jwt: responseData.accessToken,
+        })
+      );
     }
   } catch (error) {
     dispatch(registerFailure({ message: error.message }));
@@ -40,15 +40,16 @@ export const loginUser = (data) => async (dispatch) => {
       `${API_URL}/login`,
       data.userData
     );
-
     if (responseData.accessToken) {
       localStorage.setItem("jwt", responseData.accessToken);
-      dispatch(loginSuccess({
-        username: responseData.user.username,
-        email: responseData.user.email,
-        roles: responseData.user.roles || [], // Upewnij się, że to jest tablica
-        jwt: responseData.accessToken
-      }));
+      dispatch(
+        loginSuccess({
+          username: responseData.user.username,
+          email: responseData.user.email,
+          roles: responseData.user.roles || [],
+          jwt: responseData.accessToken,
+        })
+      );
     }
   } catch (error) {
     dispatch(loginFailure({ message: error.message }));
@@ -56,7 +57,7 @@ export const loginUser = (data) => async (dispatch) => {
   }
 };
 
-export const logoutUser = () => (dispatch) => {
+export const logoutUser = () => (dispatch)=> {
   localStorage.removeItem("jwt");
   dispatch(logoutSuccess());
 };
@@ -75,11 +76,13 @@ export const getUser = (jwt) => {
           Authorization: `Bearer ${jwt}`,
         },
       });
-      dispatch(getUserSuccess({
-        username: res.data.username,
-        email: res.data.email,
-        roles: res.data.roles || [] 
-      }));
+      dispatch(
+        getUserSuccess({
+          username: res.data.username,
+          email: res.data.email,
+          roles: res.data.roles || [],
+        })
+      );
     } catch (error) {
       console.error("Error fetching user:", error);
       dispatch(getUserFailure({ message: error.message }));

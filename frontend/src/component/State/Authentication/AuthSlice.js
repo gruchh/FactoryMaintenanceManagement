@@ -44,7 +44,7 @@ export const authSlice = createSlice({
         username: action.payload.username || null,
         email: action.payload.email || null,
         roles: action.payload.roles ? [...action.payload.roles] : [],
-      }
+      };
       state.jwt = action.payload.jwt || null;
       state.error = null;
       state.success = true;
@@ -100,6 +100,7 @@ export const {
   getUserSuccess,
   getUserFailure,
   logoutSuccess,
+  testy,
 } = authSlice.actions;
 
 export default authSlice.reducer;
