@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Getter
 @Builder
-public class BreakdownDto {
+public class BreakdownListItemDto {
     private long id;
     private String eventDescription;
     private LocalDate startDate;

@@ -2,6 +2,7 @@ package pl.factoryofthefuture.factorymanagement.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,25 +36,23 @@ public class UserService {
             throw new IllegalStateException("User with this username already exists");
         });
         String originalPassword = user.getPassword();
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(originalPassword));
         Role role = roleRepository.findByName("USER").orElseThrow(() -> new NoSuchElementException("Role USER not found"));
         user.setRoles(Set.of(role));
         userRepository.save(user);
-        User userToLogin = User.builder()
-                .username(user.getUsername())
-                .password(originalPassword)
-                .email(user.getEmail())
-                .roles(Set.of(role))
-                .build();
-        return verify(userToLogin);
+        return verify(User.builder().username(user.getUsername()).password(originalPassword).email(user.getEmail()).roles(Set.of(role)).build());
     }
 
     public String verify(User user) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+        User existingUser = userRepository.findByUsername(user.getUsername())
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
+        );
         if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(user.getUsername(), user.getEmail(), user.getRoles());
+            return jwtService.generateToken(existingUser.getUsername(), existingUser.getEmail(), existingUser.getRoles());
         } else {
-            return "fail";
+            throw new BadCredentialsException("Authentication failed for user: " + user.getUsername());
         }
     }
 }

@@ -40,7 +40,7 @@ public class BreakdownControllerTest {
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    public void givenAdmin_whenGetBreakdowns_thenReturnForbidden() throws Exception {
+    public void givenAdmin_whenGetAllBreakdowns_thenReturnForbidden() throws Exception {
         mockMvc.perform(get("/breakdowns")).andExpect(status().isForbidden());
     }
 }
