@@ -100,7 +100,6 @@ export const {
   getUserSuccess,
   getUserFailure,
   logoutSuccess,
-  testy,
 } = authSlice.actions;
 
 export default authSlice.reducer;

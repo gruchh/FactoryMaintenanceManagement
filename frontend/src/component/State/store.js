@@ -1,9 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit'
-import authReducer from './Authentication/AuthSlice'
+import { configureStore } from '@reduxjs/toolkit';
+import authReducer from './Authentication/AuthSlice';
+import breakdownReducer from './Breakdown/BreakdownSlice';
 
 const store = configureStore({
   reducer: {
-    auth: authReducer
-  }
-})
-export default store
+    auth: authReducer,
+    breakdowns: breakdownReducer,
+  },
+});
+
+export default store;
