@@ -9,6 +9,8 @@ import pl.factoryofthefuture.factorymanagement.entity.Breakdown;
 import pl.factoryofthefuture.factorymanagement.entity.dto.BreakdownDetailsDto;
 import pl.factoryofthefuture.factorymanagement.entity.dto.BreakdownDto;
 import pl.factoryofthefuture.factorymanagement.entity.dto.BreakdownListItemDto;
+import pl.factoryofthefuture.factorymanagement.entity.dto.BreakdownWithShortCutDto;
+import pl.factoryofthefuture.factorymanagement.entity.projections.BreakdownWithShortCutProjection;
 import pl.factoryofthefuture.factorymanagement.mapper.BreakdownDtoMapper;
 import pl.factoryofthefuture.factorymanagement.service.BreakdownService;
 
@@ -79,7 +81,7 @@ public class BreakdownController {
             return ResponseEntity.ok(breakdownDtoMapper.mapBreakdownToDtos(editedBreakdown));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }  catch (Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
@@ -94,5 +96,11 @@ public class BreakdownController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    @GetMapping("/withShortcut")
+    public ResponseEntity<List<BreakdownWithShortCutDto>> getBreakdownsWithShortcut() {
+        List<BreakdownWithShortCutProjection> breakdownProjections = breakdownService.getAllBreakdownsWitShortCut();
+        return ResponseEntity.ok(breakdownDtoMapper.mapBreakdownProjectionToDtos(breakdownProjections));
     }
 }

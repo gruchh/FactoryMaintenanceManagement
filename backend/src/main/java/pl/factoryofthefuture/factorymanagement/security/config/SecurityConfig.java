@@ -49,7 +49,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize) -> {
                     authorize.requestMatchers("/h2-console/**", "/register", "/login", "/me", "/getUser", "/test").permitAll();
                     authorize.requestMatchers("/machines", "/breakdowns", "/departments").hasRole("USER");
+                    authorize.requestMatchers("/machines/**", "/breakdowns/**", "/departments/**").hasRole("USER");
                     authorize.requestMatchers("/employees", "/budget").hasRole("ADMIN");
+                    authorize.requestMatchers("/employees/**", "/budget/**").hasRole("ADMIN");
                     authorize.anyRequest().authenticated();
                 }).httpBasic(withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

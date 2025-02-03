@@ -9,6 +9,8 @@ import pl.factoryofthefuture.factorymanagement.entity.Machine;
 import pl.factoryofthefuture.factorymanagement.entity.dto.BreakdownDetailsDto;
 import pl.factoryofthefuture.factorymanagement.entity.dto.BreakdownDto;
 import pl.factoryofthefuture.factorymanagement.entity.dto.BreakdownListItemDto;
+import pl.factoryofthefuture.factorymanagement.entity.dto.BreakdownWithShortCutDto;
+import pl.factoryofthefuture.factorymanagement.entity.projections.BreakdownWithShortCutProjection;
 import pl.factoryofthefuture.factorymanagement.service.EmployeeService;
 import pl.factoryofthefuture.factorymanagement.service.MachineService;
 
@@ -94,5 +96,21 @@ public class BreakdownDtoMapper {
                 .machine(machine)
                 .employeeSet(employeeSet)
                 .build();
+    }
+
+    public BreakdownWithShortCutDto mapBreakdownProjectionToDto(BreakdownWithShortCutProjection breakdownWithShortuctProjection) {
+        return BreakdownWithShortCutDto.builder()
+                .id(breakdownWithShortuctProjection.getId())
+                .startDate(breakdownWithShortuctProjection.getStartDate())
+                .endDate(breakdownWithShortuctProjection.getEndDate())
+                .severity(breakdownWithShortuctProjection.getSeverity())
+                .shortCut(breakdownWithShortuctProjection.getShortCut())
+                .build();
+    }
+
+    public List<BreakdownWithShortCutDto> mapBreakdownProjectionToDtos(List<BreakdownWithShortCutProjection> breakdownWithShortuctProjectionList) {
+        return breakdownWithShortuctProjectionList.stream()
+                .map(this::mapBreakdownProjectionToDto)
+                .collect(Collectors.toList());
     }
 }

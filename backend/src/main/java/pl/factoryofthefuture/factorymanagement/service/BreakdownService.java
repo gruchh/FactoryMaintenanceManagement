@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.factoryofthefuture.factorymanagement.entity.Breakdown;
+import pl.factoryofthefuture.factorymanagement.entity.projections.BreakdownWithShortCutProjection;
 import pl.factoryofthefuture.factorymanagement.repository.BreakdownRepository;
 
 import java.util.HashSet;
@@ -60,5 +61,9 @@ public class BreakdownService {
 
     public void deleteById(long id) {
         breakdownRepository.deleteById(id);
+    }
+
+    public List<BreakdownWithShortCutProjection> getAllBreakdownsWitShortCut () {
+        return breakdownRepository.findAllBreakdownsWithShortCut();
     }
 }
