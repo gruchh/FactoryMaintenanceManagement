@@ -10,41 +10,73 @@ import pl.factoryofthefuture.factorymanagement.mapper.DepartmentDtoMapper;
 import pl.factoryofthefuture.factorymanagement.service.DepartmentService;
 
 import java.util.List;
-
-import static pl.factoryofthefuture.factorymanagement.mapper.DepartmentDtoMapper.*;
+import java.util.NoSuchElementException;
 
 @RestController()
 @RequestMapping("/departments")
 @RequiredArgsConstructor
 public class DepartmentController {
 
-    private final DepartmentService departmantService;
+    private final DepartmentService departmentService;
     private final DepartmentDtoMapper departmentDtoMapper;
 
     @GetMapping()
-    public List<DepartmentDto> getDepartments() {
-        return departmentDtoMapper.mapDepartmentDtosToEntities(departmantService.getDepartments());
+    public ResponseEntity<List<DepartmentDto>> getDepartments() {
+        try {
+            List<DepartmentDto> departmentDtos = departmentDtoMapper.mapDepartmentDtosToEntities(departmentService.getDepartments());
+            return ResponseEntity.ok(departmentDtos);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @GetMapping("/{id}")
-    public DepartmentDto getDepartment(@PathVariable long id) {
-        return departmentDtoMapper.mapDepartmentToDto(departmantService.getDepartment(id));
+    public ResponseEntity<DepartmentDto> getDepartment(@PathVariable long id) { // ResponseEntity for single item
+        try {
+            Department department = departmentService.getDepartment(id);
+            if (department != null) {
+                return ResponseEntity.ok(departmentDtoMapper.mapDepartmentToDto(department));
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @PostMapping()
     public ResponseEntity<DepartmentDto> saveDepartment(@RequestBody DepartmentDto departmentDto) {
-        Department savedDepartment = departmantService.saveDepartment(departmentDtoMapper.mapDepartmentDtoToEntity(departmentDto));
-        return ResponseEntity.status(HttpStatus.CREATED).body(departmentDtoMapper.mapDepartmentToDto(savedDepartment));
+        try {
+            Department savedDepartment = departmentService.saveDepartment(departmentDtoMapper.mapDepartmentDtoToEntity(departmentDto));
+            return ResponseEntity.status(HttpStatus.CREATED).body(departmentDtoMapper.mapDepartmentToDto(savedDepartment));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @PutMapping()
     public ResponseEntity<DepartmentDto> updateDepartment(@RequestBody DepartmentDto departmentDto) {
-        Department editedDepartment = departmantService.updateDepartment(departmentDtoMapper.mapDepartmentDtoToEntity(departmentDto));
-        return ResponseEntity.status(HttpStatus.OK).body(departmentDtoMapper.mapDepartmentToDto(editedDepartment));
+        try {
+            Department editedDepartment = departmentService.updateDepartment(departmentDtoMapper.mapDepartmentDtoToEntity(departmentDto));
+            return ResponseEntity.ok(departmentDtoMapper.mapDepartmentToDto(editedDepartment));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteBudget(@PathVariable long id) {
-        departmantService.deleteById(id);
+    public ResponseEntity<Void> deleteDepartment(@PathVariable long id) {
+        try {
+            departmentService.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 }

@@ -60,11 +60,11 @@ public class BreakdownDtoMapper {
 
     public List<BreakdownDto> mapBreakdownsToDtos(List<Breakdown> breakdowns) {
         return breakdowns.stream()
-                .map(this::mapBreakdownToDtos)
+                .map(this::mapBreakdownToDto)
                 .collect(Collectors.toList());
     }
 
-    public BreakdownDto mapBreakdownToDtos(Breakdown breakdown) {
+    public BreakdownDto mapBreakdownToDto(Breakdown breakdown) {
         return BreakdownDto.builder()
                 .id(breakdown.getId())
                 .eventDescription(breakdown.getEventDescription())

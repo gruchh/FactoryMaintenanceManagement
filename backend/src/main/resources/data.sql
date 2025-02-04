@@ -1,8 +1,8 @@
 INSERT INTO DEPARTMENTS (FULL_NAME, SHORT_CUT, CREATION_DATE)
 VALUES ('Research and Development', 'R&D', '2020-01-15'),
-       ('Preparation', 'PRP', '2020-01-15'),
-       ('Assembling', 'ASM', '2020-01-15'),
-       ('Finishing', 'FSH', '2020-01-15');
+       ('Preparation', 'D1', '2020-01-15'),
+       ('Assembling', 'D2', '2020-01-15'),
+       ('Finishing', 'D3', '2020-01-15');
 
 INSERT INTO EMPLOYEES (NAME, SURNAME, JOB_POSITION, DATE_OF_BIRTH, HIRE_DATE, SHIFT, CONTACT_NUMBER, EMAIL, SALARY,
                        PERFORMANCE_RATING, ASSESMENT_DATE)
@@ -77,3 +77,10 @@ INSERT INTO USERS (EMAIL, PASSWORD, USERNAME)
 VALUES ('admin@admin.pl', '$2a$10$BTOuwspZHJWHhz4PabaOFe3ejBFraRUkWWGJn3MJPizhOG7ZRNsMG', 'admin');
 INSERT INTO USERS_ROLES
 VALUES (1, 1), (2, 1);
+INSERT INTO carousel_items (IMAGE_URL, TITLE, LINK, IS_VISIBLE)
+VALUES ('https://cdn.pixabay.com/photo/2021/11/22/22/53/inventory-6817561_1280.png', 'Analizy i Raporty', '/analises', TRUE),
+       ('https://cdn.pixabay.com/photo/2022/06/25/06/43/students-7282940_1280.png', 'Szkolenia i Dokumentacja', '/trainings', TRUE),
+       ('https://cdn.pixabay.com/photo/2012/04/02/16/06/error-24842_1280.png', 'Awarie', '/breakdowns', TRUE),
+       ('https://cdn.pixabay.com/photo/2016/07/31/20/54/calendar-1559935_1280.png', 'Harmonogramy', '/schedules', TRUE),
+       ('https://cdn.pixabay.com/photo/2017/11/17/14/02/sign-2957512_1280.png', 'BHP', '/safety', TRUE),
+       ('https://cdn.pixabay.com/photo/2013/07/13/11/27/ekg-158177_1280.png', 'Monitorowanie', '/monitoring', TRUE);

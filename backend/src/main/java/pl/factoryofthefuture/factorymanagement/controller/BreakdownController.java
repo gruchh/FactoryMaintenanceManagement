@@ -1,6 +1,7 @@
 package pl.factoryofthefuture.factorymanagement.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class BreakdownController {
             List<BreakdownListItemDto> breakdownDtos = breakdownDtoMapper.mapBreakdownsToListItemDtos(breakdowns);
             return ResponseEntity.ok(breakdownDtos);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.internalServerError().build();
         }
     }
 
@@ -47,7 +48,7 @@ public class BreakdownController {
             List<BreakdownListItemDto> breakdownDtos = breakdownDtoMapper.mapBreakdownsToListItemDtos(breakdowns);
             return ResponseEntity.ok(breakdownDtos);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.internalServerError().build();
         }
     }
 
@@ -58,9 +59,9 @@ public class BreakdownController {
             BreakdownDetailsDto breakdownDto = breakdownDtoMapper.mapBreakdownToDetailsDto(breakdown);
             return ResponseEntity.ok(breakdownDto);
         } catch (NoSuchElementException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.notFound().build(); // Concise 404
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.internalServerError().build();
         }
     }
 
@@ -68,9 +69,11 @@ public class BreakdownController {
     public ResponseEntity<BreakdownDto> saveBreakdown(@RequestBody BreakdownDto breakdownDto) {
         try {
             Breakdown savedBreakdown = breakdownService.saveBreakdown(breakdownDtoMapper.mapBreakdownDtoToEntity(breakdownDto));
-            return ResponseEntity.status(HttpStatus.CREATED).body(breakdownDtoMapper.mapBreakdownToDtos(savedBreakdown));
+            return ResponseEntity.status(HttpStatus.CREATED).body(breakdownDtoMapper.mapBreakdownToDto(savedBreakdown));
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -78,11 +81,11 @@ public class BreakdownController {
     public ResponseEntity<BreakdownDto> updateBreakdown(@RequestBody BreakdownDto breakdownDto) {
         try {
             Breakdown editedBreakdown = breakdownService.updateBreakdown(breakdownDtoMapper.mapBreakdownDtoToEntity(breakdownDto));
-            return ResponseEntity.ok(breakdownDtoMapper.mapBreakdownToDtos(editedBreakdown));
+            return ResponseEntity.ok(breakdownDtoMapper.mapBreakdownToDto(editedBreakdown)); // Corrected mapper to singular
         } catch (NoSuchElementException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.internalServerError().build();
         }
     }
 
@@ -103,4 +106,5 @@ public class BreakdownController {
         List<BreakdownWithShortCutProjection> breakdownProjections = breakdownService.getAllBreakdownsWitShortCut();
         return ResponseEntity.ok(breakdownDtoMapper.mapBreakdownProjectionToDtos(breakdownProjections));
     }
+    
 }

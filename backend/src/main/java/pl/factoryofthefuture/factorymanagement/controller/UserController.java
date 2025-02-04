@@ -1,6 +1,7 @@
 package pl.factoryofthefuture.factorymanagement.controller;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +40,12 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<JwtAuthResponse> login(@RequestBody UserDto userDto) {
-        String jwtToken = userService.verify(userDtoMapper.mapUserDtoToEntity(userDto));
-        return ResponseEntity.status(HttpStatus.OK).body(userDtoMapper.mapTokenToJwtAuthResponse(jwtToken));
+        try {
+            String jwtToken = userService.verify(userDtoMapper.mapUserDtoToEntity(userDto));
+            return ResponseEntity.ok(userDtoMapper.mapTokenToJwtAuthResponse(jwtToken));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 
     @GetMapping("/getUser")
@@ -60,16 +65,24 @@ public class UserController {
                     .username(username)
                     .roles(roles)
                     .build();
-            return ResponseEntity.status(HttpStatus.OK).body(userDto);
+            return ResponseEntity.ok(userDto);
+        } catch (ExpiredJwtException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 
     @GetMapping("/me")
-    public Set<String> getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Set<String> roles = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
-        return roles;
+    public ResponseEntity<Set<String>> getCurrentUser() {
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            Set<String> roles = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
+            return ResponseEntity.ok(roles);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Set.of("ERROR_ROLE"));
+        }
+
     }
 }

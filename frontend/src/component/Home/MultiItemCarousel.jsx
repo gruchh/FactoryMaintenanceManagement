@@ -1,8 +1,10 @@
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import { useEffect } from "react";
 import Slider from "react-slick";
-import { carouselData } from "./carouselData";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import { fetchCarouselItems } from "../State/Carousel/carouselActions";
 import CarouselItem from "./CarouselItem";
+import { useDispatch, useSelector } from "react-redux";
 
 const MultiItemCarousel = () => {
   const settings = {
@@ -37,14 +39,25 @@ const MultiItemCarousel = () => {
       },
     ],
   };
+
+  const dispatch = useDispatch();
+  const carouselItems = useSelector((state) => state.carousel);
+  const carouselData = carouselItems.carouselItems;
+
+  useEffect(() => {
+    dispatch(fetchCarouselItems());
+  }, []);
+
   return (
     <div>
       <Slider {...settings}>
         {carouselData.map((data, index) => (
-          <CarouselItem 
-          key={index}
-          image={data.image}
-          title={data.title} />
+          <CarouselItem
+            key={index}
+            image={data.imageUrl}
+            title={data.title}
+            link={data.link}
+          />
         ))}
       </Slider>
     </div>

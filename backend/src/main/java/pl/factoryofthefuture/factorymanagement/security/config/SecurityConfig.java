@@ -48,6 +48,7 @@ public class SecurityConfig {
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests((authorize) -> {
                     authorize.requestMatchers("/h2-console/**", "/register", "/login", "/me", "/getUser", "/test").permitAll();
+                    authorize.requestMatchers("/carousel-item/**").permitAll();
                     authorize.requestMatchers("/machines", "/breakdowns", "/departments").hasRole("USER");
                     authorize.requestMatchers("/machines/**", "/breakdowns/**", "/departments/**").hasRole("USER");
                     authorize.requestMatchers("/employees", "/budget").hasRole("ADMIN");

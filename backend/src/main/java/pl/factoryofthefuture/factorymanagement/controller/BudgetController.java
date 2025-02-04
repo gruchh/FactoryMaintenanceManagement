@@ -10,8 +10,7 @@ import pl.factoryofthefuture.factorymanagement.mapper.BudgetDtoMapper;
 import pl.factoryofthefuture.factorymanagement.service.BudgetService;
 
 import java.util.List;
-
-import static pl.factoryofthefuture.factorymanagement.mapper.BudgetDtoMapper.*;
+import java.util.stream.Collectors;
 
 @RestController()
 @RequestMapping("/budget")
@@ -22,13 +21,21 @@ public class BudgetController {
     private final BudgetDtoMapper budgetDtoMapper;
 
     @GetMapping()
-    public List<BudgetDto> getBudgetList() {
-        return budgetDtoMapper.mapBudgetsToDtos(budgetService.getBudgetList());
+    public ResponseEntity<List<BudgetDto>> getBudgetList() {
+        List<BudgetDto> budgetDtos = budgetService.getBudgetList().stream()
+                .map(budgetDtoMapper::mapBudgetToDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(budgetDtos);
     }
 
     @GetMapping("/{id}")
-    public BudgetDto getBudget(@PathVariable long id) {
-        return budgetDtoMapper.mapBudgetToDto(budgetService.getBudget(id));
+    public ResponseEntity<BudgetDto> getBudget(@PathVariable long id) {
+        Budget budget = budgetService.getBudget(id);
+        if (budget != null) {
+            return ResponseEntity.ok(budgetDtoMapper.mapBudgetToDto(budget));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping()
@@ -40,11 +47,12 @@ public class BudgetController {
     @PutMapping()
     public ResponseEntity<BudgetDto> updateBudget(@RequestBody BudgetDto budgetDto) {
         Budget editedBudget = budgetService.updateBudget(budgetDtoMapper.mapBudgetDtoToEntity(budgetDto));
-        return ResponseEntity.status(HttpStatus.OK).body(budgetDtoMapper.mapBudgetToDto(editedBudget));
+        return ResponseEntity.ok(budgetDtoMapper.mapBudgetToDto(editedBudget));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteBudget(@PathVariable long id) {
+    public ResponseEntity<Void> deleteBudget(@PathVariable long id) {
         budgetService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
