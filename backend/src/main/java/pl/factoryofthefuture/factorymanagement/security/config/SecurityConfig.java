@@ -44,15 +44,17 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-                http.csrf(csrf -> csrf.disable())
+
+        String[] permitAllPaths = {"/h2-console/**", "/register", "/login", "/me", "/getUser", "/test", "/carousel-item/**"};
+        String[] userRolePaths = {"/machines", "/breakdowns", "/departments", "/machines/**", "/breakdowns/**", "/departments/**"};
+        String[] adminRolePaths = {"/employees", "/budget", "/employees/**", "/budget/**"};
+
+        http.csrf(csrf -> csrf.disable())
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests((authorize) -> {
-                    authorize.requestMatchers("/h2-console/**", "/register", "/login", "/me", "/getUser", "/test").permitAll();
-                    authorize.requestMatchers("/carousel-item/**").permitAll();
-                    authorize.requestMatchers("/machines", "/breakdowns", "/departments").hasRole("USER");
-                    authorize.requestMatchers("/machines/**", "/breakdowns/**", "/departments/**").hasRole("USER");
-                    authorize.requestMatchers("/employees", "/budget").hasRole("ADMIN");
-                    authorize.requestMatchers("/employees/**", "/budget/**").hasRole("ADMIN");
+                    authorize.requestMatchers(permitAllPaths).permitAll();
+                    authorize.requestMatchers(userRolePaths).hasRole("USER");
+                    authorize.requestMatchers(adminRolePaths).hasRole("ADMIN");
                     authorize.anyRequest().authenticated();
                 }).httpBasic(withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
