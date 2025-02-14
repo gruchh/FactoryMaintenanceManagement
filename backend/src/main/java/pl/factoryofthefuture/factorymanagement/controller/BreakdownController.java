@@ -59,7 +59,7 @@ public class BreakdownController {
             BreakdownDetailsDto breakdownDto = breakdownDtoMapper.mapBreakdownToDetailsDto(breakdown);
             return ResponseEntity.ok(breakdownDto);
         } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build(); // Concise 404
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

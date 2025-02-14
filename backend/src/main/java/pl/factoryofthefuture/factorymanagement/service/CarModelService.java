@@ -2,11 +2,12 @@ package pl.factoryofthefuture.factorymanagement.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.factoryofthefuture.factorymanagement.entity.CarModel;
+import pl.factoryofthefuture.factorymanagement.exception.NotFoundException;
 import pl.factoryofthefuture.factorymanagement.repository.CarModelRepository;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +21,7 @@ public class CarModelService {
 
     public CarModel getCarModel(long id) {
         return carModelRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("No such car model with id: " + id));
+                .orElseThrow(() -> new NotFoundException(id));
     }
 
     public CarModel saveCarModel(CarModel carModel) {
@@ -29,16 +30,17 @@ public class CarModelService {
 
     public CarModel updateCarModel(CarModel carModel) {
         CarModel updatedCarModel = carModelRepository.findById(carModel.getId())
-                .orElseThrow(() -> new NoSuchElementException("CarModel not found with id: " + carModel.getId()));
+                .orElseThrow(() -> new NotFoundException(carModel.getId()));
         updatedCarModel.setModelName(carModel.getModelName());
         updatedCarModel.setModelType(carModel.getModelType());
         updatedCarModel.setFactory(carModel.getFactory());
         return carModelRepository.save(updatedCarModel);
     }
 
+    @Transactional
     public void deleteById(long id) {
         if (!carModelRepository.existsById(id)) {
-            throw new NoSuchElementException("Car model not found with id: " + id);
+            throw new NotFoundException(id);
         }
         carModelRepository.deleteById(id);
     }

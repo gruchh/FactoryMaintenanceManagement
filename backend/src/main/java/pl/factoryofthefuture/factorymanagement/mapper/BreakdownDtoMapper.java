@@ -80,7 +80,7 @@ public class BreakdownDtoMapper {
     }
 
     public Breakdown mapBreakdownDtoToEntity(BreakdownDto breakdownDto) {
-        Machine machine = machineService.getMachine(breakdownDto.getMachineId());
+        Machine machine = machineService.getMachineById(breakdownDto.getMachineId());
         Set<Employee> employeeSet = breakdownDto.getEmployeeIds().stream()
                 .map(employeeService::getEmployee)
                 .collect(Collectors.toSet());

@@ -36,7 +36,7 @@ public class DepartmentDtoMapper {
     }
 
     public Department mapDepartmentDtoToEntity(DepartmentDto departmentDto) {
-        Set<Machine> machineSet = machineService.findMachines(departmentDto.getMachineIds());
+        Set<Machine> machineSet = machineService.getMachinesByIds(departmentDto.getMachineIds());
         return Department.builder()
                 .fullName(departmentDto.getFullName())
                 .shortCut(departmentDto.getShortCut())

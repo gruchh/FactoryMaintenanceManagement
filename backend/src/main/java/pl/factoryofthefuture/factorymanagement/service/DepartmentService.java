@@ -2,11 +2,12 @@ package pl.factoryofthefuture.factorymanagement.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.factoryofthefuture.factorymanagement.entity.Department;
+import pl.factoryofthefuture.factorymanagement.exception.NotFoundException;
 import pl.factoryofthefuture.factorymanagement.repository.DepartmentRepository;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @Service
@@ -20,7 +21,7 @@ public class DepartmentService {
 
     public Department getDepartment(Long id) {
         return departmentRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("No such element " + id));
+                .orElseThrow(() -> new NotFoundException(id));
     }
 
     public Department saveDepartment(Department department) {
@@ -29,7 +30,7 @@ public class DepartmentService {
 
     public Department updateDepartment(Department department) {
         Department updatedDepartment = departmentRepository.findById(department.getId())
-                .orElseThrow(() -> new NoSuchElementException("Department not found with id: " + department.getId()));
+                .orElseThrow(() -> new NotFoundException(department.getId()));
         updatedDepartment.setFullName(department.getFullName());
         updatedDepartment.setShortCut(department.getShortCut());
         updatedDepartment.setCreationDate(department.getCreationDate());
@@ -37,7 +38,11 @@ public class DepartmentService {
         return departmentRepository.save(updatedDepartment);
     }
 
+    @Transactional
     public void deleteById(long id) {
+        if (!departmentRepository.existsById(id)) {
+            throw new NotFoundException(id);
+        }
         departmentRepository.deleteById(id);
     }
 }

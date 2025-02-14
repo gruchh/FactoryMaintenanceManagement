@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.factoryofthefuture.factorymanagement.entity.Breakdown;
 import pl.factoryofthefuture.factorymanagement.entity.projections.BreakdownWithShortCutProjection;
+import pl.factoryofthefuture.factorymanagement.exception.NotFoundException;
 import pl.factoryofthefuture.factorymanagement.repository.BreakdownRepository;
 
 import java.util.HashSet;
@@ -33,7 +34,7 @@ public class BreakdownService {
 
     public Breakdown getBreakdown(Long id) {
         return breakdownRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("No such breakdown with id: " + id));
+                .orElseThrow(() -> new NotFoundException(id));
     }
 
     public Set<Breakdown> findBreakdownsById(Set<Long> breakdownIds) {
@@ -47,7 +48,7 @@ public class BreakdownService {
     @Transactional
     public Breakdown updateBreakdown(Breakdown breakdown) {
         Breakdown updatedBreakdown = breakdownRepository.findById(breakdown.getId())
-                .orElseThrow(() -> new NoSuchElementException("Breakdown not found with id: " + breakdown.getId()));
+                .orElseThrow(() -> new NotFoundException(breakdown.getId()));
         updatedBreakdown.setEventDescription(breakdown.getEventDescription());
         updatedBreakdown.setStartDate(breakdown.getStartDate());
         updatedBreakdown.setEndDate(breakdown.getEndDate());
@@ -60,7 +61,11 @@ public class BreakdownService {
         return breakdownRepository.save(updatedBreakdown);
     }
 
+    @Transactional
     public void deleteById(long id) {
+        if (!breakdownRepository.existsById(id)) {
+            throw new NotFoundException(id);
+        }
         breakdownRepository.deleteById(id);
     }
 

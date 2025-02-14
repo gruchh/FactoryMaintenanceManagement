@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.factoryofthefuture.factorymanagement.entity.Machine;
+import pl.factoryofthefuture.factorymanagement.exception.NotFoundException;
 import pl.factoryofthefuture.factorymanagement.repository.MachineRepository;
 
 import java.util.HashSet;
@@ -17,16 +18,16 @@ public class MachineService {
 
     private final MachineRepository machineRepository;
 
-    public List<Machine> getMachine() {
+    public List<Machine> getAllMachines() {
         return machineRepository.findAll();
     }
 
-    public Machine getMachine(Long id) {
+    public Machine getMachineById(Long id) {
         return machineRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("No such machine with id:  " + id));
+                .orElseThrow(() -> new NotFoundException(id));
     }
 
-    public Set<Machine> findMachines(Set<Long> machineIds) {
+    public Set<Machine> getMachinesByIds(Set<Long> machineIds) {
         return new HashSet<>(machineRepository.findAllById(machineIds));
     }
 
@@ -37,7 +38,7 @@ public class MachineService {
     @Transactional
     public Machine updateMachine(Machine machine) {
         Machine updatedMachine = machineRepository.findById(machine.getId())
-                .orElseThrow(() -> new NoSuchElementException("Machine not found with id: " + machine.getId()));
+                .orElseThrow(() -> new NotFoundException(machine.getId()));
         updatedMachine.setName(machine.getName());
         updatedMachine.setManufacturer(machine.getManufacturer());
         updatedMachine.setProductionDate(machine.getProductionDate());
@@ -47,7 +48,11 @@ public class MachineService {
         return machineRepository.save(updatedMachine);
     }
 
-    public void deleteById(long id) {
+    @Transactional
+    public void deleteMachineById(long id) {
+        if (!machineRepository.existsById(id)) {
+            throw new NotFoundException(id);
+        }
         machineRepository.deleteById(id);
     }
 }

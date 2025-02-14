@@ -2,11 +2,12 @@ package pl.factoryofthefuture.factorymanagement.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.factoryofthefuture.factorymanagement.entity.Budget;
+import pl.factoryofthefuture.factorymanagement.exception.NotFoundException;
 import pl.factoryofthefuture.factorymanagement.repository.BudgetRepository;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @Service
@@ -20,7 +21,7 @@ public class BudgetService {
 
     public Budget getBudget(Long id) {
         return budgetRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("No such budget with id: " + id));
+                .orElseThrow(() -> new NotFoundException(id));
     }
 
     public Budget saveBudget(Budget budget) {
@@ -29,7 +30,7 @@ public class BudgetService {
 
     public Budget updateBudget(Budget budget) {
         Budget updatedBudget = budgetRepository.findById(budget.getId())
-                .orElseThrow(() -> new NoSuchElementException("Budget not found with id: " + budget.getId()));
+                .orElseThrow(() -> new NotFoundException(budget.getId()));
         updatedBudget.setId(budget.getId());
         updatedBudget.setMonth(budget.getMonth());
         updatedBudget.setYear(budget.getYear());
@@ -37,7 +38,11 @@ public class BudgetService {
         return budgetRepository.save(updatedBudget);
     }
 
+    @Transactional
     public void deleteById(long id) {
+        if (!budgetRepository.existsById(id)) {
+            throw new NotFoundException(id);
+        }
         budgetRepository.deleteById(id);
     }
 }

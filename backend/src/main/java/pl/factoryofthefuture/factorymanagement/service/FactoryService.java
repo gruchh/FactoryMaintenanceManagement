@@ -4,11 +4,11 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.factoryofthefuture.factorymanagement.entity.Factory;
+import pl.factoryofthefuture.factorymanagement.exception.NotFoundException;
 import pl.factoryofthefuture.factorymanagement.repository.CarModelRepository;
 import pl.factoryofthefuture.factorymanagement.repository.FactoryRepository;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @Service
@@ -23,7 +23,7 @@ public class FactoryService {
 
     public Factory getFactory(Long id) {
         return factoryRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Factory with ID " + id + " not found."));
+                .orElseThrow(() -> new NotFoundException(id));
     }
 
     public Factory saveFactory(Factory factory) {
@@ -33,7 +33,7 @@ public class FactoryService {
     @Transactional
     public Factory updateFactory(Factory updatedFactory) {
         Factory existingFactory = factoryRepository.findById(updatedFactory.getId())
-                .orElseThrow(() -> new NoSuchElementException("Factory ID " + updatedFactory.getId() + " hasn't been found."));
+                .orElseThrow(() -> new NotFoundException(updatedFactory.getId()));
 
         existingFactory.setName(updatedFactory.getName());
         existingFactory.setDescription(updatedFactory.getDescription());
@@ -47,7 +47,7 @@ public class FactoryService {
     @Transactional
     public void deleteFactory(Long id) {
         if (!factoryRepository.existsById(id)) {
-            throw new NoSuchElementException("Factory with ID " + id + " not found.");
+            throw new NotFoundException(id);
         }
         factoryRepository.deleteById(id);
     }

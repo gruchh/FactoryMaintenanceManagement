@@ -23,7 +23,7 @@ public class MachineController {
     @GetMapping()
     public ResponseEntity<List<MachineDto>> getAllMachines() {
         try {
-            List<MachineDto> machineDtos = machineDtoMapper.mapMachinesToDtos(machineService.getMachine());
+            List<MachineDto> machineDtos = machineDtoMapper.mapMachinesToDtos(machineService.getAllMachines());
             return ResponseEntity.ok(machineDtos);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
@@ -33,7 +33,7 @@ public class MachineController {
     @GetMapping("/{id}")
     public ResponseEntity<MachineDto> getMachine(@PathVariable long id) {
         try {
-            Machine machine = machineService.getMachine(id);
+            Machine machine = machineService.getMachineById(id);
             if (machine != null) {
                 return ResponseEntity.ok(machineDtoMapper.mapMachineToDto(machine));
             } else {
@@ -65,7 +65,7 @@ public class MachineController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMachine(@PathVariable long id) {
         try {
-            machineService.deleteById(id);
+            machineService.deleteMachineById(id);
             return ResponseEntity.noContent().build();
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();

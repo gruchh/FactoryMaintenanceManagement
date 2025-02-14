@@ -36,7 +36,7 @@ class BreakdownServiceTest {
                 .build();
 
         Breakdown modifiedBreakdown = Breakdown.builder()
-                .id(1L) // Ensure the same ID as breakdownBeforeUpdate
+                .id(1L)
                 .cause("Test")
                 .build();
 
