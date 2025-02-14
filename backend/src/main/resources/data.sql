@@ -84,3 +84,23 @@ VALUES ('https://cdn.pixabay.com/photo/2021/11/22/22/53/inventory-6817561_1280.p
        ('https://cdn.pixabay.com/photo/2016/07/31/20/54/calendar-1559935_1280.png', 'Harmonogramy', '/schedules', TRUE),
        ('https://cdn.pixabay.com/photo/2017/11/17/14/02/sign-2957512_1280.png', 'BHP', '/safety', TRUE),
        ('https://cdn.pixabay.com/photo/2013/07/13/11/27/ekg-158177_1280.png', 'Monitorowanie', '/monitoring', TRUE);
+
+INSERT INTO FACTORIES (NAME, DESCRIPTION, CITY, CREATION_DATE, status, ACTIVITY_SCOPE) VALUES
+    ('Fabryka Bielsko-Biała', 'Fabryka silników', 'Bielsko-Biała', CURRENT_DATE, 'ACTIVE', 'engines'),
+    ('Fabryka Tychy', 'Fabryka pojazdów', 'Tychy', CURRENT_DATE, 'ACTIVE', 'vehicles'),
+    ('Fabryka Warszawa', 'Fabryka części', 'Warsaw', CURRENT_DATE, 'ACTIVE', 'parts');
+
+INSERT INTO CAR_MODEL (factory_id, model_name, model_type) VALUES
+      ((SELECT id FROM FACTORIES WHERE name = 'Fabryka Bielsko-Biała'), '1.6', 'Gas'),
+      ((SELECT id FROM FACTORIES WHERE name = 'Fabryka Bielsko-Biała'), '1.4 T-Jet', 'Turbodiesel'),
+      ((SELECT id FROM FACTORIES WHERE name = 'Fabryka Bielsko-Biała'), '1.4 Fire', 'Gas'),
+      ((SELECT id FROM FACTORIES WHERE name = 'Fabryka Tychy'), 'Panda', 'Fiat'),
+      ((SELECT id FROM FACTORIES WHERE name = 'Fabryka Bielsko-Biała'), '1.2 Fire', 'Gas'),
+      ((SELECT id FROM FACTORIES WHERE name = 'Fabryka Tychy'), 'Ypsilon', 'Lancia'),
+      ((SELECT id FROM FACTORIES WHERE name = 'Fabryka Tychy'), '500', 'Fiat'),
+      ((SELECT id FROM FACTORIES WHERE name = 'Fabryka Tychy'), '500', 'Abarth'),
+      ((SELECT id FROM FACTORIES WHERE name = 'Fabryka Warszawa'), 'Alternator', 'Electrical'),
+      ((SELECT id FROM FACTORIES WHERE name = 'Fabryka Warszawa'), 'Radiator', 'Cooling System'),
+      ((SELECT id FROM FACTORIES WHERE name = 'Fabryka Warszawa'), 'Brake Pads', 'Brake System'),
+      ((SELECT id FROM FACTORIES WHERE name = 'Fabryka Warszawa'), 'Suspension Spring', 'Suspension System'),
+      ((SELECT id FROM FACTORIES WHERE name = 'Fabryka Warszawa'), 'Oil Filter', 'Engine System');

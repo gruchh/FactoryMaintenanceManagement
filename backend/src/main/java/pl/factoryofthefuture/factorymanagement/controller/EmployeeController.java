@@ -21,7 +21,7 @@ public class EmployeeController {
     private final EmployeeDtoMapper employeeDtoMapper;
 
     @GetMapping()
-    public ResponseEntity<List<EmployeeDto>> getEmployees() {
+    public ResponseEntity<List<EmployeeDto>> getAllEmployees() {
         try {
             List<EmployeeDto> employeeDtos = employeeDtoMapper.mapEmployeesToDtos(employeeService.getEmployees());
             return ResponseEntity.ok(employeeDtos);
@@ -29,7 +29,6 @@ public class EmployeeController {
             return ResponseEntity.internalServerError().build();
         }
     }
-
 
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeDto> getEmployee(@PathVariable long id) {

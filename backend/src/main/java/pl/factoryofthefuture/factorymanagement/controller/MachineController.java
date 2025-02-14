@@ -12,7 +12,7 @@ import pl.factoryofthefuture.factorymanagement.service.MachineService;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@RestController()
+@RestController
 @RequestMapping("/machines")
 @RequiredArgsConstructor
 public class MachineController {
@@ -21,7 +21,7 @@ public class MachineController {
     private final MachineDtoMapper machineDtoMapper;
 
     @GetMapping()
-    public ResponseEntity<List<MachineDto>> getMachines() {
+    public ResponseEntity<List<MachineDto>> getAllMachines() {
         try {
             List<MachineDto> machineDtos = machineDtoMapper.mapMachinesToDtos(machineService.getMachine());
             return ResponseEntity.ok(machineDtos);

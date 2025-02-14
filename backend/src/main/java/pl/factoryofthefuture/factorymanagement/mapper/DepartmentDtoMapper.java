@@ -2,7 +2,6 @@ package pl.factoryofthefuture.factorymanagement.mapper;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import pl.factoryofthefuture.factorymanagement.entity.Department;
 import pl.factoryofthefuture.factorymanagement.entity.Machine;
@@ -37,7 +36,7 @@ public class DepartmentDtoMapper {
     }
 
     public Department mapDepartmentDtoToEntity(DepartmentDto departmentDto) {
-        Set<Machine> machineSet = machineService.findMachinesById(departmentDto.getMachineIds());
+        Set<Machine> machineSet = machineService.findMachines(departmentDto.getMachineIds());
         return Department.builder()
                 .fullName(departmentDto.getFullName())
                 .shortCut(departmentDto.getShortCut())

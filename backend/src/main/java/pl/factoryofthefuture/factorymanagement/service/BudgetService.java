@@ -20,7 +20,7 @@ public class BudgetService {
 
     public Budget getBudget(Long id) {
         return budgetRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("No such element " + id));
+                .orElseThrow(() -> new NoSuchElementException("No such budget with id: " + id));
     }
 
     public Budget saveBudget(Budget budget) {

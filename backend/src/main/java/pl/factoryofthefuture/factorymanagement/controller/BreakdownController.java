@@ -53,7 +53,7 @@ public class BreakdownController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BreakdownDetailsDto> getBreakdownDto(@PathVariable long id) {
+    public ResponseEntity<BreakdownDetailsDto> getBreakdown(@PathVariable long id) {
         try {
             Breakdown breakdown = breakdownService.getBreakdown(id);
             BreakdownDetailsDto breakdownDto = breakdownDtoMapper.mapBreakdownToDetailsDto(breakdown);

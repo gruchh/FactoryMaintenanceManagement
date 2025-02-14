@@ -21,7 +21,7 @@ public class BudgetController {
     private final BudgetDtoMapper budgetDtoMapper;
 
     @GetMapping()
-    public ResponseEntity<List<BudgetDto>> getBudgetList() {
+    public ResponseEntity<List<BudgetDto>> getAllBudget() {
         List<BudgetDto> budgetDtos = budgetService.getBudgetList().stream()
                 .map(budgetDtoMapper::mapBudgetToDto)
                 .collect(Collectors.toList());

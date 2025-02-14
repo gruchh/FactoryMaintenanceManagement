@@ -2,6 +2,7 @@ package pl.factoryofthefuture.factorymanagement.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.factoryofthefuture.factorymanagement.entity.Machine;
 import pl.factoryofthefuture.factorymanagement.repository.MachineRepository;
 
@@ -22,10 +23,10 @@ public class MachineService {
 
     public Machine getMachine(Long id) {
         return machineRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("No such element " + id));
+                .orElseThrow(() -> new NoSuchElementException("No such machine with id:  " + id));
     }
 
-    public Set<Machine> findMachinesById(Set<Long> machineIds) {
+    public Set<Machine> findMachines(Set<Long> machineIds) {
         return new HashSet<>(machineRepository.findAllById(machineIds));
     }
 
@@ -33,11 +34,16 @@ public class MachineService {
         return machineRepository.save(machine);
     }
 
+    @Transactional
     public Machine updateMachine(Machine machine) {
         Machine updatedMachine = machineRepository.findById(machine.getId())
                 .orElseThrow(() -> new NoSuchElementException("Machine not found with id: " + machine.getId()));
-        updatedMachine.setId(updatedMachine.getId());
-
+        updatedMachine.setName(machine.getName());
+        updatedMachine.setManufacturer(machine.getManufacturer());
+        updatedMachine.setProductionDate(machine.getProductionDate());
+        updatedMachine.setLastMaintenanceDate(machine.getLastMaintenanceDate());
+        updatedMachine.setEnergyConsumption(machine.getEnergyConsumption());
+        updatedMachine.setDepartment(machine.getDepartment());
         return machineRepository.save(updatedMachine);
     }
 

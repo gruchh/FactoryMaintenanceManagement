@@ -30,8 +30,10 @@ public class DepartmentService {
     public Department updateDepartment(Department department) {
         Department updatedDepartment = departmentRepository.findById(department.getId())
                 .orElseThrow(() -> new NoSuchElementException("Department not found with id: " + department.getId()));
-        updatedDepartment.setId(updatedDepartment.getId());
-
+        updatedDepartment.setFullName(department.getFullName());
+        updatedDepartment.setShortCut(department.getShortCut());
+        updatedDepartment.setCreationDate(department.getCreationDate());
+        updatedDepartment.setMachineSet(department.getMachineSet());
         return departmentRepository.save(updatedDepartment);
     }
 

@@ -5,10 +5,8 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class CarouselItemDTO {
+public class CarModelDto {
     private Long id;
-    private String imageUrl;
-    private String title;
-    private String link;
-    private boolean isVisible;
+    private String modelName;
+    private String modelType;
 }

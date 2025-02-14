@@ -19,13 +19,6 @@ public class EmployeeDtoMapper {
 
     private final BreakdownService breakdownService;
 
-    public List<EmployeeDto> mapEmployeesToDtos(List<Employee> employees) {
-
-        return employees.stream()
-                .map(this::mapEmployeeToDto)
-                .collect(Collectors.toList());
-    }
-
     public EmployeeDto mapEmployeeToDto(Employee employee) {
         return EmployeeDto.builder()
                 .id(employee.getId())
@@ -44,9 +37,16 @@ public class EmployeeDtoMapper {
                 .build();
     }
 
+    public List<EmployeeDto> mapEmployeesToDtos(List<Employee> employees) {
+        return employees.stream()
+                .map(this::mapEmployeeToDto)
+                .collect(Collectors.toList());
+    }
+
     public Employee mapEmployeeDtoToEntity(EmployeeDto employeeDto) {
         Set<Breakdown> breakdownSet = breakdownService.findBreakdownsById(employeeDto.getBreakdownIds());
         return Employee.builder()
+                .id(employeeDto.getId())
                 .name(employeeDto.getName())
                 .surname(employeeDto.getSurname())
                 .jobPosition(employeeDto.getJobPosition())

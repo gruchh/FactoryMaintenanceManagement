@@ -12,7 +12,7 @@ import pl.factoryofthefuture.factorymanagement.service.DepartmentService;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@RestController()
+@RestController
 @RequestMapping("/departments")
 @RequiredArgsConstructor
 public class DepartmentController {
@@ -21,7 +21,7 @@ public class DepartmentController {
     private final DepartmentDtoMapper departmentDtoMapper;
 
     @GetMapping()
-    public ResponseEntity<List<DepartmentDto>> getDepartments() {
+    public ResponseEntity<List<DepartmentDto>> getAllDepartments() {
         try {
             List<DepartmentDto> departmentDtos = departmentDtoMapper.mapDepartmentDtosToEntities(departmentService.getDepartments());
             return ResponseEntity.ok(departmentDtos);
@@ -31,7 +31,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DepartmentDto> getDepartment(@PathVariable long id) { // ResponseEntity for single item
+    public ResponseEntity<DepartmentDto> getDepartment(@PathVariable long id) {
         try {
             Department department = departmentService.getDepartment(id);
             if (department != null) {

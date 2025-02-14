@@ -32,7 +32,8 @@ public class BreakdownService {
     }
 
     public Breakdown getBreakdown(Long id) {
-        return breakdownRepository.findById(id).orElse(null);
+        return breakdownRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("No such breakdown with id: " + id));
     }
 
     public Set<Breakdown> findBreakdownsById(Set<Long> breakdownIds) {
@@ -63,7 +64,7 @@ public class BreakdownService {
         breakdownRepository.deleteById(id);
     }
 
-    public List<BreakdownWithShortCutProjection> getAllBreakdownsWitShortCut () {
+    public List<BreakdownWithShortCutProjection> getAllBreakdownsWitShortCut() {
         return breakdownRepository.findAllBreakdownsWithShortCut();
     }
 }
