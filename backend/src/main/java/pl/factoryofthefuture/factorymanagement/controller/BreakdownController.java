@@ -96,7 +96,11 @@ public class BreakdownController {
 
     @GetMapping("/withShortcut")
     public ResponseEntity<List<BreakdownWithShortCutDto>> getBreakdownsWithShortcut() {
-        List<BreakdownWithShortCutDto> allBreakdownsWitShortCut = breakdownService.getAllBreakdownsWitShortCut();
-        return ResponseEntity.ok(allBreakdownsWitShortCut);
+        try {
+            List<BreakdownWithShortCutDto> allBreakdownsWitShortCut = breakdownService.getAllBreakdownsWitShortCut();
+            return ResponseEntity.ok(allBreakdownsWitShortCut);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
