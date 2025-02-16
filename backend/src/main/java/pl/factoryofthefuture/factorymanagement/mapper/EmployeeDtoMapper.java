@@ -17,8 +17,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class EmployeeDtoMapper {
 
-    private final BreakdownService breakdownService;
-
     public EmployeeDto mapEmployeeToDto(Employee employee) {
         return EmployeeDto.builder()
                 .id(employee.getId())
@@ -43,8 +41,7 @@ public class EmployeeDtoMapper {
                 .collect(Collectors.toList());
     }
 
-    public Employee mapEmployeeDtoToEntity(EmployeeDto employeeDto) {
-        Set<Breakdown> breakdownSet = breakdownService.findBreakdownsById(employeeDto.getBreakdownIds());
+    public Employee mapEmployeeDtoToEntity(EmployeeDto employeeDto, Set<Breakdown> breakdownSet) {
         return Employee.builder()
                 .id(employeeDto.getId())
                 .name(employeeDto.getName())

@@ -23,14 +23,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class BreakdownDtoMapper {
 
-    private final MachineService machineService;
-    private final EmployeeService employeeService;
-
-    public List<BreakdownListItemDto> mapBreakdownsToListItemDtos(List<Breakdown> breakdowns) {
-        return breakdowns.stream()
-                .map(this::mapBreakdownToListItemDto)
-                .collect(Collectors.toList());
-    }
+    private final EmployeeDtoMapper employeeDtoMapper;
+    private final MachineDtoMapper machineDtoMapper;
 
     public BreakdownListItemDto mapBreakdownToListItemDto(Breakdown breakdown) {
         return BreakdownListItemDto.builder()
@@ -41,6 +35,12 @@ public class BreakdownDtoMapper {
                 .severity(breakdown.getSeverity())
                 .machineId(breakdown.getMachine().getId())
                 .build();
+    }
+
+    public List<BreakdownListItemDto> mapBreakdownsToListItemDtos(List<Breakdown> breakdowns) {
+        return breakdowns.stream()
+                .map(this::mapBreakdownToListItemDto)
+                .collect(Collectors.toList());
     }
 
     public BreakdownDetailsDto mapBreakdownToDetailsDto(Breakdown breakdown) {
@@ -79,11 +79,7 @@ public class BreakdownDtoMapper {
                 .build();
     }
 
-    public Breakdown mapBreakdownDtoToEntity(BreakdownDto breakdownDto) {
-        Machine machine = machineService.getMachineById(breakdownDto.getMachineId());
-        Set<Employee> employeeSet = breakdownDto.getEmployeeIds().stream()
-                .map(employeeService::getEmployee)
-                .collect(Collectors.toSet());
+    public Breakdown mapBreakdownDtoToEntity(BreakdownDto breakdownDto, Machine machine, Set<Employee> employeeSet) {
         return Breakdown.builder()
                 .id(breakdownDto.getId())
                 .eventDescription(breakdownDto.getEventDescription())

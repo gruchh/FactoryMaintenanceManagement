@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.factoryofthefuture.factorymanagement.entity.Department;
 import pl.factoryofthefuture.factorymanagement.entity.dto.DepartmentDto;
-import pl.factoryofthefuture.factorymanagement.mapper.DepartmentDtoMapper;
 import pl.factoryofthefuture.factorymanagement.service.DepartmentService;
 
 import java.util.List;
@@ -18,12 +16,11 @@ import java.util.NoSuchElementException;
 public class DepartmentController {
 
     private final DepartmentService departmentService;
-    private final DepartmentDtoMapper departmentDtoMapper;
 
     @GetMapping()
     public ResponseEntity<List<DepartmentDto>> getAllDepartments() {
         try {
-            List<DepartmentDto> departmentDtos = departmentDtoMapper.mapDepartmentDtosToEntities(departmentService.getDepartments());
+            List<DepartmentDto> departmentDtos = departmentService.getAllDepartmentsDtos();
             return ResponseEntity.ok(departmentDtos);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
@@ -33,9 +30,9 @@ public class DepartmentController {
     @GetMapping("/{id}")
     public ResponseEntity<DepartmentDto> getDepartment(@PathVariable long id) {
         try {
-            Department department = departmentService.getDepartment(id);
-            if (department != null) {
-                return ResponseEntity.ok(departmentDtoMapper.mapDepartmentToDto(department));
+            DepartmentDto departmentDto = departmentService.getDepartmentDtoById(id);
+            if (departmentDto != null) {
+                return ResponseEntity.ok(departmentDto);
             } else {
                 return ResponseEntity.notFound().build();
             }
@@ -49,8 +46,8 @@ public class DepartmentController {
     @PostMapping()
     public ResponseEntity<DepartmentDto> saveDepartment(@RequestBody DepartmentDto departmentDto) {
         try {
-            Department savedDepartment = departmentService.saveDepartment(departmentDtoMapper.mapDepartmentDtoToEntity(departmentDto));
-            return ResponseEntity.status(HttpStatus.CREATED).body(departmentDtoMapper.mapDepartmentToDto(savedDepartment));
+            DepartmentDto savedDepartmentDto = departmentService.saveDepartment(departmentDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedDepartmentDto);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -59,8 +56,8 @@ public class DepartmentController {
     @PutMapping()
     public ResponseEntity<DepartmentDto> updateDepartment(@RequestBody DepartmentDto departmentDto) {
         try {
-            Department editedDepartment = departmentService.updateDepartment(departmentDtoMapper.mapDepartmentDtoToEntity(departmentDto));
-            return ResponseEntity.ok(departmentDtoMapper.mapDepartmentToDto(editedDepartment));
+            DepartmentDto updatedDepartmentDto = departmentService.updateDepartment(departmentDto);
+            return ResponseEntity.ok(updatedDepartmentDto);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {

@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 import pl.factoryofthefuture.factorymanagement.entity.CarouselItem;
 import pl.factoryofthefuture.factorymanagement.entity.dto.CarouselItemDto;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 @Data
 @AllArgsConstructor
@@ -19,5 +22,11 @@ public class CarouselDtoMapper {
                 .link(carouselItem.getLink())
                 .isVisible(carouselItem.isVisible())
                 .build();
+    }
+
+    public List<CarouselItemDto> mapCarouselItemsToDtos(List<CarouselItem> carouselItems) {
+        return carouselItems.stream()
+                .map(this::mapCarouselItemToDto)
+                .collect(Collectors.toList());
     }
 }

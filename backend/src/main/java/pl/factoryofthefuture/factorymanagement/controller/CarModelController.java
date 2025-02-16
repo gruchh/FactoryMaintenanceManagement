@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.factoryofthefuture.factorymanagement.entity.CarModel;
 import pl.factoryofthefuture.factorymanagement.entity.dto.CarModelDto;
-import pl.factoryofthefuture.factorymanagement.mapper.CarModelDtoMapper;
 import pl.factoryofthefuture.factorymanagement.service.CarModelService;
 
 import java.util.List;
@@ -18,12 +16,11 @@ import java.util.NoSuchElementException;
 public class CarModelController {
 
     private final CarModelService carModelService;
-    private final CarModelDtoMapper carModelDtoMapper;
 
     @GetMapping
     public ResponseEntity<List<CarModelDto>> getAllCarModels() {
         try {
-            List<CarModelDto> carModelDtos = carModelDtoMapper.mapCarModelsToDtos(carModelService.getCarModels());
+            List<CarModelDto> carModelDtos = carModelService.getAllCarModelsDtos();
             return ResponseEntity.ok(carModelDtos);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
@@ -33,8 +30,7 @@ public class CarModelController {
     @GetMapping("/{id}")
     public ResponseEntity<CarModelDto> getCarModel(@PathVariable long id) {
         try {
-            CarModel carModel = carModelService.getCarModel(id);
-            CarModelDto carModelDto = carModelDtoMapper.mapCarModelToDto(carModel);
+            CarModelDto carModelDto = carModelService.getCarModelDtoById(id);
             return ResponseEntity.ok(carModelDto);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
@@ -46,8 +42,8 @@ public class CarModelController {
     @PostMapping()
     public ResponseEntity<CarModelDto> saveCarModel(@RequestBody CarModelDto carModelDto) {
         try {
-            CarModel savedCarModel = carModelService.saveCarModel(carModelDtoMapper.mapCarModelDtoToEntity(carModelDto));
-            return ResponseEntity.status(HttpStatus.CREATED).body(carModelDtoMapper.mapCarModelToDto(savedCarModel));
+            CarModelDto savedCarModelDto = carModelService.saveCarModel(carModelDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedCarModelDto);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -56,8 +52,8 @@ public class CarModelController {
     @PutMapping()
     public ResponseEntity<CarModelDto> updateCarModel(@RequestBody CarModelDto carModelDto) {
         try {
-            CarModel editedCarModel = carModelService.updateCarModel(carModelDtoMapper.mapCarModelDtoToEntity(carModelDto));
-            return ResponseEntity.ok(carModelDtoMapper.mapCarModelToDto(editedCarModel));
+            CarModelDto editedCarModelDto = carModelService.updateCarModel(carModelDto);
+            return ResponseEntity.ok(editedCarModelDto);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {

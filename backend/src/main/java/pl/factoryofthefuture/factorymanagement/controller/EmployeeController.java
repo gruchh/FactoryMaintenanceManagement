@@ -4,26 +4,23 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.factoryofthefuture.factorymanagement.entity.Employee;
 import pl.factoryofthefuture.factorymanagement.entity.dto.EmployeeDto;
-import pl.factoryofthefuture.factorymanagement.mapper.EmployeeDtoMapper;
 import pl.factoryofthefuture.factorymanagement.service.EmployeeService;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@RestController()
+@RestController
 @RequestMapping("/employees")
 @RequiredArgsConstructor
 public class EmployeeController {
 
     private final EmployeeService employeeService;
-    private final EmployeeDtoMapper employeeDtoMapper;
 
     @GetMapping()
     public ResponseEntity<List<EmployeeDto>> getAllEmployees() {
         try {
-            List<EmployeeDto> employeeDtos = employeeDtoMapper.mapEmployeesToDtos(employeeService.getEmployees());
+            List<EmployeeDto> employeeDtos = employeeService.getAllEmployeesDtos();
             return ResponseEntity.ok(employeeDtos);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
@@ -33,9 +30,9 @@ public class EmployeeController {
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeDto> getEmployee(@PathVariable long id) {
         try {
-            Employee employee = employeeService.getEmployee(id);
-            if (employee != null) {
-                return ResponseEntity.ok(employeeDtoMapper.mapEmployeeToDto(employee));
+            EmployeeDto employeeDto = employeeService.getEmployeeDto(id);
+            if (employeeDto != null) {
+                return ResponseEntity.ok(employeeDto);
             } else {
                 return ResponseEntity.notFound().build();
             }
@@ -49,8 +46,8 @@ public class EmployeeController {
     @PostMapping()
     public ResponseEntity<EmployeeDto> saveEmployee(@RequestBody EmployeeDto employeeDto) {
         try {
-            Employee savedEmployee = employeeService.saveEmployee(employeeDtoMapper.mapEmployeeDtoToEntity(employeeDto));
-            return ResponseEntity.status(HttpStatus.CREATED).body(employeeDtoMapper.mapEmployeeToDto(savedEmployee));
+            EmployeeDto saveEmployeeDto = employeeService.saveEmployee(employeeDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(saveEmployeeDto);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -59,8 +56,8 @@ public class EmployeeController {
     @PutMapping()
     public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto employeeDto) {
         try {
-            Employee editedEmployee = employeeService.updateEmployee(employeeDtoMapper.mapEmployeeDtoToEntity(employeeDto));
-            return ResponseEntity.ok(employeeDtoMapper.mapEmployeeToDto(editedEmployee));
+            EmployeeDto updatedEmployeeDto = employeeService.updateEmployee(employeeDto);
+            return ResponseEntity.ok(updatedEmployeeDto);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {

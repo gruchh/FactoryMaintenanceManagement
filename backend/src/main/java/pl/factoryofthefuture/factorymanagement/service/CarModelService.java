@@ -4,8 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.factoryofthefuture.factorymanagement.entity.CarModel;
+import pl.factoryofthefuture.factorymanagement.entity.Factory;
+import pl.factoryofthefuture.factorymanagement.entity.dto.CarModelDto;
 import pl.factoryofthefuture.factorymanagement.exception.NotFoundException;
+import pl.factoryofthefuture.factorymanagement.mapper.CarModelDtoMapper;
 import pl.factoryofthefuture.factorymanagement.repository.CarModelRepository;
+import pl.factoryofthefuture.factorymanagement.repository.FactoryRepository;
 
 import java.util.List;
 
@@ -14,27 +18,41 @@ import java.util.List;
 public class CarModelService {
 
     private final CarModelRepository carModelRepository;
+    private final FactoryRepository factoryRepository;
+    private final CarModelDtoMapper carModelDtoMapper;
 
-    public List<CarModel> getCarModels() {
-        return carModelRepository.findAll();
+    public List<CarModelDto> getAllCarModelsDtos() {
+        List<CarModel> allCarModels = carModelRepository.findAll();
+        return carModelDtoMapper.mapCarModelsToDtos(allCarModels);
     }
 
-    public CarModel getCarModel(long id) {
-        return carModelRepository.findById(id)
+    public CarModelDto getCarModelDtoById(long id) {
+        CarModel carModel = carModelRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(id));
+        return carModelDtoMapper.mapCarModelToDto(carModel);
     }
 
-    public CarModel saveCarModel(CarModel carModel) {
-        return carModelRepository.save(carModel);
+    public CarModelDto saveCarModel(CarModelDto carModelDto) {
+        CarModel carModel = carModelDtoMapper.mapCarModelDtoToEntity(carModelDto);
+        CarModel savedCarModel = carModelRepository.save(carModel);
+        return carModelDtoMapper.mapCarModelToDto(savedCarModel);
     }
 
-    public CarModel updateCarModel(CarModel carModel) {
-        CarModel updatedCarModel = carModelRepository.findById(carModel.getId())
-                .orElseThrow(() -> new NotFoundException(carModel.getId()));
-        updatedCarModel.setModelName(carModel.getModelName());
-        updatedCarModel.setModelType(carModel.getModelType());
-        updatedCarModel.setFactory(carModel.getFactory());
-        return carModelRepository.save(updatedCarModel);
+    @Transactional
+    public CarModelDto updateCarModel(CarModelDto carModelDto) {
+        CarModel updatedCarModel = carModelRepository.findById(carModelDto.getId())
+                .orElseThrow(() -> new NotFoundException(carModelDto.getId()));
+        updatedCarModel.setModelName(carModelDto.getModelName());
+        updatedCarModel.setModelType(carModelDto.getModelType());
+        if (carModelDto.getId() != null) {
+            Factory factory = factoryRepository.findById(carModelDto.getId())
+                    .orElseThrow(() -> new NotFoundException(carModelDto.getId()));
+            updatedCarModel.setFactory(factory);
+        } else {
+            updatedCarModel.setFactory(null);
+        }
+        CarModel savedCarModel = carModelRepository.save(updatedCarModel);
+        return carModelDtoMapper.mapCarModelToDto(savedCarModel);
     }
 
     @Transactional

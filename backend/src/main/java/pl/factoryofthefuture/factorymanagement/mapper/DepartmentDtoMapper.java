@@ -17,14 +17,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class DepartmentDtoMapper {
 
-    private final MachineService machineService;
-
-    public List<DepartmentDto> mapDepartmentDtosToEntities(List<Department> departments) {
-        return departments.stream()
-                .map(this::mapDepartmentToDto)
-                .collect(Collectors.toList());
-    }
-
     public DepartmentDto mapDepartmentToDto(Department department) {
         return DepartmentDto.builder()
                 .id(department.getId())
@@ -35,13 +27,24 @@ public class DepartmentDtoMapper {
                 .build();
     }
 
+    public List<DepartmentDto> mapDepartmentsToDtos(List<Department> departmentList) {
+        return departmentList.stream()
+                .map(this::mapDepartmentToDto)
+                .collect(Collectors.toList());
+    }
+
     public Department mapDepartmentDtoToEntity(DepartmentDto departmentDto) {
-        Set<Machine> machineSet = machineService.getMachinesByIds(departmentDto.getMachineIds());
         return Department.builder()
+                .id(departmentDto.getId())
                 .fullName(departmentDto.getFullName())
                 .shortCut(departmentDto.getShortCut())
                 .creationDate(departmentDto.getCreationDate())
-                .machineSet(machineSet)
                 .build();
+    }
+
+    public List<DepartmentDto> mapDepartmentDtosToEntities(List<Department> departmentList) {
+        return departmentList.stream()
+                .map(this::mapDepartmentToDto)
+                .collect(Collectors.toList());
     }
 }

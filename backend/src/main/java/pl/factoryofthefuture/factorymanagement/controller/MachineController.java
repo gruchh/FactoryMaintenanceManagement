@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.factoryofthefuture.factorymanagement.entity.Machine;
 import pl.factoryofthefuture.factorymanagement.entity.dto.MachineDto;
-import pl.factoryofthefuture.factorymanagement.mapper.MachineDtoMapper;
 import pl.factoryofthefuture.factorymanagement.service.MachineService;
 
 import java.util.List;
@@ -18,12 +16,11 @@ import java.util.NoSuchElementException;
 public class MachineController {
 
     private final MachineService machineService;
-    private final MachineDtoMapper machineDtoMapper;
 
     @GetMapping()
     public ResponseEntity<List<MachineDto>> getAllMachines() {
         try {
-            List<MachineDto> machineDtos = machineDtoMapper.mapMachinesToDtos(machineService.getAllMachines());
+            List<MachineDto> machineDtos = machineService.getAllMachinesDtos();
             return ResponseEntity.ok(machineDtos);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
@@ -33,9 +30,9 @@ public class MachineController {
     @GetMapping("/{id}")
     public ResponseEntity<MachineDto> getMachine(@PathVariable long id) {
         try {
-            Machine machine = machineService.getMachineById(id);
-            if (machine != null) {
-                return ResponseEntity.ok(machineDtoMapper.mapMachineToDto(machine));
+            MachineDto machineDto = machineService.getMachineDtoById(id);
+            if (machineDto != null) {
+                return ResponseEntity.ok(machineDto);
             } else {
                 return ResponseEntity.notFound().build();
             }
@@ -49,8 +46,8 @@ public class MachineController {
     @PostMapping()
     public ResponseEntity<MachineDto> saveMachine(@RequestBody MachineDto machineDto) {
         try {
-            Machine savedMachine = machineService.saveMachine(machineDtoMapper.mapDtoToMachine(machineDto));
-            return ResponseEntity.status(HttpStatus.CREATED).body(machineDtoMapper.mapMachineToDto(savedMachine));
+            MachineDto savedMachineDto = machineService.saveMachine(machineDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedMachineDto);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -58,8 +55,8 @@ public class MachineController {
 
     @PutMapping()
     public ResponseEntity<MachineDto> updateMachine(@RequestBody MachineDto machineDto) {
-        Machine editedMachine = machineService.updateMachine(machineDtoMapper.mapDtoToMachine(machineDto));
-        return ResponseEntity.status(HttpStatus.OK).body(machineDtoMapper.mapMachineToDto(editedMachine));
+        MachineDto updatedMachineDto = machineService.updateMachine(machineDto);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedMachineDto);
     }
 
     @DeleteMapping("/{id}")

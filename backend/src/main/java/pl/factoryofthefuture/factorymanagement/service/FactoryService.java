@@ -4,8 +4,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.factoryofthefuture.factorymanagement.entity.Factory;
+import pl.factoryofthefuture.factorymanagement.entity.dto.FactoryDto;
 import pl.factoryofthefuture.factorymanagement.exception.NotFoundException;
-import pl.factoryofthefuture.factorymanagement.repository.CarModelRepository;
+import pl.factoryofthefuture.factorymanagement.mapper.FactoryDtoMapper;
 import pl.factoryofthefuture.factorymanagement.repository.FactoryRepository;
 
 import java.util.List;
@@ -15,33 +16,36 @@ import java.util.List;
 public class FactoryService {
 
     private final FactoryRepository factoryRepository;
-    private final CarModelRepository carModelRepository;
+    private final FactoryDtoMapper factoryDtoMapper;
 
-    public List<Factory> getAllFactories() {
-        return factoryRepository.findAll();
+    public List<FactoryDto> getAllFactoriesDtos() {
+        List<Factory> allFactories = factoryRepository.findAll();
+        return factoryDtoMapper.mapFactoriesToDtos(allFactories);
     }
 
-    public Factory getFactory(Long id) {
-        return factoryRepository.findById(id)
+    public FactoryDto getFactoryById(Long id) {
+        Factory factory = factoryRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(id));
+        return factoryDtoMapper.mapFactoryToDto(factory);
     }
 
-    public Factory saveFactory(Factory factory) {
-        return factoryRepository.save(factory);
+    public FactoryDto saveFactory(FactoryDto factoryDto) {
+        Factory factory = factoryDtoMapper.mapFactoryToEntity(factoryDto);
+        Factory savedFactory = factoryRepository.save(factory);
+        return factoryDtoMapper.mapFactoryToDto(savedFactory);
     }
 
     @Transactional
-    public Factory updateFactory(Factory updatedFactory) {
-        Factory existingFactory = factoryRepository.findById(updatedFactory.getId())
-                .orElseThrow(() -> new NotFoundException(updatedFactory.getId()));
-
-        existingFactory.setName(updatedFactory.getName());
-        existingFactory.setDescription(updatedFactory.getDescription());
-        existingFactory.setCity(updatedFactory.getCity());
-        existingFactory.setCreationDate(updatedFactory.getCreationDate());
-        existingFactory.setStatus(updatedFactory.getStatus());
-        existingFactory.setScopeOfActivity(updatedFactory.getScopeOfActivity());
-        return factoryRepository.save(existingFactory);
+    public FactoryDto updateFactory(FactoryDto factoryDto) {
+        Factory updatedFactory = factoryRepository.findById(factoryDto.getId())
+                .orElseThrow(() -> new NotFoundException(factoryDto.getId()));
+        updatedFactory.setName(updatedFactory.getName());
+        updatedFactory.setDescription(updatedFactory.getDescription());
+        updatedFactory.setCity(updatedFactory.getCity());
+        updatedFactory.setCreationDate(updatedFactory.getCreationDate());
+        updatedFactory.setStatus(updatedFactory.getStatus());
+        updatedFactory.setScopeOfActivity(updatedFactory.getScopeOfActivity());
+        return factoryDtoMapper.mapFactoryToDto(updatedFactory);
     }
 
     @Transactional

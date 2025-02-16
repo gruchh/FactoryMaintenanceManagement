@@ -3,10 +3,11 @@ package pl.factoryofthefuture.factorymanagement.mapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Component;
-import pl.factoryofthefuture.factorymanagement.entity.CarModel;
 import pl.factoryofthefuture.factorymanagement.entity.Factory;
-import pl.factoryofthefuture.factorymanagement.entity.dto.CarModelDto;
 import pl.factoryofthefuture.factorymanagement.entity.dto.FactoryDto;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @Data
@@ -23,6 +24,12 @@ public class FactoryDtoMapper {
                 .status(factory.getStatus())
                 .scopeOfActivity(factory.getScopeOfActivity())
                 .build();
+    }
+
+    public List<FactoryDto> mapFactoriesToDtos(List<Factory> factoryList) {
+        return factoryList.stream()
+                .map(this::mapFactoryToDto)
+                .collect(Collectors.toList());
     }
 
     public Factory mapFactoryToEntity(FactoryDto factoryDto) {

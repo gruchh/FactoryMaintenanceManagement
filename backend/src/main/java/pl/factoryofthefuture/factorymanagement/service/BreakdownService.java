@@ -7,13 +7,21 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.factoryofthefuture.factorymanagement.entity.Breakdown;
+import pl.factoryofthefuture.factorymanagement.entity.Employee;
+import pl.factoryofthefuture.factorymanagement.entity.Machine;
+import pl.factoryofthefuture.factorymanagement.entity.dto.BreakdownDetailsDto;
+import pl.factoryofthefuture.factorymanagement.entity.dto.BreakdownDto;
+import pl.factoryofthefuture.factorymanagement.entity.dto.BreakdownListItemDto;
+import pl.factoryofthefuture.factorymanagement.entity.dto.BreakdownWithShortCutDto;
 import pl.factoryofthefuture.factorymanagement.entity.projections.BreakdownWithShortCutProjection;
 import pl.factoryofthefuture.factorymanagement.exception.NotFoundException;
+import pl.factoryofthefuture.factorymanagement.mapper.BreakdownDtoMapper;
 import pl.factoryofthefuture.factorymanagement.repository.BreakdownRepository;
+import pl.factoryofthefuture.factorymanagement.repository.EmployeeRepository;
+import pl.factoryofthefuture.factorymanagement.repository.MachineRepository;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Set;
 
 @RequiredArgsConstructor
@@ -21,44 +29,71 @@ import java.util.Set;
 public class BreakdownService {
 
     private final BreakdownRepository breakdownRepository;
+    private final MachineRepository machineRepository;
+    private final EmployeeRepository employeeRepository;
+    private final BreakdownDtoMapper breakdownDtoMapper;
     private final int PAGE_SIZE = 5;
 
-    public List<Breakdown> getBreakdowns() {
-        return breakdownRepository.findAll();
+    public List<BreakdownDto> getAllBreakdownsDtos() {
+        List<Breakdown> allBreakdowns = breakdownRepository.findAll();
+        return breakdownDtoMapper.mapBreakdownsToDtos(allBreakdowns);
     }
 
-    public List<Breakdown> getPaginatedBreakdowns(int pageNumber, Sort.Direction sortDirection) {
+    public List<BreakdownListItemDto> getPaginatedBreakdownsByIdDto(int pageNumber, Sort.Direction sortDirection) {
         Pageable pageable = PageRequest.of(pageNumber, PAGE_SIZE, Sort.by(sortDirection, "id"));
-        return breakdownRepository.findAllBreakdowns(pageable);
+        List<Breakdown> allBreakdowns = breakdownRepository.findAllBreakdowns(pageable);
+        return breakdownDtoMapper.mapBreakdownsToListItemDtos(allBreakdowns);
     }
 
-    public Breakdown getBreakdown(Long id) {
-        return breakdownRepository.findById(id)
+    public BreakdownDetailsDto getBreakdownDetailByIdDto(Long id) {
+        Breakdown breakdown = breakdownRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(id));
+        return breakdownDtoMapper.mapBreakdownToDetailsDto(breakdown);
     }
 
-    public Set<Breakdown> findBreakdownsById(Set<Long> breakdownIds) {
+    public Set<Breakdown> getBreakdownsById(Set<Long> breakdownIds) {
         return new HashSet<>(breakdownRepository.findAllById(breakdownIds));
     }
 
-    public Breakdown saveBreakdown(Breakdown breakdown) {
-        return breakdownRepository.save(breakdown);
+    public BreakdownDto saveBreakdown(BreakdownDto breakdownDto) {
+        Machine machine = null;
+        if (breakdownDto.getMachineId() != 0) {
+            machine = machineRepository.findById(breakdownDto.getMachineId())
+                    .orElseThrow(() -> new NotFoundException(breakdownDto.getMachineId()));
+        }
+        Set<Employee> employeeSet = null;
+        if (breakdownDto.getEmployeeIds() != null && !breakdownDto.getEmployeeIds().isEmpty()) {
+            employeeSet = new HashSet<>(employeeRepository.findAllById(breakdownDto.getEmployeeIds()));
+        }
+        Breakdown breakdown = breakdownDtoMapper.mapBreakdownDtoToEntity(breakdownDto, machine, employeeSet);
+        Breakdown savedBreakdown = breakdownRepository.save(breakdown);
+        return breakdownDtoMapper.mapBreakdownToDto(savedBreakdown);
     }
 
     @Transactional
-    public Breakdown updateBreakdown(Breakdown breakdown) {
-        Breakdown updatedBreakdown = breakdownRepository.findById(breakdown.getId())
-                .orElseThrow(() -> new NotFoundException(breakdown.getId()));
-        updatedBreakdown.setEventDescription(breakdown.getEventDescription());
-        updatedBreakdown.setStartDate(breakdown.getStartDate());
-        updatedBreakdown.setEndDate(breakdown.getEndDate());
-        updatedBreakdown.setSeverity(breakdown.getSeverity());
-        updatedBreakdown.setCause(breakdown.getCause());
-        updatedBreakdown.setUsedParts(breakdown.getUsedParts());
-        updatedBreakdown.setComments(breakdown.getComments());
-        updatedBreakdown.setMachine(breakdown.getMachine());
-        updatedBreakdown.setEmployeeSet(breakdown.getEmployeeSet());
-        return breakdownRepository.save(updatedBreakdown);
+    public BreakdownDto updateBreakdown(BreakdownDto breakdownDto) {
+        Breakdown updatedBreakdown = breakdownRepository.findById(breakdownDto.getId())
+                .orElseThrow(() -> new NotFoundException(breakdownDto.getId()));
+        updatedBreakdown.setEventDescription(breakdownDto.getEventDescription());
+        updatedBreakdown.setStartDate(breakdownDto.getStartDate());
+        updatedBreakdown.setEndDate(breakdownDto.getEndDate());
+        updatedBreakdown.setSeverity(breakdownDto.getSeverity());
+        updatedBreakdown.setCause(breakdownDto.getCause());
+        updatedBreakdown.setUsedParts(breakdownDto.getUsedParts());
+        updatedBreakdown.setComments(breakdownDto.getComments());
+        Machine machine = null;
+        if (breakdownDto.getMachineId() != 0) {
+            machine = machineRepository.findById(breakdownDto.getMachineId())
+                    .orElseThrow(() -> new NotFoundException(breakdownDto.getMachineId()));
+        }
+        updatedBreakdown.setMachine(machine);
+        Set<Employee> employeeSet = null;
+        if (breakdownDto.getEmployeeIds() != null && !breakdownDto.getEmployeeIds().isEmpty()) {
+            employeeSet = new HashSet<>(employeeRepository.findAllById(breakdownDto.getEmployeeIds()));
+        }
+        updatedBreakdown.setEmployeeSet(employeeSet);
+        Breakdown savedBreakdown = breakdownRepository.save(updatedBreakdown);
+        return breakdownDtoMapper.mapBreakdownToDto(savedBreakdown);
     }
 
     @Transactional
@@ -69,7 +104,8 @@ public class BreakdownService {
         breakdownRepository.deleteById(id);
     }
 
-    public List<BreakdownWithShortCutProjection> getAllBreakdownsWitShortCut() {
-        return breakdownRepository.findAllBreakdownsWithShortCut();
+    public List<BreakdownWithShortCutDto> getAllBreakdownsWitShortCut() {
+        List<BreakdownWithShortCutProjection> allBreakdownsWithShortCut = breakdownRepository.findAllBreakdownsWithShortCut();
+        return breakdownDtoMapper.mapBreakdownProjectionToDtos(allBreakdownsWithShortCut);
     }
 }

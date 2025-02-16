@@ -4,35 +4,29 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.factoryofthefuture.factorymanagement.entity.Budget;
 import pl.factoryofthefuture.factorymanagement.entity.dto.BudgetDto;
-import pl.factoryofthefuture.factorymanagement.mapper.BudgetDtoMapper;
 import pl.factoryofthefuture.factorymanagement.service.BudgetService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-@RestController()
+@RestController
 @RequestMapping("/budget")
 @RequiredArgsConstructor
 public class BudgetController {
 
     private final BudgetService budgetService;
-    private final BudgetDtoMapper budgetDtoMapper;
 
     @GetMapping()
     public ResponseEntity<List<BudgetDto>> getAllBudget() {
-        List<BudgetDto> budgetDtos = budgetService.getBudgetList().stream()
-                .map(budgetDtoMapper::mapBudgetToDto)
-                .collect(Collectors.toList());
+        List<BudgetDto> budgetDtos = budgetService.getAllBudgetsDtos();
         return ResponseEntity.ok(budgetDtos);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<BudgetDto> getBudget(@PathVariable long id) {
-        Budget budget = budgetService.getBudget(id);
-        if (budget != null) {
-            return ResponseEntity.ok(budgetDtoMapper.mapBudgetToDto(budget));
+        BudgetDto budgetDto = budgetService.getBudgetDtoById(id);
+        if (budgetDto != null) {
+            return ResponseEntity.ok(budgetDto);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -40,14 +34,14 @@ public class BudgetController {
 
     @PostMapping()
     public ResponseEntity<BudgetDto> saveBudget(@RequestBody BudgetDto budgetDto) {
-        Budget savedBudget = budgetService.saveBudget(budgetDtoMapper.mapBudgetDtoToEntity(budgetDto));
-        return ResponseEntity.status(HttpStatus.CREATED).body(budgetDtoMapper.mapBudgetToDto(savedBudget));
+        BudgetDto savedBudgetDto = budgetService.saveBudget(budgetDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedBudgetDto);
     }
 
     @PutMapping()
     public ResponseEntity<BudgetDto> updateBudget(@RequestBody BudgetDto budgetDto) {
-        Budget editedBudget = budgetService.updateBudget(budgetDtoMapper.mapBudgetDtoToEntity(budgetDto));
-        return ResponseEntity.ok(budgetDtoMapper.mapBudgetToDto(editedBudget));
+        BudgetDto updatedBudgetDto = budgetService.updateBudget(budgetDto);
+        return ResponseEntity.ok(updatedBudgetDto);
     }
 
     @DeleteMapping("/{id}")
